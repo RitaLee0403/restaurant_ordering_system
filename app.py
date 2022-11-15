@@ -53,6 +53,12 @@ def apiAttraction():
 			}
 				return data
 			else:
+				if(page > 4):
+					data = {
+						"nextPage":None,
+						"data":getData.showPage(page,keyword)
+					}
+					return data
 				data = {
 						"nextPage":page+1,
 						"data":getData.showPage(page,keyword)
