@@ -32,42 +32,42 @@ def attraction(id):
 
 @app.route("/api/attractions/")
 def apiAttraction():
-	# try:
-	page = request.args.get("page","0")
-	keyword = request.args.get("keyword", "")
-	page=int(page)
-	if(len(getData.showPage(page+1)) == 0):
-		nextPage = None
-	else:
-		nextPage = page +1
-
-	if(page < 0 or page > 4):
-		data = {
-			"error": True,
-			"message": "無此頁"
-		}
-		return data,200
-	if(keyword != ""):
-		if(len(getData.showPage(page+1,keyword)) == 0):
+	try:
+		page = request.args.get("page","0")
+		keyword = request.args.get("keyword", "")
+		page=int(page)
+		if(len(getData.showPage(page+1)) == 0):
 			nextPage = None
-			
-		data = {
-			"nextPage":nextPage,
-			"data":getData.showPage(page,keyword)
-		}
-		return data,200
-	if(keyword == ""):
-		data = {
+		else:
+			nextPage = page +1
+
+		if(page < 0 or page > 4):
+			data = {
+				"error": True,
+				"message": "無此頁"
+			}
+			return data,200
+		if(keyword != ""):
+			if(len(getData.showPage(page+1,keyword)) == 0):
+				nextPage = None
+				
+			data = {
 				"nextPage":nextPage,
-				"data":getData.showPage(page)
-		}
-		return data,200
-	# except:
-	# 		data = {
-	# 			"error": True,
-	# 			"message":"連線失敗"
-	# 		}
-	# 		return data,500
+				"data":getData.showPage(page,keyword)
+			}
+			return data,200
+		if(keyword == ""):
+			data = {
+					"nextPage":nextPage,
+					"data":getData.showPage(page)
+			}
+			return data,200
+	except:
+			data = {
+				"error": True,
+				"message":"連線失敗"
+			}
+			return data,500
 
 
      
