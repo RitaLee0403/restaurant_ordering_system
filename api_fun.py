@@ -42,7 +42,6 @@ class ConnectToSql:
             records = cursor.fetchall()
             for k in records:
                 pcArr.append(k[0])
-            index+=1
             cursor.close()
             cnx.close()
             return pcArr
@@ -90,15 +89,13 @@ class ConnectToSql:
     def showPage(self, page, keyword = ""):
         arr = []
         pages = 12
-        
-        
         index = (12 * page) + 1
         imageIndex = index
         if(keyword == ""):
             cnx = pool.get_connection()
             cursor = cnx.cursor()
             execute = "SELECT `id`,`name`,`category`,`description`,`address`,`transport`,`MRT`,`latitude`,`longitude` FROM `data` WHERE idName >= %s ORDER BY `idName` LIMIT %s;"
-            values = (f"{index}",pages)
+            values = (index,pages)
             cursor.execute(execute,values)
             record = cursor.fetchall()
             for k in record:
@@ -121,11 +118,10 @@ class ConnectToSql:
         else:
             cnx = pool.get_connection()
             cursor = cnx.cursor()
-            execute = "SELECT `id`,`name`,`category`,`description`,`address`,`transport`,`MRT`,`latitude`,`longitude` FROM `data` WHERE `data`.`name` LIKE %s OR `data`.`category` = %s;"
+            execute = "SELECT `id`,`name`,`category`,`description`,`address`,`transport`,`MRT`,`latitude`,`longitude` FROM `data` WHERE  `data`.`name` LIKE %s OR `data`.`category` = %s ;"
             values = (f"%{keyword}%",keyword)
             cursor.execute(execute,values)
             record = cursor.fetchall()
-            index +=1
             for k in record:
                 images = self.get_pc(imageIndex)
                 arr.append({
