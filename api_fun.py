@@ -31,33 +31,19 @@ class ConnectToSql:
         return arr
         
         
-    def get_pc(self, index, id = None):
+    def get_pc(self,id):
         pcArr = []
-        if(id == None):
-            cnx = pool.get_connection()
-            cursor = cnx.cursor()
-            execute = "SELECT `picture`.`pc` from `picture` INNER JOIN `data` ON `data`.`idName` = `picture`.`id` AND `data`.`idName` = %s;"
-            values = ([f"{index}"])
-            cursor.execute(execute,values)
-            records = cursor.fetchall()
-            for k in records:
-                pcArr.append(k[0])
-            index+=1
-            cursor.close()
-            cnx.close()
-            return pcArr
-        else:
-            cnx = pool.get_connection()
-            cursor = cnx.cursor()
-            execute = "SELECT `picture`.`pc` from `picture` INNER JOIN `data` ON `data`.`idName` = `picture`.`id` AND `data`.`id` = %s;"
-            values = ([f"{id}"])
-            cursor.execute(execute,values)
-            records = cursor.fetchall()
-            for k in records:
-                pcArr.append(k[0])
-            cursor.close()
-            cnx.close()
-            return pcArr
+        cnx = pool.get_connection()
+        cursor = cnx.cursor()
+        execute = "SELECT `picture`.`pc` from `picture` INNER JOIN `data` ON `data`.`idName` = `picture`.`id` AND `data`.`id` = %s;"
+        values = ([f"{id}"])
+        cursor.execute(execute,values)
+        records = cursor.fetchall()
+        for k in records:
+            pcArr.append(k[0])
+        cursor.close()
+        cnx.close()
+        return pcArr
 
     def getAttraction(self,id):
         dict = {}
@@ -68,7 +54,7 @@ class ConnectToSql:
         cursor.execute(execute,values)
         record = cursor.fetchall()
         for k in record:
-            images = self.get_pc(0,id)
+            images = self.get_pc(id)
             dict ={
                 "id" : k[0],
                 "name" : k[1],
