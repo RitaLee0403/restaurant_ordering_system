@@ -90,8 +90,7 @@ class ConnectToSql:
     def showPage(self, page, keyword = ""):
         arr = []
         pages = 12
-        if(page == 4):
-            pages = 10
+        
         
         index = (12 * page) + 1
         imageIndex = index
@@ -102,7 +101,6 @@ class ConnectToSql:
             values = (f"{index}",pages)
             cursor.execute(execute,values)
             record = cursor.fetchall()
-            print(record)
             for k in record:
                 images = self.get_pc(imageIndex)
                 arr.append({
