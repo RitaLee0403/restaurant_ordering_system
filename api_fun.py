@@ -10,7 +10,8 @@ pool = pooling.MySQLConnectionPool(
         database = 'taipei_attraction',
         user = 'root',
         password = "",
-        charset='utf8'
+        charset='utf8',
+        auto_plugin='mysql_native_password'
     )
 
 class ConnectToSql:
