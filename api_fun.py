@@ -9,9 +9,9 @@ pool = pooling.MySQLConnectionPool(
         host = 'localhost',
         database = 'taipei_attraction',
         user = 'root',
-        password = "",
+        password = "0403",
         charset='utf8',
-        auth_plugin='mysql_native_password'
+
     )
 
 class ConnectToSql:
@@ -28,6 +28,7 @@ class ConnectToSql:
         cursor.close()
         cnx.close()
         return arr
+        
         
     def get_pc(self, index, id = None):
         pcArr = []
@@ -120,31 +121,30 @@ class ConnectToSql:
                 cursor.close()
                 cnx.close()
         else:
-            for i in range(pages):
-                cnx = pool.get_connection()
-                cursor = cnx.cursor()
-                execute = "SELECT `id`,`name`,`category`,`description`,`address`,`transport`,`MRT`,`latitude`,`longitude` FROM `data` WHERE (`data`.`name` LIKE %s OR `data`.`category` = %s) AND `idName` = %s;"
-                values = (f"%{keyword}%",keyword,index)
-                cursor.execute(execute,values)
-                record = cursor.fetchall()
-                index +=1
-                for k in record:
-                    images = self.get_pc(imageIndex)
-                    arr.append({
-                        "id" : k[0],
-                        "name" : k[1],
-                        "category":k[2],
-                        "description":k[3],
-                        "address":k[4],
-                        "transport":k[5],
-                        "mrt":k[6],
-                        "lat":k[7],
-                        "lng":k[8],
-                        "images":images
-                    })
-                    imageIndex += 1
-                    
-                cursor.close()
-                cnx.close()
-            
+            cnx = pool.get_connection()
+            cursor = cnx.cursor()
+            execute = "SELECT `id`,`name`,`category`,`description`,`address`,`transport`,`MRT`,`latitude`,`longitude` FROM `data` WHERE `data`.`name` LIKE %s OR `data`.`category` = %s;"
+            values = (f"%{keyword}%",keyword)
+            cursor.execute(execute,values)
+            record = cursor.fetchall()
+            index +=1
+            for k in record:
+                images = self.get_pc(imageIndex)
+                arr.append({
+                    "id" : k[0],
+                    "name" : k[1],
+                    "category":k[2],
+                    "description":k[3],
+                    "address":k[4],
+                    "transport":k[5],
+                    "mrt":k[6],
+                    "lat":k[7],
+                    "lng":k[8],
+                    "images":images
+                })
+                imageIndex += 1
+            cursor.close()
+            cnx.close()
+            index = 12 * page
+            arr = arr[index : index + 12]
         return arr
