@@ -42,6 +42,7 @@ class ConnectToSql:
             records = cursor.fetchall()
             for k in records:
                 pcArr.append(k[0])
+            index+=1
             cursor.close()
             cnx.close()
             return pcArr
@@ -90,16 +91,31 @@ class ConnectToSql:
         arr = []
         pages = 12
         index = (12 * page) + 1
-        imageIndex = index
         if(keyword == ""):
+            
             cnx = pool.get_connection()
             cursor = cnx.cursor()
-            execute = "SELECT `id`,`name`,`category`,`description`,`address`,`transport`,`MRT`,`latitude`,`longitude` FROM `data` WHERE idName >= %s ORDER BY `idName` LIMIT %s;"
-            values = (index,pages)
+            execute = "SELECT `data`.`id`,`name`,`category`,`description`,`address`,`transport`,`MRT`,`latitude`,`longitude`,`picture`.`pc` FROM `data` INNER JOIN `picture` ON `picture`.`id` = `data`.`idName` AND idName >= %s and idName <= %s;"
+            values = (index,index + pages -1)
             cursor.execute(execute,values)
             record = cursor.fetchall()
+            pcdict = {}
+            
+            for i in record:
+                if(f"{i[0]}" in pcdict):
+                    pcdict[f"{i[0]}"].append(i[9])
+                else:
+                    pcdict[f"{i[0]}"] = []
+                    pcdict[f"{i[0]}"].append(i[9])
+            num = - 1
             for k in record:
-                images = self.get_pc(imageIndex)
+                prev = record[num][0]
+                
+                if(num >= 0):
+                    if(prev == k[0]):
+                        num +=1
+                        continue
+                
                 arr.append({
                     "id" : k[0],
                     "name" : k[1],
@@ -110,20 +126,40 @@ class ConnectToSql:
                     "mrt":k[6],
                     "lat":k[7],
                     "lng":k[8],
-                    "images":images
+                    "images":pcdict[f"{k[0]}"]
                 })
-                imageIndex +=1
+                num +=1
+            
+            
             cursor.close()
             cnx.close()
+            
+            
         else:
             cnx = pool.get_connection()
             cursor = cnx.cursor()
-            execute = "SELECT `id`,`name`,`category`,`description`,`address`,`transport`,`MRT`,`latitude`,`longitude` FROM `data` WHERE  `data`.`name` LIKE %s OR `data`.`category` = %s ;"
+            execute = "SELECT `data`.`id`,`name`,`category`,`description`,`address`,`transport`,`MRT`,`latitude`,`longitude` , `picture`.`pc` FROM `data` INNER JOIN `picture` on `data`.`idName` = `picture`.`id` AND (`data`.`name` LIKE %s OR `data`.`category` = %s);"
             values = (f"%{keyword}%",keyword)
             cursor.execute(execute,values)
             record = cursor.fetchall()
+            
+            pcdict = {}
+            for i in record:
+                if(f"{i[0]}" in pcdict):
+                    pcdict[f"{i[0]}"].append(i[9])
+                else:
+                    pcdict[f"{i[0]}"] = []
+                    pcdict[f"{i[0]}"].append(i[9])
+            num = - 1
+    
             for k in record:
-                images = self.get_pc(imageIndex)
+                prev = record[num][0]
+                
+                if(num >= 0):
+                    if(prev == k[0]):
+                        num +=1
+                        continue
+                
                 arr.append({
                     "id" : k[0],
                     "name" : k[1],
@@ -134,9 +170,9 @@ class ConnectToSql:
                     "mrt":k[6],
                     "lat":k[7],
                     "lng":k[8],
-                    "images":images
+                    "images":pcdict[f"{k[0]}"]
                 })
-                imageIndex += 1
+                num +=1
             cursor.close()
             cnx.close()
             index = 12 * page
