@@ -8,83 +8,80 @@ getData = ConnectToSql()
 @app.route("/")
 def index():
 	return render_template("index.html")
-@app.route("/attraction/<id>")
+
+@app.route("/api/attraction/<id>")
 def attraction(id):
+	id = int(id)
 	try:
-		id = int(id)
 		if(len(getData.getAttraction(id)) == 0):
 			data = {
 				"error":True,
 				"message":"景點編號不正確"
 			}
-			return data
+			return data,400
 		data = {
 			"data":getData.getAttraction(id)
 		}
-		return data
+		return data,200
 	except:
 		data = {
 			"error":True,
 			"message":"連線失敗"
 		}
-		return data
-		
-			
-	
-	# return render_template("attraction.html")
+		return data,500
 
-@app.route("/api/attractions")
+@app.route("/api/attractions/")
 def apiAttraction():
 	try:
 		page = request.args.get("page","0")
 		keyword = request.args.get("keyword", "")
 		page=int(page)
+		if(len(getData.showPage(page+1)) == 0):
+			nextPage = None
+		else:
+			nextPage = page +1
+   
 		if(page < 0 or page > 4):
 			data = {
 				"error": True,
 				"message": "無此頁"
 			}
-			return data
+			return data,200
 		if(keyword != ""):
-			if(len(getData.showPage(page,keyword)) <= 12 ):
-				data = {
-					"nextPage":None,
-					"data":getData.showPage(page,keyword)
+			data = {
+				"nextPage":nextPage,
+				"data":getData.showPage(page,keyword)
 			}
-				return data
-			else:
-				if(page > 4):
-					data = {
-						"nextPage":None,
-						"data":getData.showPage(page,keyword)
-					}
-					return data
-				data = {
-						"nextPage":page+1,
-						"data":getData.showPage(page,keyword)
-				}
-				return data
+			return data,200
 		if(keyword == ""):
 			data = {
-					"nextPage":page+1,
+					"nextPage":nextPage,
 					"data":getData.showPage(page)
 			}
-			return data
+			return data,200
 	except:
 			data = {
 				"error": True,
 				"message":"連線失敗"
 			}
+			return data,500
 
 
      
 @app.route("/api/categories")
 def apiCategories():
-    data = {
-		"data":getData.getCategories()	
-	}
-    return data
-	
+	try:
+		data = {
+				"data":getData.getCategories()	
+			}
+		return data,200
+	except:
+		data = {
+				"error": True,
+				"data":"連線失敗"	
+				}
+		return data,500
+		
 	
 
 @app.route("/booking")

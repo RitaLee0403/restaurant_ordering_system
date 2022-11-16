@@ -6,7 +6,7 @@ pool = pooling.MySQLConnectionPool(
         pool_name = "my_pool",
         pool_size = 10,
         pool_reset_session=True,
-        host = '127.0.0.1',
+        host = 'localhost',
         database = 'taipei_attraction',
         user = 'root',
         password = "0403",
@@ -83,7 +83,7 @@ class ConnectToSql:
 
         
     
-    def showPage(self, page, keyword = None):
+    def showPage(self, page, keyword = ""):
         arr = []
         pages = 12
         if(page == 4):
@@ -91,7 +91,7 @@ class ConnectToSql:
         
         index = (12 * page) + 1
         imageIndex = index
-        if(keyword == None):
+        if(keyword == ""):
             for i in range(pages):
                 cnx = pool.get_connection()
                 cursor = cnx.cursor()
@@ -119,36 +119,31 @@ class ConnectToSql:
                 cursor.close()
                 cnx.close()
         else:
-            cnx = pool.get_connection()
-            cursor = cnx.cursor()
-            execute = "SELECT `id`,`name`,`category`,`description`,`address`,`transport`,`MRT`,`latitude`,`longitude` FROM `data` WHERE `data`.`name` LIKE %s"
-            values = ([f"%{keyword}%"])
-            cursor.execute(execute,values)
-            record = cursor.fetchall()
-            index +=1
-            size = len(record)
-            if(size > 12):
-                size = 12
-            count = 1
-            for k in record:
-                if(count > 12):
-                    break
-                images = self.get_pc(imageIndex)
-                arr.append({
-                    "id" : k[0],
-                    "name" : k[1],
-                    "category":k[2],
-                    "description":k[3],
-                    "address":k[4],
-                    "transport":k[5],
-                    "mrt":k[6],
-                    "lat":k[7],
-                    "lng":k[8],
-                    "images":images
-                })
-                imageIndex += 1
-                count += 1
-            cursor.close()
-            cnx.close()
+            for i in range(pages):
+                cnx = pool.get_connection()
+                cursor = cnx.cursor()
+                execute = "SELECT `id`,`name`,`category`,`description`,`address`,`transport`,`MRT`,`latitude`,`longitude` FROM `data` WHERE (`data`.`name` LIKE %s OR `data`.`category` = %s) AND `idName` = %s;"
+                values = (f"%{keyword}%",keyword,index)
+                cursor.execute(execute,values)
+                record = cursor.fetchall()
+                index +=1
+                for k in record:
+                    images = self.get_pc(imageIndex)
+                    arr.append({
+                        "id" : k[0],
+                        "name" : k[1],
+                        "category":k[2],
+                        "description":k[3],
+                        "address":k[4],
+                        "transport":k[5],
+                        "mrt":k[6],
+                        "lat":k[7],
+                        "lng":k[8],
+                        "images":images
+                    })
+                    imageIndex += 1
+                    
+                cursor.close()
+                cnx.close()
             
         return arr
