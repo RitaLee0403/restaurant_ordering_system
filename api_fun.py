@@ -82,6 +82,8 @@ class ConnectToSql:
                 "lng":k[8],
                 "images":images
             }
+        cursor.close()
+        cnx.close()
         return dict
 
         
