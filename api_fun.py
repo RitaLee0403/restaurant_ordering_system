@@ -11,7 +11,7 @@ pool = pooling.MySQLConnectionPool(
         user = 'root',
         password = "",
         charset='utf8',
-        auto_plugin='mysql_native_password'
+        auth_plugin='mysql_native_password'
     )
 
 class ConnectToSql:
