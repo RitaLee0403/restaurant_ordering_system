@@ -9,8 +9,9 @@ pool = pooling.MySQLConnectionPool(
         host = 'localhost',
         database = 'taipei_attraction',
         user = 'root',
-        password = "0403",
+        password = "",
         charset='utf8',
+        auth_plugin='mysql_native_password'
 
     )
 
