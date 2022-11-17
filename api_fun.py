@@ -79,7 +79,7 @@ class ConnectToSql:
         if(page == 0):
             firstIndex = 0
         else:
-            firstIndex = (12 * page) + 1
+            firstIndex = 12 * page
         index = (12 * page) + 1
         if(keyword == ""):
             
