@@ -81,12 +81,15 @@ class ConnectToSql:
             
             cnx = pool.get_connection()
             cursor = cnx.cursor()
-            execute = "SELECT `data`.`id`,`name`,`category`,`description`,`address`,`transport`,`MRT`,`latitude`,`longitude`,`picture`.`pc` FROM `data` INNER JOIN `picture` ON `picture`.`id` = `data`.`idName` AND idName >= %s and idName <= %s;"
-            values = (index,index + pages -1)
+            execute = "SELECT Data.`id`,`name`,`category`,`description`,`address`,`transport`,`MRT`,`latitude`,`longitude`,`picture`.`pc` \
+                    FROM (SELECT * FROM `data` WHERE  `data`.`idName` >= %s LIMIT %s)AS Data INNER JOIN `picture` ON (`picture`.`id` = Data.`idName`);"
+
+            values = (index,pages)
             cursor.execute(execute,values)
             record = cursor.fetchall()
             pcdict = {}
             
+            #把圖片放到pcdict
             for i in record:
                 if(f"{i[0]}" in pcdict):
                     pcdict[f"{i[0]}"].append(i[9])
@@ -94,6 +97,8 @@ class ConnectToSql:
                     pcdict[f"{i[0]}"] = []
                     pcdict[f"{i[0]}"].append(i[9])
             num = - 1
+            
+            #把資料塞進arr
             for k in record:
                 prev = record[num][0]
                 
@@ -129,6 +134,7 @@ class ConnectToSql:
             cursor.execute(execute,values)
             record = cursor.fetchall()
             
+            #把圖片放到pcdict
             pcdict = {}
             for i in record:
                 if(f"{i[0]}" in pcdict):
@@ -137,7 +143,8 @@ class ConnectToSql:
                     pcdict[f"{i[0]}"] = []
                     pcdict[f"{i[0]}"].append(i[9])
             num = - 1
-    
+
+            #把資料塞進arr
             for k in record:
                 prev = record[num][0]
                 
