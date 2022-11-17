@@ -75,11 +75,8 @@ class ConnectToSql:
     
     def showPage(self, page, keyword = ""):
         arr = []
-        pages = 12
-        if(page == 0):
-            firstIndex = 0
-        else:
-            firstIndex = 12 * page
+        pages = 12 
+        firstIndex = 12 * page
         index = (12 * page) + 1
         if(keyword == ""):
             
