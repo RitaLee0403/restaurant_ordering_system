@@ -77,7 +77,6 @@ class ConnectToSql:
         arr = []
         pages = 12 
         firstIndex = 12 * page
-        index = (12 * page) + 1
         if(keyword == ""):
             
             cnx = pool.get_connection()
@@ -107,7 +106,7 @@ class ConnectToSql:
                     if(prev == k[0]):
                         num +=1
                         continue
-                
+        
                 arr.append({
                     "id" : k[0],
                     "name" : k[1],
@@ -121,17 +120,15 @@ class ConnectToSql:
                     "images":pcdict[f"{k[0]}"]
                 })
                 num +=1
-            
-            
             cursor.close()
-            cnx.close()
-            
-            
+            cnx.close() 
         else:
             cnx = pool.get_connection()
             cursor = cnx.cursor()
-            execute = "SELECT `data`.`id`,`name`,`category`,`description`,`address`,`transport`,`MRT`,`latitude`,`longitude` , `picture`.`pc` FROM `data` INNER JOIN `picture` on `data`.`idName` = `picture`.`id` AND (`data`.`name` LIKE %s OR `data`.`category` = %s);"
-            values = (f"%{keyword}%",keyword)
+            execute = "SELECT Data.`id`,`name`,`category`,`description`,`address`,`transport`,`MRT`,`latitude`,`longitude`,`picture`.`pc` \
+                    FROM (SELECT * FROM `data` WHERE (Data.`name` LIKE %s OR Data.`category` = %s) LIMIT %s,%s)AS Data \
+                    INNER JOIN `picture` ON (`picture`.`id` = Data.`idName`) ;"
+            values = (f"%{keyword}%",keyword,firstIndex,pages)
             cursor.execute(execute,values)
             record = cursor.fetchall()
             
@@ -169,6 +166,4 @@ class ConnectToSql:
                 num +=1
             cursor.close()
             cnx.close()
-            index = 12 * page
-            arr = arr[index : index + 12]
         return arr
