@@ -9,6 +9,10 @@ getData = ConnectToSql()
 def index():
 	return render_template("index.html")
 
+@app.route("/attraction")
+def showAttraction():
+    return render_template("attraction.html")
+
 @app.route("/api/attraction/<id>")
 def attraction(id):
 	id = int(id)
@@ -29,6 +33,8 @@ def attraction(id):
 			"message":"連線失敗"
 		}
 		return data,500
+
+
 
 @app.route("/api/attractions/")
 def apiAttraction():
@@ -94,4 +100,4 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
-app.run( port=3000,debug=True)#host = "0.0.0.0"
+app.run(port=3000,debug=True)
