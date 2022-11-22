@@ -380,6 +380,7 @@
         })
     }
 
+    //點擊搜尋
     search.addEventListener("click",function(){
         message.style.display = "none";
         clickEvent = true;
@@ -399,7 +400,7 @@
         window.location = "/";
         clickEvent = false;
     })
-    // IntersectionObserver
+    // 創建第一個child
     function createChild(){
         let newDiv = document.createElement("div");
         newDiv.className = "child";
@@ -423,45 +424,54 @@
         contentBaby.appendChild(newP);
     }
     
+    //取得分頁
+    let loading = false;
     function getHomePage(keyword=""){
         page = 0;
         firstChange = false;
-        let options = {
-            threshold:1,
-            rootMargin : "-120px 0px 120px 0px"
-        }
         let observer = new IntersectionObserver((entries) =>{
             entries.forEach((entry)=>{
                 if(entry.isIntersecting){
                     if(page != null){
                         if(keyword != "" && clickEvent === true){
                             url = `/api/attractions?page=${page}&keyword=${keyword}`;
+                            if(loading === true){
+                                return;
+                            }
                             loadAttractions(url); 
                         }
-                        if(keyword == "" && clickEvent === false){
+                        else if(keyword === "" && clickEvent === false){
                             url = `/api/attractions?page=${page}`;
                             loadAttractions(url);
                         }
                       
                     }else{
+                        message.style.display = "none";
                         observer.unobserve(bottom);
                         
+                        
                     }
+                  
+                    
                 }
                 
             })
-        },options);
+        });
         observer.observe(bottom);
     }
     function loadAttractions(url){
+        loading = true;
+        console.log(url,page);
         fetch(url)
         .then((response)=>{
             return response.json()
         })
         .then((data)=>{
             dataContent = data["data"];
-            if(dataContent.length === 0){
+            if(dataContent.length === 0 && data["nextPage"] === null){
                 message.style.display = "block";
+                page = null;
+                loading = false;
                 return;
             }
             for(let i = 0; i < dataContent.length; i++){
@@ -493,24 +503,29 @@
                 
             
             }
-            if(data["nextPage"] === null){
+            if(data["nextPage"] === null){ //調整flex最後一排留下的縫隙，讓物件靠左
                 page = null;
                 let count = titleFont = document.querySelectorAll(".title-font").length;
                 let mod = count % 4;
-                if(mod != 0){
-                    for(let i = 0; i < 4 - mod; i++){
-                        newChild = child.cloneNode(true);
-                        content.appendChild(newChild);
-                    }
-                    for(let i = 0; i < 4 - mod; i++){
-                        count =  document.querySelectorAll(".title-font").length;
-                        let childCount = document.querySelectorAll(".child");
-                        childCount[count - 1 - i].style.visibility = "hidden";
-                    }
+                if(window.innerWidth > 600){
+                    if(mod != 0){
+                        for(let i = 0; i < 4 - mod; i++){
+                            newChild = child.cloneNode(true);
+                            content.appendChild(newChild);
+                        }
+                        for(let i = 0; i < 4 - mod; i++){
+                            count =  document.querySelectorAll(".title-font").length;
+                            let childCount = document.querySelectorAll(".child");
+
+                            childCount[count - 1 - i].style.visibility = "hidden";
+                        }
                     
+                    }
                 }
+                loading = false;
                 return;
             }
+            loading = false;
             page ++;
         })
     
