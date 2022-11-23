@@ -489,7 +489,6 @@
                         if(keyword != "" && clickEvent === true){
                             url = `/api/attractions?page=${page}&keyword=${keyword}`;
                             if(url in urlQueue){
-                                console.log("here");
                                 urlQueue.pop();
                                 page ++;
                                 return;
@@ -507,7 +506,7 @@
                     }else{
                         message.style.display = "none";
                         observer.unobserve(bottom);
-                        
+                        urlQueue = [];
                         
                     }
                   
