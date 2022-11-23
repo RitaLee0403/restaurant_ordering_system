@@ -185,11 +185,17 @@
         font-style: normal;
         font-weight: 700;
         font-size: 16px;
-        bottom:68px;
+        bottom:62px;
         left:0px;
         font-weight:900;
         
         
+    }
+    .left-p{
+        font-size:16px;
+    }
+    .right-p{
+        font-size:16px;
     }
     .bottom{
         position:absolute;
@@ -211,8 +217,50 @@
         font-size:40px;
         text-align: center;
     }
-    
+    @media(max-width:1200px){
+      
+        .navbar{
+            width:100%;
+        }
+        .title-pc{
+            width:100%;
+        }
+        .title-left{
+            padding-left: 5%;
+        }
+        .title-right{
+            padding-right:5%;
+        }
+        .pc-101{
+            width:100%;
+        }
+        .pc-101-inner{
+            width:90%;
+            left:55%;
+        }
+        .content{
+            width:100%;
+            flex-wrap:wrap;
+            justify-content:space-around;
+            
+          
+        }
+        .child{
+           width:40%;
+           
+        }
+        .child img{
+            width:100%;
+            object-fit:cover;
+            
+        }
+    }
+
+
     @media(max-width:600px){
+        .navbar{
+            width:100%;
+        }
         .title-pc{
             width:100%;
             height:320px;
@@ -226,14 +274,13 @@
             margin-top: 0px;
             margin-left: 700px;
         }
-        
+        .pc-101{
+            width:100%;
+        }
+      
         .pc-101-inner{
-            display:flex;
-            flex-wrap:wrap;
-            justify-content:flex-start;
-            width:25%;
-            font-size:28px;
-            left:87%;
+            width:86%;
+            left:54%;
            
         }
         .search-pc{
@@ -251,8 +298,8 @@
             width:90%;
         }
         .child img{
-            width:100%;
-
+            width: 100%;
+            object-fit:cover;
         }
         .title-input{
             width:230px;
@@ -426,23 +473,35 @@
     
     //取得分頁
     let loading = false;
+    let pageEnd = false;
+    let options = {
+        threshold: 0.1,
+    }
+    let urlQueue = [];
     function getHomePage(keyword=""){
-        page = 0;
         firstChange = false;
+        pageEnd = false;
+        page = 0;
         let observer = new IntersectionObserver((entries) =>{
-            entries.forEach((entry)=>{
+            for (let entry of entries){
                 if(entry.isIntersecting){
-                    if(page != null){
+                    if(pageEnd != true){
                         if(keyword != "" && clickEvent === true){
                             url = `/api/attractions?page=${page}&keyword=${keyword}`;
-                            if(loading === true){
+                            if(url in urlQueue){
+                                console.log("here");
+                                urlQueue.pop();
+                                page ++;
                                 return;
                             }
-                            loadAttractions(url); 
+                            urlQueue.push(url);
+                            loadAttractions(url,page); 
+                            page ++;
                         }
                         else if(keyword === "" && clickEvent === false){
                             url = `/api/attractions?page=${page}`;
-                            loadAttractions(url);
+                            loadAttractions(url,page);
+                            page ++;
                         }
                       
                     }else{
@@ -455,13 +514,12 @@
                     
                 }
                 
-            })
-        });
+            }
+        },options);
         observer.observe(bottom);
     }
-    function loadAttractions(url){
-        loading = true;
-        console.log(url,page);
+    function loadAttractions(url,page){
+  
         fetch(url)
         .then((response)=>{
             return response.json()
@@ -470,8 +528,8 @@
             dataContent = data["data"];
             if(dataContent.length === 0 && data["nextPage"] === null){
                 message.style.display = "block";
-                page = null;
-                loading = false;
+                pageEnd = true;
+       
                 return;
             }
             for(let i = 0; i < dataContent.length; i++){
@@ -504,7 +562,7 @@
             
             }
             if(data["nextPage"] === null){ //調整flex最後一排留下的縫隙，讓物件靠左
-                page = null;
+                pageEnd = true;
                 let count = titleFont = document.querySelectorAll(".title-font").length;
                 let mod = count % 4;
                 if(window.innerWidth > 600){
@@ -522,11 +580,10 @@
                     
                     }
                 }
-                loading = false;
+             
                 return;
             }
-            loading = false;
-            page ++;
+        
         })
     
         
