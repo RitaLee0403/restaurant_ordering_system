@@ -479,6 +479,7 @@
     }
     let urlQueue = [];
     function getHomePage(keyword=""){
+        message.style.display = "none";
         firstChange = false;
         pageEnd = false;
         page = 0;
@@ -494,7 +495,11 @@
                                 return;
                             }
                             urlQueue.push(url);
-                            loadAttractions(url,page); 
+                            loadAttractions(url,page)
+                                .catch(()=>{
+                                    message.style.display = "block";
+                                })
+                            
                             page ++;
                         }
                         else if(keyword === "" && clickEvent === false){
@@ -504,9 +509,8 @@
                         }
                       
                     }else{
-                        message.style.display = "none";
                         observer.unobserve(bottom);
-                        urlQueue = [];
+                        //urlQueue = [];
                         
                     }
                   
@@ -517,74 +521,67 @@
         },options);
         observer.observe(bottom);
     }
-    function loadAttractions(url,page){
-  
-        fetch(url)
-        .then((response)=>{
-            return response.json()
-        })
-        .then((data)=>{
-            dataContent = data["data"];
-            if(dataContent.length === 0 && data["nextPage"] === null){
-                message.style.display = "block";
-                pageEnd = true;
-       
-                return;
-            }
-            for(let i = 0; i < dataContent.length; i++){
-                if(firstChange === false){
-                    createChild();
-                    let titleFont = document.querySelectorAll(".title-font");
-                    let leftFont = document.querySelectorAll(".left-p");
-                    let rightFont = document.querySelectorAll(".right-p");
-                    let contentPC = document.querySelectorAll(".content-pc");
-                    titleFont[page*pages + i].innerHTML = dataContent[i]["name"];
-                    leftFont[page*pages + i].innerHTML = dataContent[i]["mrt"];
-                    rightFont[page*pages + i].innerHTML = dataContent[i]["category"];
-                    contentPC[page*pages + i].src = dataContent[i]["images"][0];
-                    firstChange = true;
-                    continue;
 
-                }
-                let newChild = child.cloneNode(true);
-                content.appendChild(newChild);
+ 
+    async function loadAttractions(url,page){
+    
+        let response = await fetch(url);
+        let data = await response.json();
+        dataContent = data["data"];
+        if(dataContent.length === 0 && data["nextPage"] === null){
+            pageEnd = true;
+            return Promise.reject();
+
+        }
+        for(let i = 0; i < dataContent.length; i++){
+            if(firstChange === false){
+                createChild();
                 let titleFont = document.querySelectorAll(".title-font");
                 let leftFont = document.querySelectorAll(".left-p");
                 let rightFont = document.querySelectorAll(".right-p");
                 let contentPC = document.querySelectorAll(".content-pc");
-            
                 titleFont[page*pages + i].innerHTML = dataContent[i]["name"];
                 leftFont[page*pages + i].innerHTML = dataContent[i]["mrt"];
                 rightFont[page*pages + i].innerHTML = dataContent[i]["category"];
                 contentPC[page*pages + i].src = dataContent[i]["images"][0];
-                
-            
-            }
-            if(data["nextPage"] === null){ //調整flex最後一排留下的縫隙，讓物件靠左
-                pageEnd = true;
-                let count = titleFont = document.querySelectorAll(".title-font").length;
-                let mod = count % 4;
-                if(window.innerWidth > 600){
-                    if(mod != 0){
-                        for(let i = 0; i < 4 - mod; i++){
-                            newChild = child.cloneNode(true);
-                            content.appendChild(newChild);
-                        }
-                        for(let i = 0; i < 4 - mod; i++){
-                            count =  document.querySelectorAll(".title-font").length;
-                            let childCount = document.querySelectorAll(".child");
+                firstChange = true;
+                continue;
 
-                            childCount[count - 1 - i].style.visibility = "hidden";
-                        }
-                    
-                    }
-                }
-             
-                return;
             }
+            let newChild = child.cloneNode(true);
+            content.appendChild(newChild);
+            let titleFont = document.querySelectorAll(".title-font");
+            let leftFont = document.querySelectorAll(".left-p");
+            let rightFont = document.querySelectorAll(".right-p");
+            let contentPC = document.querySelectorAll(".content-pc");
         
-        })
-    
+            titleFont[page*pages + i].innerHTML = dataContent[i]["name"];
+            leftFont[page*pages + i].innerHTML = dataContent[i]["mrt"];
+            rightFont[page*pages + i].innerHTML = dataContent[i]["category"];
+            contentPC[page*pages + i].src = dataContent[i]["images"][0];
+            
+        
+        }
+        if(data["nextPage"] === null){ //調整flex最後一排留下的縫隙，讓物件靠左
+            pageEnd = true;
+            let count = titleFont = document.querySelectorAll(".title-font").length;
+            let mod = count % 4;
+            if(window.innerWidth > 600){
+                if(mod != 0){
+                    for(let i = 0; i < 4 - mod; i++){
+                        newChild = child.cloneNode(true);
+                        content.appendChild(newChild);
+                    }
+                    for(let i = 0; i < 4 - mod; i++){
+                        count =  document.querySelectorAll(".title-font").length;
+                        let childCount = document.querySelectorAll(".child");
+
+                        childCount[count - 1 - i].style.visibility = "hidden";
+                    }
+                
+                }
+            }
+        }
         
     }
     
