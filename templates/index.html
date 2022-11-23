@@ -528,60 +528,63 @@
         let response = await fetch(url);
         let data = await response.json();
         dataContent = data["data"];
-        if(dataContent.length === 0 && data["nextPage"] === null){
-            pageEnd = true;
-            return Promise.reject();
+        await test(dataContent);
+        function test (dataContent){
+            if(dataContent.length === 0 && data["nextPage"] === null){
+                pageEnd = true;
+                return Promise.reject();
 
-        }
-        for(let i = 0; i < dataContent.length; i++){
-            if(firstChange === false){
-                createChild();
+            }
+            for(let i = 0; i < dataContent.length; i++){
+                if(firstChange === false){
+                    createChild();
+                    let titleFont = document.querySelectorAll(".title-font");
+                    let leftFont = document.querySelectorAll(".left-p");
+                    let rightFont = document.querySelectorAll(".right-p");
+                    let contentPC = document.querySelectorAll(".content-pc");
+                    titleFont[page*pages + i].innerHTML = dataContent[i]["name"];
+                    leftFont[page*pages + i].innerHTML = dataContent[i]["mrt"];
+                    rightFont[page*pages + i].innerHTML = dataContent[i]["category"];
+                    contentPC[page*pages + i].src = dataContent[i]["images"][0];
+                    firstChange = true;
+                    continue;
+
+                }
+                let newChild = child.cloneNode(true);
+                content.appendChild(newChild);
                 let titleFont = document.querySelectorAll(".title-font");
                 let leftFont = document.querySelectorAll(".left-p");
                 let rightFont = document.querySelectorAll(".right-p");
                 let contentPC = document.querySelectorAll(".content-pc");
+            
                 titleFont[page*pages + i].innerHTML = dataContent[i]["name"];
                 leftFont[page*pages + i].innerHTML = dataContent[i]["mrt"];
                 rightFont[page*pages + i].innerHTML = dataContent[i]["category"];
                 contentPC[page*pages + i].src = dataContent[i]["images"][0];
-                firstChange = true;
-                continue;
-
-            }
-            let newChild = child.cloneNode(true);
-            content.appendChild(newChild);
-            let titleFont = document.querySelectorAll(".title-font");
-            let leftFont = document.querySelectorAll(".left-p");
-            let rightFont = document.querySelectorAll(".right-p");
-            let contentPC = document.querySelectorAll(".content-pc");
-        
-            titleFont[page*pages + i].innerHTML = dataContent[i]["name"];
-            leftFont[page*pages + i].innerHTML = dataContent[i]["mrt"];
-            rightFont[page*pages + i].innerHTML = dataContent[i]["category"];
-            contentPC[page*pages + i].src = dataContent[i]["images"][0];
-            
-        
-        }
-        if(data["nextPage"] === null){ //調整flex最後一排留下的縫隙，讓物件靠左
-            pageEnd = true;
-            let count = titleFont = document.querySelectorAll(".title-font").length;
-            let mod = count % 4;
-            if(window.innerWidth > 600){
-                if(mod != 0){
-                    for(let i = 0; i < 4 - mod; i++){
-                        newChild = child.cloneNode(true);
-                        content.appendChild(newChild);
-                    }
-                    for(let i = 0; i < 4 - mod; i++){
-                        count =  document.querySelectorAll(".title-font").length;
-                        let childCount = document.querySelectorAll(".child");
-
-                        childCount[count - 1 - i].style.visibility = "hidden";
-                    }
                 
+            
+            }
+            if(data["nextPage"] === null){ //調整flex最後一排留下的縫隙，讓物件靠左
+                pageEnd = true;
+                let count = titleFont = document.querySelectorAll(".title-font").length;
+                let mod = count % 4;
+                if(window.innerWidth > 600){
+                    if(mod != 0){
+                        for(let i = 0; i < 4 - mod; i++){
+                            newChild = child.cloneNode(true);
+                            content.appendChild(newChild);
+                        }
+                        for(let i = 0; i < 4 - mod; i++){
+                            count =  document.querySelectorAll(".title-font").length;
+                            let childCount = document.querySelectorAll(".child");
+
+                            childCount[count - 1 - i].style.visibility = "hidden";
+                        }
+                    
+                    }
                 }
             }
-        }
+    }
         
     }
     
