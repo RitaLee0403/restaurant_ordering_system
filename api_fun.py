@@ -126,7 +126,7 @@ class ConnectToSql:
             cnx = pool.get_connection()
             cursor = cnx.cursor()
             execute = "SELECT Data.`id`,`name`,`category`,`description`,`address`,`transport`,`MRT`,`latitude`,`longitude`,`picture`.`pc` \
-                    FROM (SELECT * FROM `data` WHERE (Data.`name` LIKE %s OR Data.`category` = %s) LIMIT %s,%s)AS Data \
+                    FROM (SELECT * FROM `data` WHERE (`name` LIKE %s OR `category` = %s) LIMIT %s,%s)AS Data \
                     INNER JOIN `picture` ON (`picture`.`id` = Data.`idName`) ;"
             values = (f"%{keyword}%",keyword,firstIndex,pages)
             cursor.execute(execute,values)
