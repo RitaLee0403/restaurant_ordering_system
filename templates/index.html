@@ -135,12 +135,15 @@
         flex-wrap: wrap; 
         margin:auto;
         margin-top:50px;
+       
     }
     
     .content div{
         position:relative;
         font-size:0px;
-        margin-bottom:20px;
+        margin-bottom:30px;
+        
+        
     }
     
     .content-pc{
@@ -148,6 +151,7 @@
         width:270px;
         height:197px;
         font-size:50px;
+        cursor:pointer;
         
     }
     
@@ -160,6 +164,8 @@
         box-sizing: border-box;
         white-space:nowrap;
         border-radius: 0 0 5px 5px;
+        margin:0px;
+        cursor:pointer;
         
         
     }
@@ -185,7 +191,7 @@
         font-style: normal;
         font-weight: 700;
         font-size: 16px;
-        bottom:62px;
+        bottom:42px;
         left:0px;
         font-weight:900;
         
@@ -376,13 +382,13 @@
     let bottom = document.querySelector(".bottom");
     let search = document.querySelector(".icon-search-bg");
     let message = document.querySelector(".message");
-    let page = 0;
-    let url = `/api/attractions?page=${page}`;
+    
+    
     let pages = 12;
     let firstChange = false;
     let clickEvent = false;
     let prevSearch = "";
-    url = "/api/categories"
+    let url = "/api/categories"
     window.onload = function(){
         getHomePage();
     }
@@ -404,6 +410,12 @@
         }
     })
     
+    function addClickEvent(catNum){
+        let category = document.querySelector(`.cat${catNum}`);
+        category.addEventListener("click",function(){
+            input.value = category.innerHTML;
+        })
+    }
 
     //點擊input，把索引顯示在input
     input.addEventListener("click",function(e){
@@ -419,13 +431,10 @@
         e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
     }
 
+    
+    
    
-    function addClickEvent(catNum){
-        let category = document.querySelector(`.cat${catNum}`);
-        category.addEventListener("click",function(){
-            input.value = category.innerHTML;
-        })
-    }
+   
 
     //點擊搜尋
     search.addEventListener("click",function(){
@@ -474,6 +483,8 @@
     //取得分頁
     let loading = false;
     let pageEnd = false;
+    let page = 0;
+    let nextPage;
     let options = {
         threshold: 0.1,
     }
@@ -482,30 +493,34 @@
         message.style.display = "none";
         firstChange = false;
         pageEnd = false;
-        page = 0;
+        //page = 0;
+        nextPage = 0;
         let observer = new IntersectionObserver((entries) =>{
             for (let entry of entries){
                 if(entry.isIntersecting){
-                    if(pageEnd != true){
-                        if(keyword != "" && clickEvent === true){
-                            url = `/api/attractions?page=${page}&keyword=${keyword}`;
-                            if(url in urlQueue){
-                                urlQueue.pop();
-                                page ++;
-                                return;
-                            }
+                    if(pageEnd != true && loading === false){
+                        if(keyword !== "" && clickEvent === true){
+                            url = `/api/attractions?page=${nextPage}&keyword=${keyword}`;
+                            
+                            //if(url in urlQueue){
+                            //    page ++;
+                            //    return;
+                            //}
+                            
                             urlQueue.push(url);
-                            loadAttractions(url,page)
+                            loadAttractions(url,nextPage)
                                 .catch(()=>{
                                     message.style.display = "block";
                                 })
+                            //page = nextPage;
                             
-                            page ++;
+                            
                         }
-                        else if(keyword === "" && clickEvent === false){
-                            url = `/api/attractions?page=${page}`;
-                            loadAttractions(url,page);
-                            page ++;
+                        else if(keyword === "" && clickEvent === false ){
+                            url = `/api/attractions?page=${nextPage}`;
+                            loadAttractions(url,nextPage);
+                            //page = nextPage;
+                            //page ++;
                         }
                       
                     }else{
@@ -522,18 +537,27 @@
         observer.observe(bottom);
     }
 
- 
-    async function loadAttractions(url,page){
-    
+    async function getData(url){  //點擊圖片轉址
         let response = await fetch(url);
         let data = await response.json();
+        window.location = `/attraction/${data["data"][0]["id"]}`;
+    }
+
+    
+    async function loadAttractions(url,page){
+        loading = true;
+        let response = await fetch(url);
+        let data = await response.json();
+        
         dataContent = data["data"];
+        
+        nextPage = data["nextPage"];        
         await test(dataContent);
         function test (dataContent){
             if(dataContent.length === 0 && data["nextPage"] === null){
                 pageEnd = true;
+                loading = false;
                 return Promise.reject();
-
             }
             for(let i = 0; i < dataContent.length; i++){
                 if(firstChange === false){
@@ -547,10 +571,15 @@
                     rightFont[page*pages + i].innerHTML = dataContent[i]["category"];
                     contentPC[page*pages + i].src = dataContent[i]["images"][0];
                     firstChange = true;
+                    child.addEventListener("click",function(){
+                        let attractionUrl = `/api/attractions?page=0&keyword=${titleFont[page*pages + i].innerHTML}`;
+                        getData(attractionUrl);
+                    })
                     continue;
 
                 }
                 let newChild = child.cloneNode(true);
+                
                 content.appendChild(newChild);
                 let titleFont = document.querySelectorAll(".title-font");
                 let leftFont = document.querySelectorAll(".left-p");
@@ -561,9 +590,14 @@
                 leftFont[page*pages + i].innerHTML = dataContent[i]["mrt"];
                 rightFont[page*pages + i].innerHTML = dataContent[i]["category"];
                 contentPC[page*pages + i].src = dataContent[i]["images"][0];
+                newChild.addEventListener("click",function(){
+                    let attractionUrl = `/api/attractions?page=0&keyword=${titleFont[page*pages + i].innerHTML}`;
+                    getData(attractionUrl);
+                })
                 
             
             }
+            
             if(data["nextPage"] === null){ //調整flex最後一排留下的縫隙，讓物件靠左
                 pageEnd = true;
                 let count = titleFont = document.querySelectorAll(".title-font").length;
@@ -584,7 +618,10 @@
                     }
                 }
             }
-    }
+            
+            loading = false;
+        }
+        
         
     }
     

@@ -46,22 +46,256 @@
         font-weight:bolder;
     }
 
-
+    .content{
+        position:relative;
+        width:1200px;
+        margin:auto;
+        top:91px;
+        display:flex;
+    }
+    .content-pc{
+        width:540px;
+        height:406px;
+        position:relative;
+    }
+    .content-left{
+        width:50%;
+        position:relative;
+    }
+    .arrow-left{
+        position: absolute;        
+        top:50%;
+        left:10px;
+    }
+    .arrow-right{
+        position: absolute; 
+        top:50%;
+        right:70px;
+    }
+    .content-right{
+        width:50%;
+    }
+    .title{
+        font-size:24px;
+        font-weight:bolder;
+        margin-bottom:15px;
+    }
+    .category{
+        font-weight:bolder;
+        margin-bottom:20px;
+    }
+    .reserve{
+        background-color: rgb(228, 226, 226);
+        height:310px;
+        box-sizing: border-box;
+        width:100%;
+        padding:15px 20px;
+    }
 
     .bottom{
         position:absolute;
         background-color: gray;
         width:100%;
         height:104px;
-       
+    }
+    .bottom p{
+        color:white;
+        line-height:104px;
+        text-align:center;
+    }
+
+    .dot-btn{
+        display:flex;
+        justify-content: center;
+        width:540px;
+    }
+    .dot{
+        position: relative;
+        z-index:100;
+        accent-color: black;
+        bottom :20px;
+        margin-right:3px;
+    }
     
+    .datetime{
+        display:flex;
+        margin-top:15px;
+    }
+    .datetime p{
+        text-align:center;
+        line-height:30px;
+    }
+    .datetime input[type="date"]{
+        font-size:20px;
+
         
+    }
+    .time-order{
+        display:flex;
+        font-size:16px;
+    }
+  
+    .time-order input[type="radio"]{
+        position: relative;
+        right:66px;
+        bottom:200px;
+        z-index:100;
+        display:none;
+
+        
+    }
+    .time-order input[type="radio"]:nth-of-type(1):checked ~
+    .datetime-visible label:nth-of-type(1){
+        background-color: #448899;
+        
+    }
+    .time-order input[type="radio"]:nth-of-type(2):checked ~
+    .datetime-visible label:nth-of-type(2){
+        background-color: #448899;
+        
+    }
+    .datetime-visible{
+        width:100%;
+        bottom:12px;
+        text-align:center;
+        display:flex;
+        margin-top:30px;
+    }
+    .datetime-visible label{
+        display:inline-block;
+        width:15px;
+        height:15px;
+        background-color: white;
+        border-radius: 50%;
+        margin: 0 3px;
+        border: 2px solid white;
+    }
+    .cost{
+        display:flex;
+        margin-top:15px;
+    }
+    
+    .reserve-btn{
+        background-color: #448899;
+        width:154px;
+        height:36px;
+        text-align:center;
+        line-height:36px;
+        border-radius: 5px;
+        margin-top:25px;
+    }
+    
+    .reserve p{
+        color:#666666;
+        font-weight:bolder;
+    }
+    .content-right p {
+        color:#666666;
+    }
+    .reserve-btn p{
+        color:white;
+        font-weight:bolder;
+    }
+    .bottom{
+        position: absolute;
+        background-color: gray;
+        width:100%;
+        height:104px;
         
     }
     .bottom p{
         color:white;
         line-height:104px;
         text-align:center;
+    }
+    hr{
+
+        margin:120px auto 0px auto;
+        width:1200px;
+        justify-content: center;
+        color:#E8E8E8;
+    }
+    .description{
+        width:1200px;
+        margin:auto;
+        margin-top:50px;
+    }
+    .description p{
+        text-align:left;
+        line-height:30px;
+        color:#666666;
+        font-weight:700;
+    }
+    .address{
+        font-weight:900;
+        color:rgb(0, 0, 0);
+        padding-bottom:6px;
+        margin-top:20px;
+    }
+    .address-name{
+        padding:2px 0px 2px 0px;
+    }
+    .transport{
+        margin-bottom:150px;
+    }
+    @media(max-width:1200px){
+        .content{
+            display:block;
+            margin:auto;
+            width:100%;
+        }
+        .content-left{
+            margin:auto;
+            width:90%;
+            
+        }
+        .arrow-right{
+            right:10px;
+        }
+        .dot-btn{
+            margin:auto;
+            width:50%;
+        }
+        .content-pc{
+            width:100%;
+            object-fit: cover;
+        }
+        .content-right{
+            margin:auto;
+            width:90%;
+        }
+        hr{
+            width:90%;
+        }
+        .description{
+            width:90%;
+        }
+        
+       
+    }
+    @media(max-width:600px){
+        .content{
+          top:0px;
+        }
+        .content-right{
+            margin-top:20px;
+            padding:5px;
+        }
+        hr{
+            margin-top:40px;
+        }
+        .datetime-visible{
+            margin-top:15px;
+        }
+        .content-left{
+            width:100%;
+            height:350px;
+        }
+        .content-pc{
+            height:100%;
+        }
+        
+        
     }
 </style>
 </head>
@@ -78,20 +312,194 @@
         </div> 
     </div>
 
-    <div>
+    <div class="content">
         <div class="content-left">
+            <img src = "../static/images/btn_leftArrow.png" class="arrow-left" />
+            <img src = "../static/images/btn_rightArrow.png" class="arrow-right" />
+            <div class="dot-btn">
+            </div>
         </div>
 
         <div class="content-right">
+            <p class="title"></p>
+            <p class="category"></p>
+            <div class="reserve">
+                <p style="padding-bottom:15px;">訂購預覽行程</p>
+                <p>以此景點為中心的一日行程，帶您探索城市角落故事</p>
+                <div class="datetime">
+                    <p>選擇日期 :&nbsp;&nbsp;</p>
+                    <input class="date" type="date" /> 
+                </div> 
+                <div class="time-order">
+                    
+                    <input class="datetime-input" type="radio" id="datetime-1" name = "datetime" checked/>
+                    <input class="datetime-input" type="radio" id="datetime-2" name = "datetime"/>
+                    
+                    <div class="datetime-visible">
+                        <p >選擇時間 :&nbsp;&nbsp;</p>
+                        <label class="select-time-morning" for="datetime-1"></label>
+                        <p>上半天</p>
+                        <label class="select-time-afternoon" for="datetime-2"></label>
+                        <p>下半天</p>
+                    </div>
+                </div>  
+                <div class="cost">
+                    <p >導覽費用 :&nbsp;&nbsp;</p>
+                    <p class="cost-number">2000元</p>
+                </div>
+                <div class="reserve-btn">
+                    <p>開始預約行程</p>
+                </div>
+            </div>
         </div>
 
     </div>
+    <hr />
+    <div class="description">
+        <p class="description-font"></p>
+        <div class="address">景點地址:</div>
+        <p class="address-name">aljflasdf</p>
+        <div class="address">交通方式:</div>
+        <p class="transport"></p>
+    </div>    
 
-
-
+   
+        
+    
 
     <div class="bottom">
         <p>COPYRIGHT © 2021 台北一日遊</p>
     </div>
+    <script>
+        let titleFont = document.getElementById("titleLeftFont");
+        let contentLeft = document.querySelector(".content-left");
+        let arrowLeft = document.querySelector(".arrow-left");
+        let arrowRight = document.querySelector(".arrow-right");
+        let pictureDot = document.querySelector(".dot-btn");
+        let datetimeInput = document.querySelectorAll(".datetime-input");
+        let costNum = document.querySelector(".cost-number");
+        let selectMorning = document.querySelector(".select-time-morning");
+        let selectAfternoon = document.querySelector(".select-time-afternoon");
+        let descriptionFont = document.querySelector(".description-font");
+        let address = document.querySelector(".address-name");
+        let transport = document.querySelector(".transport");
+        let url = "/api" + window.location.pathname;
+        let allRadio, allPc, radio;
+        let pcPosition = 0;
+        
+        let title = document.querySelector(".title");
+        let category = document.querySelector(".category");
+        titleFont.addEventListener("click",function(){
+            window.location = "/";
+        })
+
+    
+        //圖片轉播圖
+        arrowRight.addEventListener("click",function(){
+            allPc = document.querySelectorAll(".content-pc");
+            allRadio = document.querySelectorAll("input");
+            if(pcPosition === allPc.length - 1){
+                allPc[pcPosition].style.display = "none";
+                allPc[0].style.display = "block";
+                allRadio[0].checked = true;
+                pcPosition = 0;
+                return;
+            }
+            allPc[pcPosition].style.display = "none";
+            allPc[pcPosition + 1].style.display = "block";
+            allRadio[pcPosition + 1].checked = true;
+            pcPosition ++;
+        });
+
+
+        arrowLeft.addEventListener("click",()=>{
+            allPc = document.querySelectorAll(".content-pc");
+            allRadio = document.querySelectorAll(".dot");
+            if(pcPosition === 0){
+                allPc[pcPosition].style.display = "none";
+                allPc[allPc.length - 1].style.display = "block";
+                allRadio[allPc.length - 1].checked = true;
+                pcPosition = allPc.length - 1;
+                return;
+                
+            }
+            allPc[pcPosition].style.display = "none";
+            allPc[pcPosition - 1].style.display = "block";
+            allRadio[pcPosition - 1].checked = true;
+            pcPosition --;
+        })
+        
+        //點擊下面圓圓切換圖片
+        setTimeout(`clickDotToChangePc()`,1000);
+        function clickDotToChangePc(){
+            radio = document.querySelectorAll(".dot");
+            for(let i = 0; i < radio.length; i++){//讓每個input[type=radio] 添加click事件
+                radio[i].addEventListener("click",function(){ 
+                    allRadio = document.querySelectorAll(".dot");
+                    allPc = document.querySelectorAll(".content-pc");
+                    for(let k = 0; k < allRadio.length; k++){
+                        if(allPc[k].style.display === "block"){
+                            allPc[k].style.display = "none";
+                        }
+                        
+                        if(allRadio[k].checked === true){
+                            if(k != 0){ //一開始載入畫面第0個圖是block，要先把它關掉
+                                allPc[0].style.display = "none";
+                            }
+                            pcPosition = k;
+                        }
+                        
+                    }
+                    allPc[pcPosition].style.display = "block";
+                })
+            }
+        }
+        
+
+        fetch(url)
+        .then((response)=>{
+            return response.json()
+        })
+        .then((data)=>{
+            data = data["data"];
+            pcCount = data["images"].length;
+            for(let i = 0; i < data["images"].length; i++){
+                let newDot = document.createElement("input");
+                newDot.type = "radio";
+                newDot.name = "control";
+                newDot.className = "dot";
+                pictureDot.appendChild(newDot);
+                let newImg = document.createElement("img");
+                newImg.src = data["images"][i];
+                newImg.className = "content-pc";
+                
+                
+                if(i > 0){
+                    newImg.style.display="none";
+                }
+                contentLeft.insertBefore(newImg,arrowLeft);
+                
+            }
+            radio = document.querySelector("input");
+            radio.checked = true;  //先讓圓圓在第一個
+            title.innerHTML = data["name"];
+            category.innerHTML = `${data["category"]} at ${data["mrt"]}`;
+            descriptionFont.innerHTML = data["description"];
+            address.innerHTML = data["address"];
+            transport.innerHTML = data["transport"];
+        })
+
+        //顯示費用
+       
+        selectMorning.addEventListener("click",()=>{
+            costNum.innerHTML = "2000元"; 
+        })
+        
+        selectAfternoon.addEventListener("click",()=>{
+            costNum.innerHTML = "2500元";
+        })
+        
+       
+    </script>
 </body>
 </html>
