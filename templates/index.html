@@ -5,325 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-<style>
-    *{
-        margin:0px;
-        padding:0px;
-    }
-    .navbar{
-        z-index:999;
-        position:fixed;
-        right:0;
-        left:0;
-        background-color: white;
-        display:flex;
-        margin:auto;
-        justify-content: center;
-    }
-    .title-left{
-        display:flex;
-        height:54px;
-        width:600px;
-        align-items: center;
-       
-    }
-    .title-left p{
-        color:#448899;
-        font-size:30px;
-        font-weight: bolder;
-        cursor:pointer;
-    }
-    .title-right{
-        display:flex;
-        font-size:16px;
-        height:54px;
-        align-items: center;
-        justify-content: right;
-        width:600px;
-    }
-    .title-right p{
-        padding:5px;
-        font-weight:bolder;
-    }
-    .title-pc{
-        overflow:hidden;
-        height:400px;
-        display:flex;
-        justify-content: center;
-        width:100%;
-        
-    }
-    .title-pc img{
-        margin-top:54px;
-        height:500px;
-        
+    <link rel="stylesheet" href="../static/styles/index.css" />
 
-    }
-    .pc-101{
-        position:absolute;
-        top:30px;
-        right:50%;
-        width:1200px;
-    }
-    .pc-101-inner{
-        width:1200px;
-        margin:auto;
-        position:absolute;
-        top:100px;
-        left:50%;
-        color:white;
-        font-weight:bolder; 
-    }
-    .pc-101-inner p{
-        padding-bottom:10px;
-    }
-    .icon-search{
-        margin:auto;
-        width:30x;
-        height:30px;
-    }
-    .icon-search-bg{
-        display:flex;
-        height:46px; 
-        width:60px;
-        background-color:#448899;
-        border-radius: 0 5px 5px 0;
-        cursor:pointer;
-    }
-    .title-input{
-        border-radius: 5px 0 0 5px;
-        width:400px;
-        height:46px;
-        font-size:16px;
-        color:black;
-        border-width:inherit;
-        padding-left:15px;
-        position:relative;
-    }
-   
-    .categories{
-        visibility:hidden;
-        position: absolute;
-        left: 0px;
-        top: 130px;
-        color:black;
-        width: 400px;
-        background-color: white;
-        display:flex;
-        flex-wrap:wrap;
-        border-radius:5px;
-        box-shadow: 0px 0px 20px #AABBCC;
-    }
- 
-    .categories p{
-        border-radius:5px;
-        width:90px;
-        padding:15px;
-        color:black;
-    } 
-    .categories p:hover{
-        background-color: #E8E8E8;
-    }
-    
-    .search-pc{
-        display:flex;
-    }
-    .content{
-        display:flex;
-        width:1200px;
-        justify-content:space-between;
-        flex-wrap: wrap; 
-        margin:auto;
-        margin-top:50px;
-       
-    }
-    
-    .content div{
-        position:relative;
-        font-size:0px;
-        margin-bottom:30px;
-        
-        
-    }
-    
-    .content-pc{
-        border-radius: 5px 5px 0 0;
-        width:270px;
-        height:197px;
-        font-size:50px;
-        cursor:pointer;
-        
-    }
-    
-    .child div{
-        display:flex;
-        justify-content: space-between;
-        border:0.1px solid rgb(202, 199, 199);
-        font-size:20px;
-        padding:10px;
-        box-sizing: border-box;
-        white-space:nowrap;
-        border-radius: 0 0 5px 5px;
-        margin:0px;
-        cursor:pointer;
-        
-        
-    }
-    .left-p{
-        text-align:left;
-    }
-    .right-p{
-        text-align:right;
-    }
-    
-    .child p{
-        box-sizing: border-box;
-        width:100%;
-    }
-    
-    .title-font{
-        color:white;
-        position:absolute;
-        box-sizing: border-box;
-        padding:15px;
-        background:rgba(0, 0, 0, 0.5);
-        font-family: 'Noto Sans TC';
-        font-style: normal;
-        font-weight: 700;
-        font-size: 16px;
-        bottom:42px;
-        left:0px;
-        font-weight:900;
-        
-        
-    }
-    .left-p{
-        font-size:16px;
-    }
-    .right-p{
-        font-size:16px;
-    }
-    .bottom{
-        position:absolute;
-        background-color: gray;
-        width:100%;
-        height:104px;
-       
-    
-        
-        
-    }
-    .bottom p{
-        color:white;
-        line-height:104px;
-        text-align:center;
-    }
-    .message{
-        display:none;
-        font-size:40px;
-        text-align: center;
-    }
-    @media(max-width:1200px){
-      
-        .navbar{
-            width:100%;
-        }
-        .title-pc{
-            width:100%;
-        }
-        .title-left{
-            padding-left: 5%;
-        }
-        .title-right{
-            padding-right:5%;
-        }
-        .pc-101{
-            width:100%;
-        }
-        .pc-101-inner{
-            width:90%;
-            left:55%;
-        }
-        .content{
-            width:100%;
-            flex-wrap:wrap;
-            justify-content:space-around;
-            
-          
-        }
-        .child{
-           width:40%;
-           
-        }
-        .child img{
-            width:100%;
-            object-fit:cover;
-            
-        }
-    }
-
-
-    @media(max-width:600px){
-        .navbar{
-            width:100%;
-        }
-        .title-pc{
-            width:100%;
-            height:320px;
-            overflow:hidden;
-       
-        }
-        .title-pc img{
-            object-fit: cover;
-            width: 1600px;
-            height: 320px;
-            margin-top: 0px;
-            margin-left: 700px;
-        }
-        .pc-101{
-            width:100%;
-        }
-      
-        .pc-101-inner{
-            width:86%;
-            left:54%;
-           
-        }
-        .search-pc{
-            width:320px;
-            margin-right:0px;
-        }
-        .content{
-            width:100%;
-            flex-wrap:wrap;
-            justify-content: center;
-            
-          
-        }
-        .child{
-            width:90%;
-        }
-        .child img{
-            width: 100%;
-            object-fit:cover;
-        }
-        .title-input{
-            width:230px;
-        }
-        .categories{
-            z-index: 888;
-            width:100%;
-            
-        }
-        .categories p{
-            font-size:14px;
-            text-align:center;
-            padding:10px 15px;
-        }
-    
-       
-    }
-</style>
 </head>
 <body>
     <div class="navbar-father">
@@ -333,7 +16,7 @@
             </div>
             <div class="title-right">
                 <p>預定行程</p>
-                <p>登錄/註冊</p>  
+                <p class="login-btn">登錄/註冊</p>  
             </div>          
         </div> 
     </div>
@@ -341,13 +24,54 @@
         <img src="../static/images/welcome.png"/> 
     </div>
 
+    <div class="darker">
+    </div>
+
+    <div class="login">
+        <div class="login-inner">
+            <div class="login-content">
+                <div class="login-title">
+                    <p>登入會員帳號</p>
+                    <img class="login-close" src="../static/images/icon_close.png"/>
+                </div>
+                <div class="login-input">
+                    <input type="text" placeholder="輸入電子信箱"/>
+                    <input type="text" placeholder="輸入密碼"/>
+                    <input type="submit" name="submit" value="登入帳號">
+                    <a class="signup-btn">還沒有帳戶?點此註冊</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="signup">
+        <div class="signup-inner">
+            <div class="signup-content">
+                <div class="signup-title">
+                    <p>註冊會員帳號</p>
+                    <img class="signup-close" src="../static/images/icon_close.png"/>
+                </div>
+                <div class="signup-input">
+                    <input type="text" placeholder="輸入姓名"/>
+                    <input type="text" placeholder="輸入電子郵件"/>
+                    <input type="text" placeholder="輸入密碼"/>
+                    <input type="submit" name="SB" value="註冊新帳戶">
+                    <a class="had-login-btn">已經有帳戶了?點此登入</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
     <div class="pc-101">
         <div class="pc-101-inner">
             <p style="font-size:28px;">輕鬆享受台北一日悠閒</p>
             <p style="font-size:16px;">探索每個角落，體驗城市的深度旅遊行程</p>
             
             <div class="search-pc">
-                <input id="title-input" class="title-input"  type=text placeholder="輸入景點名稱查詢"/>
+                <input id="title-input" class="title-input"  type="text" placeholder="輸入景點名稱查詢"/>
                 <div class="icon-search-bg" id="icon-search-bg">
                     <img class="icon-search" src="../static/images/icon_search.png"  />
                 </div>
@@ -373,260 +97,7 @@
         <p>COPYRIGHT © 2021 台北一日遊</p>
     </div>
    
-<script>
-    let input = document.getElementById("title-input");
-    let categories = document.getElementById("categories");
-    let titleFont = document.getElementById("titleLeftFont");
-    let child = document.querySelector(".child");
-    let content = document.getElementById("content");
-    let bottom = document.querySelector(".bottom");
-    let search = document.querySelector(".icon-search-bg");
-    let message = document.querySelector(".message");
-    
-    
-    let pages = 12;
-    let firstChange = false;
-    let clickEvent = false;
-    let prevSearch = "";
-    let url = "/api/categories"
-    window.onload = function(){
-        getHomePage();
-    }
-    fetch(url)
-    .then((response)=>{
-        return response.json()
-    })
-    .then((data)=>{
-        let catNum = 1;
-        data = data["data"];
-        for(let i = 0; i < data.length; i++){
-            newP = document.createElement("p");
-            textNode = document.createTextNode(data[i]);
-            newP.appendChild(textNode);
-            newP.className = `cat${catNum}`;
-            categories.appendChild(newP);
-            addClickEvent(catNum);
-            catNum ++;
-        }
-    })
-    
-    function addClickEvent(catNum){
-        let category = document.querySelector(`.cat${catNum}`);
-        category.addEventListener("click",function(){
-            input.value = category.innerHTML;
-        })
-    }
-
-    //點擊input，把索引顯示在input
-    input.addEventListener("click",function(e){
-        stopFunc(e);
-        categories.style.visibility = "visible";
-    });
-    
-    document.addEventListener("click",function(e){
-        categories.style.visibility = "hidden"
-
-    })
-    function stopFunc(e) { 
-        e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
-    }
-
-    
-    
-   
-   
-
-    //點擊搜尋
-    search.addEventListener("click",function(){
-        message.style.display = "none";
-        clickEvent = true;
-        let inputValue = input.value;
-        if(inputValue === prevSearch && inputValue != ""){
-            return;
-        }
-        let removeChild = document.querySelectorAll(".child");
-        for(let i = 0; i < removeChild.length; i++){
-            content.removeChild(removeChild[i]); 
-        }
-        getHomePage(inputValue);
-        prevSearch = inputValue;
-    })
-    
-    titleLeftFont.addEventListener("click",function(){
-        window.location = "/";
-        clickEvent = false;
-    })
-    // 創建第一個child
-    function createChild(){
-        let newDiv = document.createElement("div");
-        newDiv.className = "child";
-        content.appendChild(newDiv);
-        child = document.querySelector(".child");
-        let newImg = document.createElement("img");
-        newImg.className = "content-pc";
-        child.appendChild(newImg);
-        let newP = document.createElement("p");
-        newP.className= "title-font";
-        child.appendChild(newP);
-        newDiv = document.createElement("div");
-        newDiv.className = "content-baby";
-        child.appendChild(newDiv);
-        newP = document.createElement("p");
-        newP.className = "left-p";
-        contentBaby = document.querySelector(".content-baby");
-        contentBaby.appendChild(newP);
-        newP = document.createElement("p");
-        newP.className = "right-p";
-        contentBaby.appendChild(newP);
-    }
-    
-    //取得分頁
-    let loading = false;
-    let pageEnd = false;
-    let page = 0;
-    let nextPage;
-    let options = {
-        threshold: 0.1,
-    }
-    let urlQueue = [];
-    function getHomePage(keyword=""){
-        message.style.display = "none";
-        firstChange = false;
-        pageEnd = false;
-        //page = 0;
-        nextPage = 0;
-        let observer = new IntersectionObserver((entries) =>{
-            for (let entry of entries){
-                if(entry.isIntersecting){
-                    if(pageEnd != true && loading === false){
-                        if(keyword !== "" && clickEvent === true){
-                            url = `/api/attractions?page=${nextPage}&keyword=${keyword}`;
-                            
-                            //if(url in urlQueue){
-                            //    page ++;
-                            //    return;
-                            //}
-                            
-                            urlQueue.push(url);
-                            loadAttractions(url,nextPage)
-                                .catch(()=>{
-                                    message.style.display = "block";
-                                })
-                            //page = nextPage;
-                            
-                            
-                        }
-                        else if(keyword === "" && clickEvent === false ){
-                            url = `/api/attractions?page=${nextPage}`;
-                            loadAttractions(url,nextPage);
-                            //page = nextPage;
-                            //page ++;
-                        }
-                      
-                    }else{
-                        observer.unobserve(bottom);
-                        urlQueue = [];
-                        
-                    }
-                  
-                    
-                }
-                
-            }
-        },options);
-        observer.observe(bottom);
-    }
-
-    async function getData(url){  //點擊圖片轉址
-        let response = await fetch(url);
-        let data = await response.json();
-        window.location = `/attraction/${data["data"][0]["id"]}`;
-    }
-
-    
-    async function loadAttractions(url,page){
-        loading = true;
-        let response = await fetch(url);
-        let data = await response.json();
-        
-        dataContent = data["data"];
-        
-        nextPage = data["nextPage"];        
-        await test(dataContent);
-        function test (dataContent){
-            if(dataContent.length === 0 && data["nextPage"] === null){
-                pageEnd = true;
-                loading = false;
-                return Promise.reject();
-            }
-            for(let i = 0; i < dataContent.length; i++){
-                if(firstChange === false){
-                    createChild();
-                    let titleFont = document.querySelectorAll(".title-font");
-                    let leftFont = document.querySelectorAll(".left-p");
-                    let rightFont = document.querySelectorAll(".right-p");
-                    let contentPC = document.querySelectorAll(".content-pc");
-                    titleFont[page*pages + i].innerHTML = dataContent[i]["name"];
-                    leftFont[page*pages + i].innerHTML = dataContent[i]["mrt"];
-                    rightFont[page*pages + i].innerHTML = dataContent[i]["category"];
-                    contentPC[page*pages + i].src = dataContent[i]["images"][0];
-                    firstChange = true;
-                    child.addEventListener("click",function(){
-                        let attractionUrl = `/api/attractions?page=0&keyword=${titleFont[page*pages + i].innerHTML}`;
-                        getData(attractionUrl);
-                    })
-                    continue;
-
-                }
-                let newChild = child.cloneNode(true);
-                
-                content.appendChild(newChild);
-                let titleFont = document.querySelectorAll(".title-font");
-                let leftFont = document.querySelectorAll(".left-p");
-                let rightFont = document.querySelectorAll(".right-p");
-                let contentPC = document.querySelectorAll(".content-pc");
-            
-                titleFont[page*pages + i].innerHTML = dataContent[i]["name"];
-                leftFont[page*pages + i].innerHTML = dataContent[i]["mrt"];
-                rightFont[page*pages + i].innerHTML = dataContent[i]["category"];
-                contentPC[page*pages + i].src = dataContent[i]["images"][0];
-                newChild.addEventListener("click",function(){
-                    let attractionUrl = `/api/attractions?page=0&keyword=${titleFont[page*pages + i].innerHTML}`;
-                    getData(attractionUrl);
-                })
-                
-            
-            }
-            
-            if(data["nextPage"] === null){ //調整flex最後一排留下的縫隙，讓物件靠左
-                pageEnd = true;
-                let count = titleFont = document.querySelectorAll(".title-font").length;
-                let mod = count % 4;
-                if(window.innerWidth > 600){
-                    if(mod != 0){
-                        for(let i = 0; i < 4 - mod; i++){
-                            newChild = child.cloneNode(true);
-                            content.appendChild(newChild);
-                        }
-                        for(let i = 0; i < 4 - mod; i++){
-                            count =  document.querySelectorAll(".title-font").length;
-                            let childCount = document.querySelectorAll(".child");
-
-                            childCount[count - 1 - i].style.visibility = "hidden";
-                        }
-                    
-                    }
-                }
-            }
-            
-            loading = false;
-        }
-        
-        
-    }
-    
-
-</script>
+    <script type="module" src="../static/scripts/index.js"></script>
     
 </body>
 </html>
