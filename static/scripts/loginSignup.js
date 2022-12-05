@@ -140,6 +140,7 @@ clickToLogin.addEventListener("click",()=>{
             loginErrorMsg.innerHTML = "登入成功";
             loginErrorMsg.style.color = "green";
             loginErrorMsg.style.display = "block";
+            location.reload();
 
         }
         if("error" in data){
@@ -154,7 +155,7 @@ clickToLogin.addEventListener("click",()=>{
                 loginErrorMsg.style.display = "block";
             }
         }
-        location.reload();
+        
     })
     
     
