@@ -6,17 +6,11 @@ let content = document.getElementById("content");
 let bottom = document.querySelector(".bottom");
 let search = document.querySelector(".icon-search-bg");
 let message = document.querySelector(".message");
-let loginBtn = document.querySelector(".login-btn");
-let login = document.querySelector(".login");
 let titlePc = document.querySelector(".title-pc");
-let backgroundDarker = document.querySelector(".darker");
-let loginContent = document.querySelector(".login-content");
-let loginClose = document.querySelector(".login-close");
-let signupBtn = document.querySelector(".signup-btn");
-let signup = document.querySelector(".signup");
-let signupClose = document.querySelector(".signup-close");
-let hadLoginBtn = document.querySelector(".had-login-btn");
-let newP, textNode, dataContent, contentBaby, newChild;
+
+
+
+let newP, textNode, dataContent, contentBaby, newChild, username, email, password;
 let pages = 12;
 let firstChange = false;
 let clickEvent = false;
@@ -50,6 +44,8 @@ function addClickEvent(catNum){
         input.value = category.innerHTML;
     })
 }
+
+
 
 //點擊input，把索引顯示在input
 input.addEventListener("click",function(e){
@@ -241,43 +237,4 @@ async function loadAttractions(url,page){
     
 }
 
-loginBtn.addEventListener("click",(e)=>{
-    login.style.display = "block";
-    backgroundDarker.style.display = "block";
-    //stopFunc(e); 
-})
 
-loginClose.addEventListener("click",()=>{
-    login.style.display = "none";
-    backgroundDarker.style.display = "none";
-})
-
-signupBtn.addEventListener("click",()=>{
-    login.style.display = "none";
-    signup.style.display = "block";
-})
-
-signupClose.addEventListener("click",()=>{
-    signup.style.display = "none";
-    backgroundDarker.style.display = "none";
-})
-
-hadLoginBtn.addEventListener("click",()=>{
-    signup.style.display = "none";
-    login.style.display = "block";
-    backgroundDarker.style.display = "block";
-})
-
-
-
-
-/*
-document.addEventListener("click",function(e){
-    login.style.display = "none";
-    backgroundDarker.style.display = "none";
-})
-
-loginContent.addEventListener("click",(e)=>{
-    stopFunc(e); 
-})
-*/

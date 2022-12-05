@@ -35,9 +35,10 @@
                     <img class="login-close" src="../static/images/icon_close.png"/>
                 </div>
                 <div class="login-input">
-                    <input type="text" placeholder="輸入電子信箱"/>
-                    <input type="text" placeholder="輸入密碼"/>
-                    <input type="submit" name="submit" value="登入帳號">
+                    <input type="text" id="loginEmail" placeholder="輸入電子信箱"/>
+                    <input type="password" id = "loginPassword" placeholder="輸入密碼"/>
+                    <input id = "clickToLogin" type="submit" name="submit" value="登入帳號">
+                    <p class="login-error-msg"></p>
                     <a class="signup-btn">還沒有帳戶?點此註冊</a>
                 </div>
             </div>
@@ -52,13 +53,16 @@
                     <p>註冊會員帳號</p>
                     <img class="signup-close" src="../static/images/icon_close.png"/>
                 </div>
-                <div class="signup-input">
-                    <input type="text" placeholder="輸入姓名"/>
-                    <input type="text" placeholder="輸入電子郵件"/>
-                    <input type="text" placeholder="輸入密碼"/>
-                    <input type="submit" name="SB" value="註冊新帳戶">
+                <div class="signup-input" >
+                    <input type="text" id="name" placeholder="輸入姓名" />
+                    <input type="text" id = "email" placeholder="輸入電子郵件" />
+                    <input type="password" id = "password" placeholder="輸入密碼" />
+                    <input id ="clickToSignup" type="submit" name="SB" value="註冊新帳戶">
+                 
+                    <p class="error-msg"></p>
+                  
                     <a class="had-login-btn">已經有帳戶了?點此登入</a>
-                </div>
+                </div >
             </div>
         </div>
 
@@ -98,6 +102,7 @@
     </div>
    
     <script type="module" src="../static/scripts/index.js"></script>
+    <script type="module" src="../static/scripts/loginSignup.js"></script>
     
 </body>
 </html>
