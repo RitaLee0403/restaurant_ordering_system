@@ -2,6 +2,7 @@ from flask import Flask, render_template, jsonify, request, make_response
 from view.api import api_blueprint
 import jwt
 from view.api_fun import *
+import datetime
 
 
 app=Flask(__name__)
@@ -64,7 +65,9 @@ def userAuth():
 						}
 					}
 					token = jwt.encode(payload_data, jwt_key, algorithm="HS256")
-					response.set_cookie("token", token)
+					expire_date = datetime.datetime.now()
+					expire_date = expire_date + datetime.timedelta(days=7)
+					response.set_cookie("token", token,expires= expire_date)
 					global initCookie
 					initCookie = token
 					return response, 200
