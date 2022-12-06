@@ -77,7 +77,10 @@ loginBtn.addEventListener("click",(e)=>{
                 'Content-type':'application/json; charset=UTF-8',
             },
         })
-        location.reload();
+        .then(()=>{
+            location.reload();
+        })
+        
     }
 })
 
