@@ -57,8 +57,8 @@ arrowLeft.addEventListener("click",()=>{
     pcPosition --;
 })
 
-//點擊下面圓圓切換圖片
 
+//點擊下面圓圓切換圖片
 function clickDotToChangePc(){
     radio = document.querySelectorAll(".dot");
     for(let i = 0; i < radio.length; i++){//讓每個點點 添加click事件
@@ -83,7 +83,7 @@ function clickDotToChangePc(){
     }
 }
 
-
+//取得圖片並加入點點
 fetch(url)
 .then((response)=>{
     return response.json()
@@ -108,6 +108,7 @@ fetch(url)
         contentLeft.insertBefore(newImg,arrowLeft);
         
     }
+    document.title = data["name"];
     radio = document.querySelector(".dot");
     radio.checked = true;  //先讓圓圓在第一個
     title.innerHTML = data["name"];
@@ -118,8 +119,8 @@ fetch(url)
     clickDotToChangePc();
 })
 
-//顯示費用
 
+//顯示費用
 selectMorning.addEventListener("click",()=>{
     costNum.innerHTML = "2000元"; 
 })

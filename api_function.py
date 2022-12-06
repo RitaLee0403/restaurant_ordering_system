@@ -1,4 +1,3 @@
-import json
 from mysql.connector import pooling
 
 

@@ -1,7 +1,7 @@
 from flask import Flask, render_template, jsonify, request, make_response
-from view.api import api_blueprint
+from api import api_blueprint
 import jwt
-from view.api_fun import *
+import api_function 
 import datetime
 
 
@@ -9,7 +9,7 @@ app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 jwt_key = "dsjlfjkdlasjfklsdafjaksldfjkaksdlfjaslfksaldfjalsfj"
-getData = ConnectToSql()
+getData = api_function.ConnectToSql()
 payload_data = None
 
 # Pages
