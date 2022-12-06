@@ -49,6 +49,7 @@ fetch("/api/user/auth",{
 })
 .then((data)=>{
     if(data["data"] === null){
+        loginBtn.style.color = "black";
         loginBtn.innerHTML = "登錄/註冊";
         fetch("/api/user/auth",{
             method : "DELETE",
@@ -58,6 +59,7 @@ fetch("/api/user/auth",{
         })  
     }
     else{
+        loginBtn.style.color = "black";
         loginBtn.innerHTML = "登出系統";
     }
 })

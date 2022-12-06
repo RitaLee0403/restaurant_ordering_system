@@ -426,6 +426,9 @@
     width:330px;
     text-align:center;
 }
+.login-btn{
+    color:white;
+}
 
 @media(max-width:1200px){
   
