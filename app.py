@@ -1,16 +1,19 @@
 from flask import Flask, render_template, jsonify, request, make_response
 from api import api_blueprint
 import jwt
-import api_function 
+import mysql_function 
 import datetime
-
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
-jwt_key = "dsjlfjkdlasjfklsdafjaksldfjkaksdlfjaslfksaldfjalsfj"
-getData = api_function.ConnectToSql()
-payload_data = None
+jwtKey = os.getenv("jwt_key")
+jwt_key = jwtKey
+getData = mysql_function.ConnectToSql()
+
 
 # Pages
 @app.route("/")

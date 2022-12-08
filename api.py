@@ -1,9 +1,9 @@
 from flask import Blueprint ,  request
-import api_function 
+import mysql_function 
 
 
 api_blueprint = Blueprint("api_attraction", __name__)
-getData = api_function.ConnectToSql()
+getData = mysql_function.ConnectToSql()
 
 @api_blueprint.route("/api/attraction/<id>")
 def attraction(id):

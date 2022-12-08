@@ -1,5 +1,10 @@
 from mysql.connector import pooling
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
+
+mysqlPassword = os.getenv("password")
 
 pool = pooling.MySQLConnectionPool(
         pool_name = "my_pool",
@@ -8,7 +13,7 @@ pool = pooling.MySQLConnectionPool(
         host = 'localhost',
         database = 'taipei_attraction',
         user = 'root',
-        password = "0403",
+        password = mysqlPassword,
         charset='utf8',
         auth_plugin='mysql_native_password'
 

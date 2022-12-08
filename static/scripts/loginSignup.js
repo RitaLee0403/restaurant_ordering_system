@@ -64,7 +64,7 @@ fetch("/api/user/auth",{
     }
 })
 
-//點擊登出系統時登出
+//點擊登出系統時登出  點擊登入就登入
 loginBtn.addEventListener("click",(e)=>{
     if(loginBtn.innerHTML === "登錄/註冊"){
         loginErrorMsg.style.display = "none";
