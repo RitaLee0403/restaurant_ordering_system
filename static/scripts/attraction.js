@@ -1,11 +1,10 @@
-// let titleFont = document.getElementById("titleLeftFont");
+const arrowLeft = document.querySelector(".arrow-left");
+const arrowRight = document.querySelector(".arrow-right");
+const contentLeft = document.querySelector(".content-left");
+const pictureDot = document.querySelector(".dot-btn");
+const datetimeInput = document.querySelectorAll(".datetime-input");
 
 
-let contentLeft = document.querySelector(".content-left");
-let arrowLeft = document.querySelector(".arrow-left");
-let arrowRight = document.querySelector(".arrow-right");
-let pictureDot = document.querySelector(".dot-btn");
-let datetimeInput = document.querySelectorAll(".datetime-input");
 let costNum = document.querySelector(".cost-number");
 let selectMorning = document.querySelector(".select-time-morning");
 let selectAfternoon = document.querySelector(".select-time-afternoon");
@@ -24,13 +23,9 @@ let bookingMessage = document.querySelector(".booking-message");
 let darker = document.querySelector(".darker");
 let bookingMessageClose = document.querySelector(".booking-message-btn");
 let bookingMessageFont = document.querySelector(".booking-message-font");
-
-
 let title = document.querySelector(".title");
 let category = document.querySelector(".category");
-// titleFont.addEventListener("click",function(){
-//     window.location = "/";
-// })
+
 
 
 

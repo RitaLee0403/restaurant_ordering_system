@@ -35,7 +35,7 @@ class ConnectToSql:
         cnx.close()
       
     
-    def getBookingData(self, id):
+    def get_booking_data(self, id):
         cnx = pool.get_connection()
         cursor = cnx.cursor()
         execute = 'SELECT \
@@ -58,7 +58,7 @@ class ConnectToSql:
         return record
                 
        
-    def deleteBooking(self, userId, attractionId):
+    def delete_booking(self, userId, attractionId):
         cnx = pool.get_connection()
         cursor = cnx.cursor()
         execute = 'DELETE FROM `booking` WHERE userId = %s AND attractionId = %s;'
@@ -153,7 +153,17 @@ class ConnectToSql:
         dict = {}
         cnx = pool.get_connection()
         cursor = cnx.cursor()
-        execute = "SELECT `id`,`name`,`category`,`description`,`address`,`transport`,`MRT`,`latitude`,`longitude` FROM `data` WHERE `data`.`id` = %s;"
+        execute = "SELECT \
+                    `id`,\
+                    `name`,\
+                    `category`,\
+                    `description`,\
+                    `address`,\
+                    `transport`,\
+                    `MRT`,\
+                    `latitude`,\
+                    `longitude` \
+                    FROM `data` WHERE `data`.`id` = %s;"
         values = ([f"{id}"])
         cursor.execute(execute,values)
         record = cursor.fetchall()
@@ -185,8 +195,19 @@ class ConnectToSql:
             
             cnx = pool.get_connection()
             cursor = cnx.cursor()
-            execute = "SELECT Data.`id`,`name`,`category`,`description`,`address`,`transport`,`MRT`,`latitude`,`longitude`,`picture`.`pc` \
-                    FROM (SELECT * FROM `data` LIMIT %s,%s)AS Data INNER JOIN `picture` ON (`picture`.`id` = Data.`idName`);"
+            execute = "SELECT \
+                        Data.`id`,\
+                        `name`,\
+                        `category`,\
+                        `description`,\
+                        `address`,\
+                        `transport`,\
+                        `MRT`,\
+                        `latitude`,\
+                        `longitude`,\
+                        `picture`.`pc` \
+                    FROM (SELECT * FROM `data` LIMIT %s,%s)AS Data \
+                        INNER JOIN `picture` ON (`picture`.`id` = Data.`idName`);"
 
             values = (firstIndex,pages)
             cursor.execute(execute,values)
@@ -229,7 +250,17 @@ class ConnectToSql:
         else:
             cnx = pool.get_connection()
             cursor = cnx.cursor()
-            execute = "SELECT Data.`id`,`name`,`category`,`description`,`address`,`transport`,`MRT`,`latitude`,`longitude`,`picture`.`pc` \
+            execute = "SELECT \
+                        Data.`id`,\
+                        `name`,\
+                        `category`,\
+                        `description`,\
+                        `address`,\
+                        `transport`,\
+                        `MRT`,\
+                        `latitude`,\
+                        `longitude`,\
+                        `picture`.`pc` \
                     FROM (SELECT * FROM `data` WHERE (`name` LIKE %s OR `category` = %s) LIMIT %s,%s)AS Data \
                     INNER JOIN `picture` ON (`picture`.`id` = Data.`idName`) ;"
             values = (f"%{keyword}%",keyword,firstIndex,pages)

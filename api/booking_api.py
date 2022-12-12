@@ -2,10 +2,14 @@ from flask import Blueprint, request
 import jwt
 import mysql_function 
 import time
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
+jwtKey = os.getenv("jwt_key")
 booking_api = Blueprint("booking_api", __name__)
 getData = mysql_function.ConnectToSql()
-jwt_key = "dsjlfjkdlasjfklsdafjaksldfjkaksdlfjaslfksaldfjalsfj"
+jwt_key = jwtKey
 
 
 @booking_api.route("/api/booking", methods = ["POST"])
@@ -48,7 +52,7 @@ def apiBooking():
 		
 			getId = jwt.decode(getId, jwt_key, algorithms="HS256")
 			getId = getId["data"]["id"]
-			datas = getData.getBookingData(getId)
+			datas = getData.get_booking_data(getId)
 			bookingDatas = {"data":[]
 			}
 			attraction = {"attraction":{}}
@@ -77,7 +81,7 @@ def apiBooking():
 			getId = request.cookies.get("token")
 			getId = jwt.decode(getId, jwt_key, algorithms="HS256")
 			getId = getId["data"]["id"]
-			getData.deleteBooking(getId, deleteData)
+			getData.delete_booking(getId, deleteData)
 			return {"ok":True},200
 		except:
 			return {"error":True , "message" : "刪除失敗"},403

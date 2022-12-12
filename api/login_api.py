@@ -2,10 +2,15 @@ from flask import Blueprint, request, make_response
 import mysql_function 
 import jwt
 import datetime
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
+jwtKey = os.getenv("jwt_key")
 login_api = Blueprint("login_api", __name__)
 getData = mysql_function.ConnectToSql()
-jwt_key = "dsjlfjkdlasjfklsdafjaksldfjkaksdlfjaslfksaldfjalsfj"
+jwt_key = jwtKey
+
 
 @login_api.route("/api/user/auth" , methods = ["GET", "PUT", "DELETE"])
 def userAuth():

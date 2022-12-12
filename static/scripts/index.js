@@ -1,13 +1,10 @@
+const bottom = document.querySelector(".bottom");
+const search = document.querySelector(".icon-search-bg");
+const message = document.querySelector(".message");
 let input = document.getElementById("title-input");
 let categories = document.getElementById("categories");
-// let titleFont = document.getElementById("titleLeftFont");
 let child = document.querySelector(".child");
 let content = document.getElementById("content");
-let bottom = document.querySelector(".bottom");
-let search = document.querySelector(".icon-search-bg");
-let message = document.querySelector(".message");
-let titlePc = document.querySelector(".title-pc");
-let order = document.querySelector(".order");
 let newP, textNode, dataContent, contentBaby, newChild, username, email, password;
 let pages = 12;
 let firstChange = false;
@@ -36,12 +33,7 @@ fetch(url)
     }
 })
 
-function addClickEvent(catNum){
-    let category = document.querySelector(`.cat${catNum}`);
-    category.addEventListener("click",function(){
-        input.value = category.innerHTML;
-    })
-}
+
 
 
 
@@ -83,29 +75,7 @@ titleLeftFont.addEventListener("click",function(){
     clickEvent = false;
 })
 
-// 創建第一個child
-function createChild(){
-    let newDiv = document.createElement("div");
-    newDiv.className = "child";
-    content.appendChild(newDiv);
-    child = document.querySelector(".child");
-    let newImg = document.createElement("img");
-    newImg.className = "content-pc";
-    child.appendChild(newImg);
-    let newP = document.createElement("p");
-    newP.className= "title-font";
-    child.appendChild(newP);
-    newDiv = document.createElement("div");
-    newDiv.className = "content-baby";
-    child.appendChild(newDiv);
-    newP = document.createElement("p");
-    newP.className = "left-p";
-    contentBaby = document.querySelector(".content-baby");
-    contentBaby.appendChild(newP);
-    newP = document.createElement("p");
-    newP.className = "right-p";
-    contentBaby.appendChild(newP);
-}
+
 
 //取得分頁
 let loading = false;
@@ -114,6 +84,8 @@ let nextPage;
 let options = {
     threshold: 0.1,
 }
+
+//IntersectionObserver
 function getHomePage(keyword=""){
     message.style.display = "none";
     firstChange = false;
@@ -144,11 +116,6 @@ function getHomePage(keyword=""){
     observer.observe(bottom);
 }
 
-async function getData(url){  //點擊圖片轉址
-    let response = await fetch(url);
-    let data = await response.json();
-    window.location = `/attraction/${data["data"][0]["id"]}`;
-}
 
 
 async function loadAttractions(url,page){
@@ -183,7 +150,6 @@ async function loadAttractions(url,page){
                     getData(attractionUrl);
                 })
                 continue;
-
             }
             let newChild = child.cloneNode(true);
             
@@ -201,8 +167,6 @@ async function loadAttractions(url,page){
                 let attractionUrl = `/api/attractions?page=0&keyword=${titleFont[page*pages + i].innerHTML}`;
                 getData(attractionUrl);
             })
-            
-        
         }
         
         if(data.nextPage === null){ //調整flex最後一排留下的縫隙，讓物件靠左
@@ -224,12 +188,48 @@ async function loadAttractions(url,page){
                 
                 }
             }
-        }
-        
+        }  
         loading = false;
-    }
-    
-    
+    }  
 }
 
 
+//點擊圖片轉址
+async function getData(url){  
+    let response = await fetch(url);
+    let data = await response.json();
+    window.location = `/attraction/${data["data"][0]["id"]}`;
+}
+
+//點擊categories時，自動填入input搜尋框
+function addClickEvent(catNum){
+    let category = document.querySelector(`.cat${catNum}`);
+    category.addEventListener("click",function(){
+        input.value = category.innerHTML;
+    })
+}
+
+
+// 創建第一個child
+function createChild(){
+    let newDiv = document.createElement("div");
+    newDiv.className = "child";
+    content.appendChild(newDiv);
+    child = document.querySelector(".child");
+    let newImg = document.createElement("img");
+    newImg.className = "content-pc";
+    child.appendChild(newImg);
+    let newP = document.createElement("p");
+    newP.className= "title-font";
+    child.appendChild(newP);
+    newDiv = document.createElement("div");
+    newDiv.className = "content-baby";
+    child.appendChild(newDiv);
+    newP = document.createElement("p");
+    newP.className = "left-p";
+    contentBaby = document.querySelector(".content-baby");
+    contentBaby.appendChild(newP);
+    newP = document.createElement("p");
+    newP.className = "right-p";
+    contentBaby.appendChild(newP);
+}

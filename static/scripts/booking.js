@@ -1,21 +1,24 @@
+const bookingEmpty = document.querySelector(".booking-empty");
+const contactInformation = document.querySelector(".contact-information");
+const creditCardInformation = document.querySelector(".credit-card-information");
+const priceAndBtn = document.querySelector(".price-and-btn");
+const emptyShoppingcart = document.querySelector(".empty-shoppingcart");
+const bookingMessage = document.querySelector(".booking-message");
+const darker = document.querySelector(".darker");
+const bookingMessageClose = document.querySelector(".booking-message-btn");
+
+
 let title = document.querySelector(".booking-title");
-let bookingEmpty = document.querySelector(".booking-empty");
 let bookingContent = document.querySelector(".booking-content");
 let totalCost = document.querySelector(".total-price");
 let hr = document.querySelectorAll(".hr");
-let contactInformation = document.querySelector(".contact-information");
-let creditCardInformation = document.querySelector(".credit-card-information");
-let priceAndBtn = document.querySelector(".price-and-btn");
-let emptyShoppingcart = document.querySelector(".empty-shoppingcart");
-let bookingMessage = document.querySelector(".booking-message");
-let darker = document.querySelector(".darker");
-let bookingMessageClose = document.querySelector(".booking-message-btn");
 let bookingMessageFont = document.querySelector(".booking-message-font");
-
 let userName, data, time, productImage, productTitle, productDate, productTime, productPrice, productAddress, trashcan;
 let newDiv, newImg, newP, attractionId, productName;
 let count = 0;
 let totalPrice = 0;
+
+
 fetch("/api/user/auth")
 .then((response)=>{
     return response.json()
@@ -24,6 +27,9 @@ fetch("/api/user/auth")
     userName = data['data']['name'];
     title.innerHTML = `您好，${userName}，待預訂的行程如下 :`;
 })
+
+
+
 
 fetch("/api/booking")
 .then((response)=>{
@@ -88,7 +94,6 @@ fetch("/api/booking")
                         })
                         .then((data)=>{
                             if("ok" in data){
-                                
                                 bookingMessage.style.display = "block";
                                 darker.style.display = "block";
                             }
@@ -104,12 +109,11 @@ fetch("/api/booking")
                 
             }
             totalCost.innerHTML = `總價 : 新台幣${totalPrice}元`;
-            
         }
     }
 })
 
-
+//點擊刪除商品時跳出的popup視窗
 bookingMessageClose.addEventListener("click",()=>{
     bookingMessage.style.display = "none";
     darker.style.display = "none";
@@ -156,7 +160,6 @@ function produceProductHTML(){
     rightProduct[count].appendChild(newP);
     newP = document.createElement("p");
     newP.className = "product-address";
-    rightProduct[count].appendChild(newP);
-    
+    rightProduct[count].appendChild(newP); 
     count ++;
 }

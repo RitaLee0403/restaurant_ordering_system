@@ -1,8 +1,5 @@
-from flask import Flask, render_template, redirect, request, make_response
-import jwt
+from flask import Flask, render_template, redirect, request
 import mysql_function 
-import datetime
-import time
 from api import *
 
 app=Flask(__name__)
@@ -11,7 +8,6 @@ app.config["TEMPLATES_AUTO_RELOAD"]=True
 getData = mysql_function.ConnectToSql()
 
 
-# Pages
 @app.route("/")
 def index():	
 	return render_template("index.html")
