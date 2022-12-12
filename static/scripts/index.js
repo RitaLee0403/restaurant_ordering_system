@@ -1,21 +1,19 @@
 let input = document.getElementById("title-input");
 let categories = document.getElementById("categories");
-let titleFont = document.getElementById("titleLeftFont");
+// let titleFont = document.getElementById("titleLeftFont");
 let child = document.querySelector(".child");
 let content = document.getElementById("content");
 let bottom = document.querySelector(".bottom");
 let search = document.querySelector(".icon-search-bg");
 let message = document.querySelector(".message");
 let titlePc = document.querySelector(".title-pc");
-
-
-
+let order = document.querySelector(".order");
 let newP, textNode, dataContent, contentBaby, newChild, username, email, password;
 let pages = 12;
 let firstChange = false;
 let clickEvent = false;
 let prevSearch = "";
-let url = "/api/categories"
+let url = "/api/categories";
 
 window.onload = function(){
     getHomePage();
@@ -60,8 +58,6 @@ document.addEventListener("click",function(e){
 function stopFunc(e) { 
     e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
 }
-
-
 
 
 
@@ -122,7 +118,6 @@ function getHomePage(keyword=""){
     message.style.display = "none";
     firstChange = false;
     pageEnd = false;
-
     nextPage = 0;
     let observer = new IntersectionObserver((entries) =>{
         for (let entry of entries){
@@ -210,9 +205,9 @@ async function loadAttractions(url,page){
         
         }
         
-        if(data["nextPage"] === null){ //調整flex最後一排留下的縫隙，讓物件靠左
+        if(data.nextPage === null){ //調整flex最後一排留下的縫隙，讓物件靠左
             pageEnd = true;
-            let count = titleFont = document.querySelectorAll(".title-font").length;
+            let count = document.querySelectorAll(".title-font").length;
             let mod = count % 4;
             if(window.innerWidth > 600){
                 if(mod != 0){

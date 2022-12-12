@@ -11,7 +11,15 @@ let errorMsg = document.querySelector(".error-msg");
 let clickToLogin = document.getElementById("clickToLogin");
 let loginBtn = document.querySelector(".login-btn");
 let login = document.querySelector(".login");
+let titleFont = document.getElementById("titleLeftFont");
+let order = document.querySelector(".order");
+let isLogin = false;
 let  username, email, password;
+
+
+titleFont.addEventListener("click",function(){
+    window.location = "/";
+})
 
 
 loginClose.addEventListener("click",()=>{
@@ -61,8 +69,23 @@ fetch("/api/user/auth",{
     else{
         loginBtn.style.color = "black";
         loginBtn.innerHTML = "登出系統";
+        isLogin = true;
     }
 })
+
+//點擊預定行程
+order.addEventListener("click",()=>{
+    if(isLogin === true){
+        window.location = "/booking";
+    }else{
+        loginErrorMsg.style.display = "none";
+        login.style.display = "block";
+        backgroundDarker.style.display = "block";   
+        }
+    }
+    
+)
+
 
 //點擊登出系統時登出  點擊登入就登入
 loginBtn.addEventListener("click",(e)=>{

@@ -46,6 +46,11 @@
     line-height:104px;
     text-align:center;
 }
+.order{
+    cursor: pointer;
+    font-family: 'Noto Sans TC';
+}
+
 @media(max-width:1200px){
   
     .navbar{

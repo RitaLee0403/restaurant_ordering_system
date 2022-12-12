@@ -20,6 +20,64 @@ pool = pooling.MySQLConnectionPool(
     )
 
 class ConnectToSql:
+    def booking(self, id, data):
+        cnx = pool.get_connection()
+        cursor = cnx.cursor()
+        execute = 'INSERT INTO `booking`(userId, attractionId, date, time, price) VALUES(%s,%s,%s,%s,%s);'
+        values = (id,data["attractionId"], data["date"], data["time"], data["price"])
+        cursor.execute(execute,values)
+        cnx.commit()
+        cursor.close()
+        cnx.close()
+    
+    def getBookingData(self, id):
+        cnx = pool.get_connection()
+        cursor = cnx.cursor()
+        execute = 'SELECT \
+                    `data`.`id`, \
+                    `data`.`name`,\
+                    `data`.`address`,\
+                    `picture`.`pc`, \
+                    `booking`.`date`,\
+                    `booking`.`time`,\
+                    `booking`.`price`\
+                    FROM `data` \
+                    INNER JOIN `picture` ON `data`.`id` = `picture`.`id`\
+                    INNER JOIN `booking` ON `data`.`id` = `booking`.`attractionId`\
+                    WHERE `booking`.`userId` = %s ; '
+        values = ([f"{id}"])
+        cursor.execute(execute,values)
+        record = cursor.fetchall()
+        cursor.close()
+        cnx.close()
+        return record
+                
+       
+    def deleteBooking(self, userId, attractionId):
+        cnx = pool.get_connection()
+        cursor = cnx.cursor()
+        execute = 'DELETE FROM `booking` WHERE userId = %s AND attractionId = %s;'
+        values = (userId, attractionId)
+        cursor.execute(execute,values)
+        cnx.commit()
+        cursor.close()
+        cnx.close()
+    
+    # def checkIsOrderTheSameSchedule(self, data):
+    #     cnx = pool.get_connection()
+    #     cursor = cnx.cursor()
+    #     execute = "SELECT COUNT(*) from `booking` WHERE `attractionId` = %s;"
+    #     values = (data)
+    #     cursor.execute(execute,values)
+    #     record = cursor.fetchall()
+    #     if(record[0][0] != 0):
+    #         cursor.close()
+    #         cnx.close()
+    #         return True
+    #     cursor.close()
+    #     cnx.close()
+    #     return False
+        
     def checkSignup(self,email):
         cnx = pool.get_connection()
         cursor = cnx.cursor()
