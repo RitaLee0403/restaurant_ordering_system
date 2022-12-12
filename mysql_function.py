@@ -8,7 +8,7 @@ mysqlPassword = os.getenv("password")
 
 pool = pooling.MySQLConnectionPool(
         pool_name = "my_pool",
-        pool_size = 10,
+        pool_size = 30,
         pool_reset_session=True,
         host = 'localhost',
         database = 'taipei_attraction',
@@ -23,19 +23,17 @@ class ConnectToSql:
     def booking(self, id, data):
         cnx = pool.get_connection()
         cursor = cnx.cursor()
-        print(6)
         execute = 'INSERT INTO `booking`(userId, attractionId, date, time, price) VALUES(%s,%s,%s,%s,%s);'
-        print(7)
-        values = (id,data["attractionId"], data["date"], data["time"], data["price"])
-        print(8)
+        attractionId = data["attractionId"]
+        date = data["date"]
+        time = data["time"]
+        price = data["price"]
+        values = (id,attractionId, date, time, price)
         cursor.execute(execute,values)
-        print(9)
         cnx.commit()
-        print(10)
         cursor.close()
-        print(11)
         cnx.close()
-        print(12)
+      
     
     def getBookingData(self, id):
         cnx = pool.get_connection()
@@ -69,22 +67,7 @@ class ConnectToSql:
         cnx.commit()
         cursor.close()
         cnx.close()
-    
-    # def checkIsOrderTheSameSchedule(self, data):
-    #     cnx = pool.get_connection()
-    #     cursor = cnx.cursor()
-    #     execute = "SELECT COUNT(*) from `booking` WHERE `attractionId` = %s;"
-    #     values = (data)
-    #     cursor.execute(execute,values)
-    #     record = cursor.fetchall()
-    #     if(record[0][0] != 0):
-    #         cursor.close()
-    #         cnx.close()
-    #         return True
-    #     cursor.close()
-    #     cnx.close()
-    #     return False
-        
+  
     def checkSignup(self,email):
         cnx = pool.get_connection()
         cursor = cnx.cursor()
