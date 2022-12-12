@@ -73,6 +73,7 @@ def apiBookingPost():
 			elif(orderYear == year and orderMonth == month and orderDay < day):
 				return {"error":True, "message" : "日期輸入錯誤"},400
 			print(3)
+			print(bookingData)
 			getData.booking(getId,bookingData)
 			print(4)
 			return {"ok" : True},200
