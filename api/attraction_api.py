@@ -2,10 +2,10 @@ from flask import Blueprint ,  request
 import mysql_function 
 
 
-api_blueprint = Blueprint("api_attraction", __name__)
+attraction_api = Blueprint("attraction_api", __name__)
 getData = mysql_function.ConnectToSql()
 
-@api_blueprint.route("/api/attraction/<id>")
+@attraction_api.route("/api/attraction/<id>")
 def attraction(id):
 	id = int(id)
 	try:
@@ -28,7 +28,7 @@ def attraction(id):
 
 
 
-@api_blueprint.route("/api/attractions/")
+@attraction_api.route("/api/attractions/")
 def apiAttraction():
 	try:
 		page = request.args.get("page","0")
@@ -69,16 +69,3 @@ def apiAttraction():
 
 
      
-@api_blueprint.route("/api/categories")
-def apiCategories():
-	try:
-		data = {
-				"data":getData.getCategories()	
-			}
-		return data,200
-	except:
-		data = {
-				"error": True,
-				"data":"連線失敗"	
-				}
-		return data,500

@@ -2,6 +2,10 @@
     margin:0px;
     padding:0px;
 }
+body{
+    font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
+}
+
 
 .title-pc{
     overflow:hidden;
@@ -49,14 +53,15 @@
     cursor:pointer;
 }
 .title-input{
+    font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
     border-radius: 5px 0 0 5px;
     width:400px;
-    height:46px;
     font-size:16px;
     color:black;
     border-width:inherit;
     padding-left:15px;
     position:relative;
+    outline: none;
 }
 
 .categories{
@@ -140,12 +145,12 @@
 }
 
 .title-font{
+    font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
     color:white;
     position:absolute;
     box-sizing: border-box;
     padding:15px;
     background:rgba(0, 0, 0, 0.5);
-    font-family: 'Noto Sans TC';
     font-style: normal;
     font-weight: 700;
     font-size: 16px;

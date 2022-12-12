@@ -1,3 +1,7 @@
+body{
+    font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
+}
+
 .navbar{
     z-index:999;
     position:fixed;
@@ -45,11 +49,13 @@
     color:white;
     line-height:104px;
     text-align:center;
+    font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
 }
 .order{
     cursor: pointer;
-    font-family: 'Noto Sans TC';
+    font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
 }
+
 
 @media(max-width:1200px){
   
