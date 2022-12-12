@@ -186,19 +186,26 @@ orderBtn.addEventListener("click",()=>{
             bookingMessageFont.innerHTML = "請先登入再預約";
 
         }
-    }).then(()=>{
-        bookingMessageClose.addEventListener("click",()=>{
-            bookingMessage.style.display = "none";
-            darker.style.display = "none";
-            if(bookingMessageFont.innerHTML === "日期輸入錯誤"){
-                location.reload();
-            }
-        })
+        if("error" in data && data.message === "伺服器內部錯誤"){
+            bookingMessage.style.display = "block";
+            darker.style.display = "block";
+            bookingMessageFont.innerHTML = "請再重試一次";
 
+        }
     })
 
 })
 
+// .then(()=>{
+//     bookingMessageClose.addEventListener("click",()=>{
+//         bookingMessage.style.display = "none";
+//         darker.style.display = "none";
+//         if(bookingMessageFont.innerHTML === "日期輸入錯誤"){
+//             location.reload();
+//         }
+//     })
+
+// })
 
 //顯示費用
 selectMorning.addEventListener("click",()=>{
