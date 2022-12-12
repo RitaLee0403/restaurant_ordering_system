@@ -207,6 +207,11 @@ orderBtn.addEventListener("click",()=>{
 
 // })
 
+bookingMessageClose.addEventListener("click",()=>{
+    bookingMessage.style.display = "none";
+    darker.style.display = "none";
+})
+
 //顯示費用
 selectMorning.addEventListener("click",()=>{
     costNum.innerHTML = "2000元"; 

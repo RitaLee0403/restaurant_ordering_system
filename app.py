@@ -53,6 +53,7 @@ def apiBookingPost():
 	try:
 		getId = request.cookies.get("token")
 		if(getId and (initCookie == getId)):
+			print(1)
 			getId = jwt.decode(getId, jwt_key, algorithms="HS256")
 			getId = getId["data"]["id"]
 			bookingData = request.json
@@ -64,15 +65,16 @@ def apiBookingPost():
 			year = int(time.strftime("%Y", localtime))
 			month = int(time.strftime("%m", localtime))
 			day = int(time.strftime("%d", localtime))
+			print(2)
 			if(orderYear < year):  #判斷是否預約到過去的日期
 				return {"error":True, "message" : "日期輸入錯誤"},400
 			elif(orderYear == year and orderMonth < month):
 				return {"error":True, "message" : "日期輸入錯誤"},400
 			elif(orderYear == year and orderMonth == month and orderDay < day):
 				return {"error":True, "message" : "日期輸入錯誤"},400
-
+			print(3)
 			getData.booking(getId,bookingData)
-			
+			print(4)
 			return {"ok" : True},200
 		else:
 			return {"error":True, "message" : "尚未登入"},403
