@@ -74,7 +74,8 @@ def apiBookingPost():
 				return {"error":True, "message" : "日期輸入錯誤"},400
 			print(3)
 			print(bookingData)
-			getData.booking(getId,bookingData)
+			print(getId)
+			getData.booking(int(getId),bookingData)
 			print(4)
 			return {"ok" : True},200
 		else:
@@ -203,3 +204,4 @@ def thankyou():
 app.register_blueprint(api_blueprint)
 
 app.run(host = "0.0.0.0",port=3000,debug=True)
+

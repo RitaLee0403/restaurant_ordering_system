@@ -23,8 +23,11 @@ class ConnectToSql:
     def booking(self, id, data):
         cnx = pool.get_connection()
         cursor = cnx.cursor()
+        print(6)
         execute = 'INSERT INTO `booking`(userId, attractionId, date, time, price) VALUES(%s,%s,%s,%s,%s);'
+        print(7)
         values = (id,data["attractionId"], data["date"], data["time"], data["price"])
+        print(8)
         cursor.execute(execute,values)
         cnx.commit()
         cursor.close()
