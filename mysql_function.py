@@ -29,9 +29,13 @@ class ConnectToSql:
         values = (id,data["attractionId"], data["date"], data["time"], data["price"])
         print(8)
         cursor.execute(execute,values)
+        print(9)
         cnx.commit()
+        print(10)
         cursor.close()
+        print(11)
         cnx.close()
+        print(12)
     
     def getBookingData(self, id):
         cnx = pool.get_connection()
