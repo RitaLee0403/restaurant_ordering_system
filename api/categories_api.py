@@ -6,10 +6,10 @@ getData = mysql_function.ConnectToSql()
 
 
 @categories_api.route("/api/categories")
-def apiCategories():
+def api_categories():
 	try:
 		data = {
-				"data":getData.getCategories()	
+				"data":getData.get_categories()	
 			}
 		return data,200
 	except:

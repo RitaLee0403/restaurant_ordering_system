@@ -9,14 +9,14 @@ getData = mysql_function.ConnectToSql()
 def attraction(id):
 	id = int(id)
 	try:
-		if(len(getData.getAttraction(id)) == 0):
+		if(len(getData.get_attraction(id)) == 0):
 			data = {
 				"error":True,
 				"message":"景點編號不正確"
 			}
 			return data,400
 		data = {
-			"data":getData.getAttraction(id)
+			"data":getData.get_attraction(id)
 		}
 		return data,200
 	except:
@@ -34,7 +34,7 @@ def apiAttraction():
 		page = request.args.get("page","0")
 		keyword = request.args.get("keyword", "")
 		page=int(page)
-		if(len(getData.showPage(page+1)) == 0):
+		if(len(getData.show_page(page+1)) == 0):
 			nextPage = None
 		else:
 			nextPage = page +1
@@ -46,18 +46,18 @@ def apiAttraction():
 			}
 			return data,200
 		if(keyword != ""):
-			if(len(getData.showPage(page+1,keyword)) == 0):
+			if(len(getData.show_page(page+1,keyword)) == 0):
 				nextPage = None
 				
 			data = {
 				"nextPage":nextPage,
-				"data":getData.showPage(page,keyword)
+				"data":getData.show_page(page,keyword)
 			}
 			return data,200
 		if(keyword == ""):
 			data = {
 					"nextPage":nextPage,
-					"data":getData.showPage(page)
+					"data":getData.show_page(page)
 			}
 			return data,200
 	except:

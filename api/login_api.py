@@ -21,7 +21,7 @@ def userAuth():
 			if request.method == 'PUT':
 				data = request.json
 				if(getData.login(data["email"], data["password"])):
-					userData = getData.getUserData(data["email"])
+					userData = getData.get_user_data(data["email"])
 					response = make_response(ok)
 					global payload_data
 					payload_data = {

@@ -56,11 +56,7 @@ def apiBooking():
 			bookingDatas = {"data":[]
 			}
 			attraction = {"attraction":{}}
-			prev = -1
 			for data in datas:
-				if(data[0] == prev):
-					continue
-				prev = data[0]
 				attraction["attraction"]["id"] = data[0]
 				attraction["attraction"]["name"] = data[1]
 				attraction["attraction"]["address"] = data[2]
@@ -70,7 +66,6 @@ def apiBooking():
 				attraction["price"] = data[6]
 				bookingDatas["data"].append(attraction)
 				attraction = {"attraction":{}}
-
 			return bookingDatas 
 		else:
 			return {"error":True,"message" : "未登入系統，拒絕存取"},403

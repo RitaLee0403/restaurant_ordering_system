@@ -11,8 +11,8 @@ def user():
 			"ok" : True
 		}
 		data = request.json
-		if(getData.checkSignup(data["email"])):
-			getData.addUserData(data["name"], data["email"], data["password"])
+		if(getData.check_signup(data["email"])):
+			getData.add_user_data(data["name"], data["email"], data["password"])
 			return ok,200
 		else:
 			
