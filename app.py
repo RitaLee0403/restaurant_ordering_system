@@ -45,12 +45,7 @@ def user():
 		}
 
 
-@app.route("/booking")
-def booking():
-	cookie = request.cookies.get("token")
-	if(cookie and (initCookie == cookie)):
-		return render_template("booking.html")	
-	return redirect("/")
+
 
 
 @app.route("/api/booking", methods = ["POST"])
@@ -187,7 +182,12 @@ def userAuth():
     
     
     
-    
+@app.route("/booking")
+def booking():
+	cookie = request.cookies.get("token")
+	if(cookie and (initCookie == cookie)):
+		return render_template("booking.html")	
+	return redirect("/")   
     
         
 

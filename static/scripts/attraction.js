@@ -187,14 +187,17 @@ fetch(url)
     })
         
 })
+.then(()=>{
+    bookingMessageClose.addEventListener("click",()=>{
+        bookingMessage.style.display = "none";
+        darker.style.display = "none";
+        if(bookingMessageFont.innerHTML === "日期輸入錯誤"){
+            location.reload();
+        }
+    })
 
-bookingMessageClose.addEventListener("click",()=>{
-    bookingMessage.style.display = "none";
-    darker.style.display = "none";
-    if(bookingMessageFont.innerHTML === "日期輸入錯誤"){
-        location.reload();
-    }
 })
+
 
 
 
