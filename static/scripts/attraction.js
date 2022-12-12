@@ -1,4 +1,6 @@
 // let titleFont = document.getElementById("titleLeftFont");
+
+
 let contentLeft = document.querySelector(".content-left");
 let arrowLeft = document.querySelector(".arrow-left");
 let arrowRight = document.querySelector(".arrow-right");
@@ -141,64 +143,61 @@ fetch(url)
     transport.innerHTML = data["transport"];
     clickDotToChangePc();
 })
-.then(()=>{  //點擊預定行程
-    orderBtn.addEventListener("click",()=>{
-        if(datetimeInput[0].checked == true){
-            time = "morning";
-            price = "2000元"
-        }else{
-            time = "afternoon";
-            price = "2500元";
+
+
+//點擊預定行程
+orderBtn.addEventListener("click",()=>{
+    if(datetimeInput[0].checked == true){
+        time = "morning";
+        price = "2000元"
+    }else{
+        time = "afternoon";
+        price = "2500元";
+    }
+    fetch("/api/booking",{
+        method : "POST",
+        body:JSON.stringify({
+            "attractionId" : `${id}`,
+            "date" : `${date.value}`,
+            "time" : time,
+            "price" : price
+        }),
+        headers:{
+            'Content-type':'application/json; charset=UTF-8',
         }
-        fetch("/api/booking",{
-            method : "POST",
-            body:JSON.stringify({
-                "attractionId" : `${id}`,
-                "date" : `${date.value}`,
-                "time" : time,
-                "price" : price
-            }),
-            headers:{
-                'Content-type':'application/json; charset=UTF-8',
-            }
-        })
-        .then((response)=>{
-            return response.json();
-        })
-        .then((data)=>{
-            if("ok" in data){
-                bookingMessage.style.display = "block";
-                darker.style.display = "block";
-            }
-            if("error" in data && data.message === "日期輸入錯誤"){
-                bookingMessage.style.display = "block";
-                darker.style.display = "block";
-                bookingMessageFont.innerHTML = "日期輸入錯誤";
+    })
+    .then((response)=>{
+        return response.json();
+    })
+    .then((data)=>{
+        if("ok" in data){
+            bookingMessage.style.display = "block";
+            darker.style.display = "block";
+        }
+        if("error" in data && data.message === "日期輸入錯誤"){
+            bookingMessage.style.display = "block";
+            darker.style.display = "block";
+            bookingMessageFont.innerHTML = "日期輸入錯誤";
 
-            }
-            if("error" in data && data.message === "尚未登入"){
-                bookingMessage.style.display = "block";
-                darker.style.display = "block";
-                bookingMessageFont.innerHTML = "請先登入再預約";
+        }
+        if("error" in data && data.message === "尚未登入"){
+            bookingMessage.style.display = "block";
+            darker.style.display = "block";
+            bookingMessageFont.innerHTML = "請先登入再預約";
 
+        }
+    }).then(()=>{
+        bookingMessageClose.addEventListener("click",()=>{
+            bookingMessage.style.display = "none";
+            darker.style.display = "none";
+            if(bookingMessageFont.innerHTML === "日期輸入錯誤"){
+                location.reload();
             }
         })
 
     })
-        
-})
-.then(()=>{
-    bookingMessageClose.addEventListener("click",()=>{
-        bookingMessage.style.display = "none";
-        darker.style.display = "none";
-        if(bookingMessageFont.innerHTML === "日期輸入錯誤"){
-            location.reload();
-        }
-    })
 
 })
-
-
 
 
 //顯示費用
