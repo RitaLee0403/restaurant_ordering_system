@@ -1,9 +1,10 @@
-let titleFont = document.getElementById("titleLeftFont");
-let contentLeft = document.querySelector(".content-left");
-let arrowLeft = document.querySelector(".arrow-left");
-let arrowRight = document.querySelector(".arrow-right");
-let pictureDot = document.querySelector(".dot-btn");
-let datetimeInput = document.querySelectorAll(".datetime-input");
+const arrowLeft = document.querySelector(".arrow-left");
+const arrowRight = document.querySelector(".arrow-right");
+const contentLeft = document.querySelector(".content-left");
+const pictureDot = document.querySelector(".dot-btn");
+const datetimeInput = document.querySelectorAll(".datetime-input");
+
+
 let costNum = document.querySelector(".cost-number");
 let selectMorning = document.querySelector(".select-time-morning");
 let selectAfternoon = document.querySelector(".select-time-afternoon");
@@ -13,12 +14,18 @@ let transport = document.querySelector(".transport");
 let url = "/api" + window.location.pathname;
 let allRadio, allPc, radio, pcCount;
 let pcPosition = 0;
-
+let orderBtn = document.querySelector(".order-btn");
+let date = document.querySelector(".date");
+let datetime = new Date();
+let year,month,day,time,orderData,price;
+let id = location.pathname.replace("/attraction/","");
+let bookingMessage = document.querySelector(".booking-message");
+let darker = document.querySelector(".darker");
+let bookingMessageClose = document.querySelector(".booking-message-btn");
+let bookingMessageFont = document.querySelector(".booking-message-font");
 let title = document.querySelector(".title");
 let category = document.querySelector(".category");
-titleFont.addEventListener("click",function(){
-    window.location = "/";
-})
+
 
 
 
@@ -108,6 +115,19 @@ fetch(url)
         contentLeft.insertBefore(newImg,arrowLeft);
         
     }
+    
+    
+    
+    year = datetime.getFullYear();
+    month = datetime.getMonth() + 1;
+    day = datetime.getDate();
+    if(datetime.getDate() < 10){
+        day = `0${day}`;
+    }
+    if(datetime.getMonth() < 9){
+        month = `0${month + 1}`;
+    }
+    date.value = `${year}-${month}-${day}`;  //設定input type="datetime" 的初始值
     document.title = data["name"];
     radio = document.querySelector(".dot");
     radio.checked = true;  //先讓圓圓在第一個
@@ -120,6 +140,67 @@ fetch(url)
 })
 
 
+//點擊預定行程
+orderBtn.addEventListener("click",()=>{
+    if(datetimeInput[0].checked == true){
+        time = "morning";
+        price = "2000元"
+    }else{
+        time = "afternoon";
+        price = "2500元";
+    }
+    fetch("/api/booking",{
+        method : "POST",
+        body:JSON.stringify({
+            "attractionId" : `${id}`,
+            "date" : `${date.value}`,
+            "time" : time,
+            "price" : price
+        }),
+        headers:{
+            'Content-type':'application/json; charset=UTF-8',
+        }
+    })
+    .then((response)=>{
+        return response.json();
+    })
+    .then((data)=>{
+        if("ok" in data){
+            bookingMessage.style.display = "block";
+            darker.style.display = "block";
+        }
+        if("error" in data && data.message === "日期輸入錯誤"){
+            bookingMessage.style.display = "block";
+            darker.style.display = "block";
+            bookingMessageFont.innerHTML = "日期輸入錯誤";
+
+        }
+        if("error" in data && data.message === "尚未登入"){
+            bookingMessage.style.display = "block";
+            darker.style.display = "block";
+            bookingMessageFont.innerHTML = "請先登入再預約";
+
+        }
+        if("error" in data && data.message === "伺服器內部錯誤"){
+            bookingMessage.style.display = "block";
+            darker.style.display = "block";
+            bookingMessageFont.innerHTML = "請再重試一次";
+
+        }
+    })
+   
+})
+
+
+
+bookingMessageClose.addEventListener("click",()=>{
+    bookingMessage.style.display = "none";
+    darker.style.display = "none";
+    if(bookingMessageFont.innerHTML === "日期輸入錯誤"){
+        location.reload();
+    }
+})
+
 //顯示費用
 selectMorning.addEventListener("click",()=>{
     costNum.innerHTML = "2000元"; 
@@ -128,4 +209,5 @@ selectMorning.addEventListener("click",()=>{
 selectAfternoon.addEventListener("click",()=>{
     costNum.innerHTML = "2500元";
 })
+
 

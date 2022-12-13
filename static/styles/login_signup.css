@@ -1,3 +1,9 @@
+p{
+    font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
+}
+input{
+    font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
+}
 .darker{
     display:none;
     position: fixed;
@@ -121,7 +127,7 @@
 }
 .signup-inner{
     width:340px;
-    height:100%;
+    height:32px;
     margin:auto;
     background: linear-gradient(270deg, #337788 0%, #66AABB 100%);
     position: relative;

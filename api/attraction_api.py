@@ -1,22 +1,22 @@
 from flask import Blueprint ,  request
-import api_function 
+import mysql_function 
 
 
-api_blueprint = Blueprint("api_attraction", __name__)
-getData = api_function.ConnectToSql()
+attraction_api = Blueprint("attraction_api", __name__)
+getData = mysql_function.ConnectToSql()
 
-@api_blueprint.route("/api/attraction/<id>")
+@attraction_api.route("/api/attraction/<id>")
 def attraction(id):
 	id = int(id)
 	try:
-		if(len(getData.getAttraction(id)) == 0):
+		if(len(getData.get_attraction(id)) == 0):
 			data = {
 				"error":True,
 				"message":"景點編號不正確"
 			}
 			return data,400
 		data = {
-			"data":getData.getAttraction(id)
+			"data":getData.get_attraction(id)
 		}
 		return data,200
 	except:
@@ -28,13 +28,13 @@ def attraction(id):
 
 
 
-@api_blueprint.route("/api/attractions/")
+@attraction_api.route("/api/attractions/")
 def apiAttraction():
 	try:
 		page = request.args.get("page","0")
 		keyword = request.args.get("keyword", "")
 		page=int(page)
-		if(len(getData.showPage(page+1)) == 0):
+		if(len(getData.show_page(page+1)) == 0):
 			nextPage = None
 		else:
 			nextPage = page +1
@@ -46,18 +46,18 @@ def apiAttraction():
 			}
 			return data,200
 		if(keyword != ""):
-			if(len(getData.showPage(page+1,keyword)) == 0):
+			if(len(getData.show_page(page+1,keyword)) == 0):
 				nextPage = None
 				
 			data = {
 				"nextPage":nextPage,
-				"data":getData.showPage(page,keyword)
+				"data":getData.show_page(page,keyword)
 			}
 			return data,200
 		if(keyword == ""):
 			data = {
 					"nextPage":nextPage,
-					"data":getData.showPage(page)
+					"data":getData.show_page(page)
 			}
 			return data,200
 	except:
@@ -69,16 +69,3 @@ def apiAttraction():
 
 
      
-@api_blueprint.route("/api/categories")
-def apiCategories():
-	try:
-		data = {
-				"data":getData.getCategories()	
-			}
-		return data,200
-	except:
-		data = {
-				"error": True,
-				"data":"連線失敗"	
-				}
-		return data,500

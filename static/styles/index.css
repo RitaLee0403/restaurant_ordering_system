@@ -2,6 +2,10 @@
     margin:0px;
     padding:0px;
 }
+body{
+    font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
+}
+
 
 .title-pc{
     overflow:hidden;
@@ -49,14 +53,15 @@
     cursor:pointer;
 }
 .title-input{
+    font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
     border-radius: 5px 0 0 5px;
     width:400px;
-    height:46px;
     font-size:16px;
     color:black;
     border-width:inherit;
     padding-left:15px;
     position:relative;
+    outline: none;
 }
 
 .categories{
@@ -140,12 +145,13 @@
 }
 
 .title-font{
+    cursor: pointer;
+    font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
     color:white;
     position:absolute;
     box-sizing: border-box;
     padding:15px;
     background:rgba(0, 0, 0, 0.5);
-    font-family: 'Noto Sans TC';
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
@@ -168,6 +174,42 @@
     text-align: center;
 }
 
+.order{
+    cursor:pointer;
+}
+.booking-message{
+    z-index: 1100;
+    display:none;
+    position: fixed;
+    width:100%;
+    text-align: center;
+    height:300px;
+    top:200px;
+}
+.booking-message div{
+    background-color: white;
+    width:30%;
+    margin:auto;
+    height:150px;
+    border-radius: 6px;
+    
+}
+.booking-message-font{
+    font-weight:900;
+    color:rgb(0, 0, 0);
+    padding-top:40px;
+}
+.booking-message-btn{
+    cursor:pointer;
+    color:white;
+    padding:10px;
+    width:30%;
+    margin:auto;
+    border-radius: 6px;
+    margin-top:30px;
+    background-color: #448899;
+
+}
 
 
 @media(max-width:1200px){

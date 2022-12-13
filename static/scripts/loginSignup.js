@@ -1,17 +1,27 @@
-let backgroundDarker = document.querySelector(".darker");
-let loginContent = document.querySelector(".login-content");
-let loginClose = document.querySelector(".login-close");
-let signupBtn = document.querySelector(".signup-btn");
-let signupClose = document.querySelector(".signup-close");
-let hadLoginBtn = document.querySelector(".had-login-btn");
+const backgroundDarker = document.querySelector(".darker");
+const loginContent = document.querySelector(".login-content");
+const loginClose = document.querySelector(".login-close");
+const signupBtn = document.querySelector(".signup-btn");
+const signupClose = document.querySelector(".signup-close");
+const hadLoginBtn = document.querySelector(".had-login-btn");
+const clickToLogin = document.getElementById("clickToLogin");
+const order = document.querySelector(".order");
+const titleFont = document.getElementById("titleLeftFont");
+const clickToSignup = document.getElementById("clickToSignup");
+const signup = document.querySelector(".signup");
+const login = document.querySelector(".login");
+
+
 let loginErrorMsg = document.querySelector(".login-error-msg");
-let signup = document.querySelector(".signup");
-let clickToSignup = document.getElementById("clickToSignup");
 let errorMsg = document.querySelector(".error-msg");
-let clickToLogin = document.getElementById("clickToLogin");
 let loginBtn = document.querySelector(".login-btn");
-let login = document.querySelector(".login");
+let isLogin = false;
 let  username, email, password;
+
+//點擊navbar<台北一日遊>跳回首頁
+titleFont.addEventListener("click",function(){
+    window.location = "/";
+})
 
 
 loginClose.addEventListener("click",()=>{
@@ -19,15 +29,17 @@ loginClose.addEventListener("click",()=>{
     backgroundDarker.style.display = "none";
 })
 
+signupClose.addEventListener("click",()=>{
+    signup.style.display = "none";
+    backgroundDarker.style.display = "none";
+})
+
+
+
 signupBtn.addEventListener("click",()=>{
     login.style.display = "none";
     signup.style.display = "block";
     errorMsg.style.display = "none";
-})
-
-signupClose.addEventListener("click",()=>{
-    signup.style.display = "none";
-    backgroundDarker.style.display = "none";
 })
 
 hadLoginBtn.addEventListener("click",()=>{
@@ -36,6 +48,7 @@ hadLoginBtn.addEventListener("click",()=>{
     login.style.display = "block";
     backgroundDarker.style.display = "block";
 })
+
 
 //確認是否是登入的狀態
 fetch("/api/user/auth",{
@@ -61,10 +74,25 @@ fetch("/api/user/auth",{
     else{
         loginBtn.style.color = "black";
         loginBtn.innerHTML = "登出系統";
+        isLogin = true;
     }
 })
 
-//點擊登出系統時登出
+//點擊預定行程
+order.addEventListener("click",()=>{
+    if(isLogin === true){
+        window.location = "/booking";
+    }else{
+        loginErrorMsg.style.display = "none";
+        login.style.display = "block";
+        backgroundDarker.style.display = "block";   
+        }
+    }
+    
+)
+
+
+//點擊登出系統時登出  點擊登入就登入
 loginBtn.addEventListener("click",(e)=>{
     if(loginBtn.innerHTML === "登錄/註冊"){
         loginErrorMsg.style.display = "none";
@@ -86,7 +114,7 @@ loginBtn.addEventListener("click",(e)=>{
 
 
 
-
+//點擊註冊新帳號
 clickToSignup.addEventListener("click", ()=>{
     username = document.getElementById("name").value;
     email = document.getElementById("email").value;
@@ -112,12 +140,12 @@ clickToSignup.addEventListener("click", ()=>{
         }
         if("error" in data){
             if(data["error"] === true && data["message"] === "此email已經註冊過了"){
-                errorMsg.innerHTML = "此email已經註冊過了";
+                errorMsg.innerHTML = "⚠此email已經註冊過了";
                 errorMsg.style.color = "red";
                 errorMsg.style.display = "block";
             }
             else if(data["error"] === true && data["message"] === "伺服器出現錯誤"){
-                errorMsg.innerHTML = "伺服器出現錯誤";
+                errorMsg.innerHTML = "⚠伺服器出現錯誤";
                 errorMsg.style.color = "red";
                 errorMsg.style.display = "block";
             }
@@ -125,6 +153,7 @@ clickToSignup.addEventListener("click", ()=>{
     })
 })
 
+//點擊登錄帳號
 clickToLogin.addEventListener("click",()=>{
     email = document.getElementById("loginEmail").value;
     password = document.getElementById("loginPassword").value;
@@ -162,8 +191,4 @@ clickToLogin.addEventListener("click",()=>{
         }
         
     })
-    
-    
-    
-
 })
