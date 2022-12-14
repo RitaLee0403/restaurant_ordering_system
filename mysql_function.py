@@ -60,14 +60,14 @@ class ConnectToSql:
     def get_booking_data(self, id):
         cnx = pool.get_connection()
         cursor = cnx.cursor()
-        execute = 'SELECT data.id, data.name, data.address, picture.pc, booking.date, booking.time, booking.price \
+        execute = 'SELECT data.id, MAX(data.name), MAX(data.address), MIN(picture.pc), MAX(booking.date), MAX(booking.time), MAX(booking.price) \
                     FROM data \
-                    JOIN picture ON data.id = picture.id \
+                    JOIN picture ON data.idName = picture.id \
                     JOIN ( \
                     SELECT userId,attractionId, date, time, price \
                     FROM booking \
                     WHERE booking.userId = %s\
-                    ) booking ON data.id = booking.attractionId GROUP BY data.id;'
+                    ) booking ON data.id = booking.attractionId GROUP BY data.idName;'
 
         values = ([f"{id}"])
         cursor.execute(execute,values)

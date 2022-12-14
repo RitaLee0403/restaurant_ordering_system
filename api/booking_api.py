@@ -66,7 +66,7 @@ def apiBooking():
 				attraction["price"] = data[6]
 				bookingDatas["data"].append(attraction)
 				attraction = {"attraction":{}}
-			return bookingDatas 
+			return bookingDatas,200 
 		else:
 			return {"error":True,"message" : "未登入系統，拒絕存取"},403
 	if request.method == "DELETE":
