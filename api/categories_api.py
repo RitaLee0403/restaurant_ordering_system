@@ -1,15 +1,14 @@
 from flask import Blueprint ,  request
-import mysql_function 
-
+from api.models.categories import Categories
 categories_api = Blueprint("categories_api", __name__)
-getData = mysql_function.ConnectToSql()
+categories = Categories()
 
 
 @categories_api.route("/api/categories")
 def api_categories():
 	try:
 		data = {
-				"data":getData.get_categories()	
+				"data":categories.get_categories()	
 			}
 		return data,200
 	except:

@@ -1,8 +1,8 @@
 from flask import Blueprint ,  request
-import mysql_function 
+from api.models.signup import Signup
 
 signup_api = Blueprint("signup_api", __name__)
-getData = mysql_function.ConnectToSql()
+signup = Signup()
 
 @signup_api.route("/api/user", methods = ["POST"])
 def user():
@@ -11,8 +11,8 @@ def user():
 			"ok" : True
 		}
 		data = request.json
-		if(getData.check_signup(data["email"])):
-			getData.add_user_data(data["name"], data["email"], data["password"])
+		if(signup.is_signup_success(data["email"])):
+			signup.signup(data["name"], data["email"], data["password"])
 			return ok,200
 		else:
 			

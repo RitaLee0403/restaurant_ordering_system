@@ -1,5 +1,5 @@
 from flask import Blueprint, request, make_response
-import mysql_function 
+from api.models.login import Login
 import jwt
 import datetime
 from dotenv import load_dotenv
@@ -8,7 +8,7 @@ load_dotenv()
 
 jwtKey = os.getenv("jwt_key")
 login_api = Blueprint("login_api", __name__)
-getData = mysql_function.ConnectToSql()
+login = Login()
 jwt_key = jwtKey
 
 
@@ -20,8 +20,8 @@ def userAuth():
 		try:
 			if request.method == 'PUT':
 				data = request.json
-				if(getData.login(data["email"], data["password"])):
-					userData = getData.get_user_data(data["email"])
+				if(login.login(data["email"], data["password"])):
+					userData = login.get_user_data(data["email"])
 					response = make_response(ok)
 					global payload_data
 					payload_data = {

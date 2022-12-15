@@ -1,11 +1,10 @@
 from flask import Flask, render_template, redirect, request
-import mysql_function 
 from api import *
 
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
-getData = mysql_function.ConnectToSql()
+
 
 
 @app.route("/")
