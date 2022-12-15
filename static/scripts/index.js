@@ -158,7 +158,7 @@ async function loadAttractions(url,page){
             let leftFont = document.querySelectorAll(".left-p");
             let rightFont = document.querySelectorAll(".right-p");
             let contentPC = document.querySelectorAll(".content-pc");
-        
+            contentPC[page*pages + i].src = "";
             titleFont[page*pages + i].innerHTML = dataContent[i]["name"];
             leftFont[page*pages + i].innerHTML = dataContent[i]["mrt"];
             rightFont[page*pages + i].innerHTML = dataContent[i]["category"];
