@@ -216,7 +216,7 @@ input{
 .empty-shoppingcart{
     display:none;
     margin:auto;
-    margin-top:70px;
+    margin-top:90px;
 }
 
 @media(max-width:1200px){
