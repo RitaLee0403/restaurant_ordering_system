@@ -152,6 +152,8 @@ async function loadAttractions(url,page){
                 continue;
             }
             let newChild = child.cloneNode(true);
+
+            
             
             content.appendChild(newChild);
             let titleFont = document.querySelectorAll(".title-font");

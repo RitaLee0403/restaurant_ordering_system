@@ -8,9 +8,8 @@ load_dotenv()
 
 jwtKey = os.getenv("jwt_key")
 booking_api = Blueprint("booking_api", __name__)
-booking = Booking()
 jwt_key = jwtKey
-
+booking = Booking()
 
 @booking_api.route("/api/booking", methods = ["POST"])
 def apiBookingPost():

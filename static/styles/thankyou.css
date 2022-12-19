@@ -1,0 +1,21 @@
+p{
+    font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
+}
+.order-info{
+    font-size:50px;
+    padding-top:120px;
+    text-align: center;
+    font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
+    font-weight:bolder;
+    margin-top:0px;
+
+}
+.thankyou-img{
+    display:flex;
+    margin:auto;
+    margin-top:200px;
+}
+.bottom p{
+    
+    line-height: 80px;
+}

@@ -88,15 +88,15 @@
         <p class="contact-information-title">您的聯絡資訊</p>
         <div class="contact-information-name">
             <p>聯絡姓名&nbsp;&nbsp;:&nbsp;&nbsp;</p>
-            <input type="text"/>
+            <input class="contact-name" type="text"/>
         </div>
         <div class="contact-information-email">
             <p>聯絡信箱&nbsp;&nbsp;:&nbsp;&nbsp;</p>
-            <input type="text"/>
+            <input class="contact-email" type="text"/>
         </div>
         <div class="contact-information-email">
             <p>手機號碼&nbsp;&nbsp;:&nbsp;&nbsp;</p>
-            <input type="text"/>
+            <input class= "contact-phone-number" type="text"/>
         </div>
         <p style="margin-bottom:30px;">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</p>
     </div>
@@ -106,16 +106,16 @@
     <div class="credit-card-information">
         <p class="credit-card-information-title">您的聯絡資訊</p>
         <div class="credit-card-information-number">
-            <p>卡片號碼&nbsp;&nbsp;:&nbsp;&nbsp;</p>
-            <input type="password"/>
+            <p >卡片號碼&nbsp;&nbsp;:&nbsp;&nbsp;</p>
+            <div  class="tpfield" id="card-number"></div>
         </div>
         <div class="credit-card-information-passtime">
             <p>過期時間&nbsp;&nbsp;:&nbsp;&nbsp;</p>
-            <input type="text"/>
+            <div  class="tpfield" id="card-expiration-date"></div>
         </div>
         <div class="credit-card-information-password">
             <p>驗證密碼&nbsp;&nbsp;:&nbsp;&nbsp;</p>
-            <input type="text"/>
+            <div  class="tpfield" id="card-ccv"></div>
         </div>
     </div>
 
@@ -141,5 +141,7 @@
     </div>
     <script type="module" src="../static/scripts/loginSignup.js"></script>
     <script type="module" src="../static/scripts/booking.js"></script>
+    <script src="https://js.tappaysdk.com/tpdirect/v5.1.0"></script>
+    
 </body>
 </html>
