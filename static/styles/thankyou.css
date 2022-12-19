@@ -19,3 +19,19 @@ p{
     
     line-height: 80px;
 }
+.order-number{
+    font-size:50px;
+    text-align: center;
+    font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
+    font-weight:bolder;
+    margin-top:0px;
+}
+@media(max-width:600px){
+    .order-info{
+        font-size:20px;
+
+    }
+    .order-number{
+        font-size:20px;
+    }
+}

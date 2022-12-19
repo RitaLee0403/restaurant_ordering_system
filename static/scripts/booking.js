@@ -253,7 +253,7 @@ paymentBtn.addEventListener("click", ()=>{
                     bookingMessage.style.display = "block";
                     darker.style.display = "block";
                     bookingMessageFont.innerHTML = " 購買成功";
-                    window.location = "/thankyou";
+                    window.location = `/thankyou?number=${data.data.number}`;
                 }else{
                     bookingMessage.style.display = "block";
                     darker.style.display = "block";

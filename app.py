@@ -33,7 +33,8 @@ def booking():
     
 @app.route("/thankyou")
 def thankyou():
-	return render_template("thankyou.html")
+	num = request.args.get("number",'')
+	return render_template("thankyou.html",num = num)
 
 @app.route("/api/orders", methods = ["POST"])
 def api_order():
