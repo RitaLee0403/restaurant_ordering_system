@@ -116,6 +116,7 @@ def get_order(orderNumber):
 			booking_data = Booking.get_booking_data(getId)
 			trip = []
 			attraction_data = {"attraction":{}}
+			print(booking_data)
 			for i in booking_data:
 				attraction_data["attraction"]["id"] = i[0]
 				attraction_data["attraction"]["name"] = i[1]
@@ -124,6 +125,7 @@ def get_order(orderNumber):
 				attraction_data["date"] = i[4]
 				attraction_data["time"] = i[5]
 				trip.append(attraction_data)
+				attraction_data = {"attraction":{}}
 
 
 			data = {
