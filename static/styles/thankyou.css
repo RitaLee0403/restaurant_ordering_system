@@ -26,6 +26,10 @@ p{
     font-weight:bolder;
     margin-top:0px;
 }
+.bottom{
+    width:100%;
+    left:0;
+}
 @media(max-width:600px){
     .order-info{
         font-size:20px;
