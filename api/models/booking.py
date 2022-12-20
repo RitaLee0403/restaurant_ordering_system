@@ -35,11 +35,37 @@ class Booking:
         cnx.close()
         return record
     
+    def get_order_attraction_data(self, id):
+        cnx = pool.get_connection()
+        cursor = cnx.cursor()
+        execute = 'SELECT data.id, MAX(data.name), MAX(data.address), MIN(picture.pc), MAX(payment.date), MAX(payment.time)\
+                    FROM data \
+                    JOIN picture ON data.idName = picture.id \
+                    JOIN payment on payment.id = %s\
+                    where data.id = payment.attractionId GROUP BY data.idName;'
+        values = ([f"{id}"])
+        cursor.execute(execute,values)
+        record = cursor.fetchall()
+        cursor.close()
+        cnx.close()
+        return record
+    
+    
     def delete_booking(self, userId, attractionId):
         cnx = pool.get_connection()
         cursor = cnx.cursor()
         execute = 'DELETE FROM `booking` WHERE userId = %s AND attractionId = %s;'
         values = (userId, attractionId)
+        cursor.execute(execute,values)
+        cnx.commit()
+        cursor.close()
+        cnx.close()
+        
+    def delete_all(self, userId):
+        cnx = pool.get_connection()
+        cursor = cnx.cursor()
+        execute = 'DELETE FROM `booking` WHERE userId = %s ;'
+        values = ([f"{userId}"]) 
         cursor.execute(execute,values)
         cnx.commit()
         cursor.close()

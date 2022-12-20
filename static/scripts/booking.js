@@ -129,12 +129,11 @@ fetch("/api/booking")
     }
 })
 
-//點擊刪除商品時跳出的popup視窗
+//點擊跳出的popup視窗
 bookingMessageClose.addEventListener("click",()=>{
     bookingMessage.style.display = "none";
     darker.style.display = "none";
     if(bookingMessageFont.innerHTML === "刪除失敗" || bookingMessageFont.innerHTML ==="刪除成功"){
-        console.log("here")
         location.reload();
     }
     
@@ -204,8 +203,8 @@ TPDirect.card.setup({
     },
   });
   
-//點擊付款
 
+//點擊付款
 paymentBtn.addEventListener("click", ()=>{
     const inputName = document.querySelector(".contact-name").value;
     const inputEmail = document.querySelector(".contact-email").value;

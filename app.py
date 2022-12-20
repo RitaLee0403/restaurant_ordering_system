@@ -82,6 +82,7 @@ def api_order():
 						}
 					}
 				}
+				Booking.delete_all(getId)
 				return response_data,200
 			else:
 				response_data = {
@@ -113,10 +114,9 @@ def get_order(orderNumber):
 			getId = jwt.decode(getId, jwt_key, algorithms="HS256")
 			getId = getId["data"]["id"]
 			order_data = Booking.get_order_data(orderNumber)
-			booking_data = Booking.get_booking_data(getId)
+			booking_data = Booking.get_order_attraction_data(orderNumber)
 			trip = []
 			attraction_data = {"attraction":{}}
-			print(booking_data)
 			for i in booking_data:
 				attraction_data["attraction"]["id"] = i[0]
 				attraction_data["attraction"]["name"] = i[1]
