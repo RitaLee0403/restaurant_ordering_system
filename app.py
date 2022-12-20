@@ -150,7 +150,7 @@ def get_order(orderNumber):
 	except:
 		return{
 			"error":True,
-			"message" : "未登入系統，拒絕存取"
+			"message" : "伺服器內部錯誤"
 		},500
 	
 app.register_blueprint(signup_api)
