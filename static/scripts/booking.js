@@ -6,6 +6,7 @@ const emptyShoppingcart = document.querySelector(".empty-shoppingcart");
 const bookingMessage = document.querySelector(".booking-message");
 const darker = document.querySelector(".darker");
 const bookingMessageClose = document.querySelector(".booking-message-btn");
+const paymentBtn = document.querySelector(".payment-btn");
 
 
 let title = document.querySelector(".booking-title");
@@ -17,6 +18,9 @@ let userName, data, time, productImage, productTitle, productDate, productTime, 
 let newDiv, newImg, newP, attractionId, productName;
 let count = 0;
 let totalPrice = 0;
+let orderData;
+let orderDataTrip = [];
+let ordereDateTripObj = {};
 
 
 fetch("/api/user/auth")
@@ -70,6 +74,17 @@ fetch("/api/booking")
                 productPrice[i].innerHTML =`費用 :  ${data[i].price}`;
                 productAddress[i].innerHTML =`地點 :  ${data[i].attraction.address}`;
                 trashcan = document.querySelectorAll(".trashcan");
+                ordereDateTripObj = {
+                    "attraction":{
+                        "id" : data[i].attraction.id,
+                        "name" : data[i].attraction.name,
+                        "address" : data[i].attraction.address,
+                        "image" : data[i].attraction.image
+                    },
+                    "date" : data[i].date,
+                    "time" : data[i].time
+                }
+                orderDataTrip[i] = ordereDateTripObj;
                 trashcan[i].addEventListener("click",()=>{ //刪除booking資料
                     productName = data[i].attraction.name
                     fetch(`/api/attractions?keyword=${productName}`)
@@ -96,6 +111,7 @@ fetch("/api/booking")
                             if("ok" in data){
                                 bookingMessage.style.display = "block";
                                 darker.style.display = "block";
+                                bookingMessageFont.innerHTML ="刪除成功"
                             }
                             if("error" in data){
                                 bookingMessage.style.display = "block";
@@ -106,18 +122,158 @@ fetch("/api/booking")
                         
                     })    
                 })
-                
             }
             totalCost.innerHTML = `總價 : 新台幣${totalPrice}元`;
+            
         }
     }
 })
 
-//點擊刪除商品時跳出的popup視窗
+//點擊跳出的popup視窗
 bookingMessageClose.addEventListener("click",()=>{
     bookingMessage.style.display = "none";
     darker.style.display = "none";
-    location.reload();
+    if(bookingMessageFont.innerHTML === "刪除失敗" || bookingMessageFont.innerHTML ==="刪除成功"){
+        location.reload();
+    }
+    
+})
+
+TPDirect.setupSDK(
+    126855,
+    "app_dpKeO3WPG3kSEwvU64ADMVj0w5qIe682MtWRl5FkQRq7IKNXff5iNeTWF5Zi",
+    "sandbox"
+  );
+  
+
+
+let fields = {
+    number: {
+        // css selector
+        element: '#card-number',
+        placeholder: '**** **** **** ****'
+    },
+    expirationDate: {
+        // DOM object
+        element: document.getElementById('card-expiration-date'),
+        placeholder: 'MM / YY'
+    },
+    ccv: {
+        element: '#card-ccv',
+        placeholder: 'ccv'
+    }
+}
+
+TPDirect.card.setup({
+    fields: fields,
+    styles: {
+      // Style all elements
+      input: {},
+      // Styling ccv field
+      "input.ccv": {
+        "font-size": "20px",
+      },
+      // Styling expiration-date field
+      "input.expiration-date": {
+        "font-size": "16px",
+      },
+      // Styling card-number field
+      "input.card-number": {
+        "font-size": "16px",
+      },
+      // style focus state
+      ":focus": {
+        color: "#337788",
+      },
+      // style valid state
+      ".valid": {
+        color: "gray",
+      },
+      // style invalid state
+      ".invalid": {
+        color: "black",
+      },
+      // Media queries
+      // Note that these apply to the iframe, not the root window.
+      "@media screen and (max-width: 400px)": {
+        input: {
+          color: "gray",
+        },
+      },
+    },
+  });
+  
+
+//點擊付款
+paymentBtn.addEventListener("click", ()=>{
+    const inputName = document.querySelector(".contact-name").value;
+    const inputEmail = document.querySelector(".contact-email").value;
+    const inputTelephone = document.querySelector(".contact-phone-number").value;
+    TPDirect.card.getPrime(function (result) {
+        if (!inputEmail || !inputName || !inputTelephone) {
+            bookingMessage.style.display = "block";
+            darker.style.display = "block";
+            bookingMessageFont.innerHTML = " 請輸入聯絡人資訊";
+            return;
+        }
+        if (result.status !== 0) {
+            bookingMessage.style.display = "block";
+            darker.style.display = "block";
+            bookingMessageFont.innerHTML = " 請確認信用卡資訊是否正確";
+            return;
+        }
+        let inputPrime = result.card.prime;
+        orderData = {
+            "prime" : inputPrime,
+            "order" : {
+                "price": totalPrice,
+                "trip" :orderDataTrip,
+                "contact":{
+                    "name" : inputName,
+                    "email" : inputEmail,
+                    "phone" : inputTelephone
+                }
+            }
+        }
+        fetch("api/orders",{
+            method : 'POST',
+            headers:{
+                'Content-type':'application/json; charset=UTF-8',
+            },
+            body:JSON.stringify(orderData)
+        })
+        .then((response)=>{
+            return response.json()
+        })
+        .then((data)=>{
+            
+            if("data" in data){
+                if(data.data.payment.message === "Success"){
+                    bookingMessage.style.display = "block";
+                    darker.style.display = "block";
+                    bookingMessageFont.innerHTML = " 購買成功";
+                    window.location = `/thankyou?number=${data.data.number}`;
+                }else{
+                    bookingMessage.style.display = "block";
+                    darker.style.display = "block";
+                    bookingMessageFont.innerHTML = " 購買失敗";
+                }
+            }
+            if("error" in data){
+                if(data.message === "未登入"){
+                    bookingMessage.style.display = "block";
+                    darker.style.display = "block";
+                    bookingMessageFont.innerHTML = "請先登入";
+                }
+            }   else if(data.message === "伺服器內部錯誤"){
+                    bookingMessage.style.display = "block";
+                    darker.style.display = "block";
+                    bookingMessageFont.innerHTML = "伺服器內部錯誤";
+            }
+        })
+
+
+    })
 })
 
 

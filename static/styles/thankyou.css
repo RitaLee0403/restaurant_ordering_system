@@ -1,0 +1,41 @@
+p{
+    font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
+}
+.order-info{
+    font-size:50px;
+    padding-top:120px;
+    text-align: center;
+    font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
+    font-weight:bolder;
+    margin-top:0px;
+
+}
+.thankyou-img{
+    display:flex;
+    margin:auto;
+    margin-top:200px;
+}
+.bottom p{
+    
+    line-height: 80px;
+}
+.order-number{
+    font-size:50px;
+    text-align: center;
+    font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
+    font-weight:bolder;
+    margin-top:0px;
+}
+.bottom{
+    width:100%;
+    left:0;
+}
+@media(max-width:600px){
+    .order-info{
+        font-size:20px;
+
+    }
+    .order-number{
+        font-size:20px;
+    }
+}

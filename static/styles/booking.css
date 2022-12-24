@@ -129,13 +129,25 @@ hr{
     display:flex;
     margin-bottom:30px;
 }
+.credit-card-information-number p{
+    display:flex;
+    align-items: center;
+}
 .credit-card-information-passtime{
     display:flex;
     margin-bottom:30px;
 }
+.credit-card-information-passtime p{
+    display:flex;
+    align-items: center;
+}
 .credit-card-information-password{
     display:flex;
     margin-bottom:30px;
+}
+.credit-card-information-password p{
+    display:flex;
+    align-items: center;
 }
 
 input{
@@ -177,6 +189,7 @@ input{
     text-align: center;
     border-radius: 6px;
     margin-bottom:20px;
+    cursor: pointer;
 }
 
 .booking-message{
@@ -216,9 +229,18 @@ input{
 .empty-shoppingcart{
     display:none;
     margin:auto;
-    margin-top:50px;
+    margin-top:90px;
 }
 
+
+.tpfield {
+    font-size:20px;
+    height: 30px;
+    width: 200px;
+    border: 1px solid gray;
+    margin: 5px 0;
+    padding-left: 10px;
+}
 @media(max-width:1200px){
     .booking-product{
         flex-wrap:wrap;  
