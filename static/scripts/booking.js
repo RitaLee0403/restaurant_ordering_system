@@ -8,7 +8,6 @@ const darker = document.querySelector(".darker");
 const bookingMessageClose = document.querySelector(".booking-message-btn");
 const paymentBtn = document.querySelector(".payment-btn");
 
-
 let title = document.querySelector(".booking-title");
 let bookingContent = document.querySelector(".booking-content");
 let totalCost = document.querySelector(".total-price");
@@ -22,7 +21,7 @@ let orderData;
 let orderDataTrip = [];
 let ordereDateTripObj = {};
 
-
+document.title = "購物車";
 fetch("/api/user/auth")
 .then((response)=>{
     return response.json()
@@ -109,14 +108,10 @@ fetch("/api/booking")
                         })
                         .then((data)=>{
                             if("ok" in data){
-                                bookingMessage.style.display = "block";
-                                darker.style.display = "block";
-                                bookingMessageFont.innerHTML ="刪除成功"
+                                bookingErrorMsg("刪除成功");
                             }
                             if("error" in data){
-                                bookingMessage.style.display = "block";
-                                darker.style.display = "block";
-                                bookingMessageFont.innerHTML = "刪除失敗";
+                                bookingErrorMsg("刪除失敗");
                             }
                         })
                         
@@ -209,17 +204,22 @@ paymentBtn.addEventListener("click", ()=>{
     const inputName = document.querySelector(".contact-name").value;
     const inputEmail = document.querySelector(".contact-email").value;
     const inputTelephone = document.querySelector(".contact-phone-number").value;
+    let emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
     TPDirect.card.getPrime(function (result) {
         if (!inputEmail || !inputName || !inputTelephone) {
-            bookingMessage.style.display = "block";
-            darker.style.display = "block";
-            bookingMessageFont.innerHTML = " 請輸入聯絡人資訊";
+            bookingErrorMsg("⚠請輸入聯絡人資訊");
+            return;
+        }
+        if(!(inputEmail.search(emailRule) != -1)){
+            bookingErrorMsg("⚠email格式錯誤");
+            return;
+        }
+        if(isNaN(inputTelephone)){
+            bookingErrorMsg("⚠電話號碼格式錯誤");
             return;
         }
         if (result.status !== 0) {
-            bookingMessage.style.display = "block";
-            darker.style.display = "block";
-            bookingMessageFont.innerHTML = " 請確認信用卡資訊是否正確";
+            bookingErrorMsg("⚠請確認信用卡資訊是否正確");
             return;
         }
         let inputPrime = result.card.prime;
@@ -249,32 +249,33 @@ paymentBtn.addEventListener("click", ()=>{
             
             if("data" in data){
                 if(data.data.payment.message === "Success"){
-                    bookingMessage.style.display = "block";
-                    darker.style.display = "block";
-                    bookingMessageFont.innerHTML = " 購買成功";
                     window.location = `/thankyou?number=${data.data.number}`;
                 }else{
-                    bookingMessage.style.display = "block";
-                    darker.style.display = "block";
-                    bookingMessageFont.innerHTML = " 購買失敗";
+                    bookingErrorMsg("購買失敗");
                 }
             }
             if("error" in data){
                 if(data.message === "未登入"){
-                    bookingMessage.style.display = "block";
-                    darker.style.display = "block";
-                    bookingMessageFont.innerHTML = "請先登入";
+                    bookingErrorMsg("請先登入");
                 }
             }   else if(data.message === "伺服器內部錯誤"){
-                    bookingMessage.style.display = "block";
-                    darker.style.display = "block";
-                    bookingMessageFont.innerHTML = "伺服器內部錯誤";
+                    bookingErrorMsg("伺服器內部錯誤");
+                    
             }
         })
 
 
     })
 })
+
+
+
+
+function bookingErrorMsg(msg){
+    bookingMessage.style.display = "block";
+    darker.style.display = "block";
+    bookingMessageFont.innerHTML = msg;
+}
 
 
 //產生產品的HTML

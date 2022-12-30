@@ -1,147 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>購物車</title>
-    <link rel="stylesheet" href="../static/styles/navbar_and_footer.css" />
-    <link rel="stylesheet" href="../static/styles/login_signup.css" />
-    <link rel="stylesheet" href="../static/styles/booking.css" />
-</head>
-<body>
-    <div style="width:1200px; ">
-        <div class="navbar">
-            <div class="title-left">
-                <p id="titleLeftFont">台北一日遊</p>
-            </div>
-            <div class="title-right">
-                <p class="order">預定行程</p>
-                <p class="login-btn">登錄/註冊</p>  
-            </div>          
-        </div> 
-    </div>
+{% extends "navbar.html" %}
 
-    <div class="darker">
-    </div>
-  <div class="login">
-        <div class="login-inner">
-            <div class="login-content">
-                <div class="login-title">
-                    <p>登入會員帳號</p>
-                    <img class="login-close" src="../static/images/icon_close.png"/>
-                </div>
-                <div class="login-input">
-                    <input type="text" id="loginEmail" placeholder="輸入電子信箱"/>
-                    <input type="password" id = "loginPassword" placeholder="輸入密碼"/>
-                    <input id = "clickToLogin" type="submit" name="submit" value="登入帳號">
-                    <p class="login-error-msg"></p>
-                    <a class="signup-btn">還沒有帳戶?點此註冊</a>
-                </div>
-            </div>
-        </div>
+{% block style %}
+<link rel="stylesheet" href="../static/styles/navbar_and_footer.css" />
+<link rel="stylesheet" href="../static/styles/login_signup.css" />
+<link rel="stylesheet" href="../static/styles/booking.css" />
+{% endblock %}
 
+{% block main %}
+<div class="booking-content">
+    <p class="booking-title"></p>
+    <p class="booking-empty">目前沒有任何待預定的行程</p>
+</div>
+<hr class="hr"/>
+<div class="contact-information">
+    <p class="contact-information-title">您的聯絡資訊</p>
+    <div class="contact-information-name">
+        <p>聯絡姓名&nbsp;&nbsp;:&nbsp;&nbsp;</p>
+        <input class="contact-name" type="text"/>
     </div>
+    <div class="contact-information-email">
+        <p>聯絡信箱&nbsp;&nbsp;:&nbsp;&nbsp;</p>
+        <input class="contact-email" type="text"/>
+    </div>
+    <div class="contact-information-email">
+        <p>手機號碼&nbsp;&nbsp;:&nbsp;&nbsp;</p>
+        <input class= "contact-phone-number" type="text"/>
+    </div>
+    <p style="margin-bottom:30px;">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</p>
+</div>
 
-    <div class="signup">
-        <div class="signup-inner">
-            <div class="signup-content">
-                <div class="signup-title">
-                    <p>註冊會員帳號</p>
-                    <img class="signup-close" src="../static/images/icon_close.png"/>
-                </div>
-                <div class="signup-input" >
-                    <input type="text" id="name" placeholder="輸入姓名" />
-                    <input type="text" id = "email" placeholder="輸入電子郵件" />
-                    <input type="password" id = "password" placeholder="輸入密碼" />
-                    <input id ="clickToSignup" type="submit" name="SB" value="註冊新帳戶">
-                 
-                    <p class="error-msg"></p>
-                  
-                    <a class="had-login-btn">已經有帳戶了?點此登入</a>
-                </div >
-            </div>
-        </div> 
+<hr class="hr"/>
 
+<div class="credit-card-information">
+    <p class="credit-card-information-title">您的聯絡資訊</p>
+    <div class="credit-card-information-number">
+        <p >卡片號碼&nbsp;&nbsp;:&nbsp;&nbsp;</p>
+        <div  class="tpfield" id="card-number"></div>
     </div>
-    <div class="booking-content">
-        <p class="booking-title"></p>
-        <p class="booking-empty">目前沒有任何待預定的行程</p>
-        <!-- <div class="booking-product">
-            <div class="left-product">
-                <img class="product-image"/>
-            </div>
-            <div class="right-product">
-                <div class="right-product-img-title">
-                <p class="right-product-title"></p>
-                <img>
-                </div>
-                <p class="product-date"></p>
-                <p class="product-time"></p>
-                <p class="product-price"></p>
-                <p class="product-address"></p>
-            </div>
-        </div>   -->
+    <div class="credit-card-information-passtime">
+        <p>過期時間&nbsp;&nbsp;:&nbsp;&nbsp;</p>
+        <div  class="tpfield" id="card-expiration-date"></div>
     </div>
-    <hr class="hr"/>
-    <div class="contact-information">
-        <p class="contact-information-title">您的聯絡資訊</p>
-        <div class="contact-information-name">
-            <p>聯絡姓名&nbsp;&nbsp;:&nbsp;&nbsp;</p>
-            <input class="contact-name" type="text"/>
-        </div>
-        <div class="contact-information-email">
-            <p>聯絡信箱&nbsp;&nbsp;:&nbsp;&nbsp;</p>
-            <input class="contact-email" type="text"/>
-        </div>
-        <div class="contact-information-email">
-            <p>手機號碼&nbsp;&nbsp;:&nbsp;&nbsp;</p>
-            <input class= "contact-phone-number" type="text"/>
-        </div>
-        <p style="margin-bottom:30px;">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</p>
+    <div class="credit-card-information-password">
+        <p>驗證密碼&nbsp;&nbsp;:&nbsp;&nbsp;</p>
+        <div  class="tpfield" id="card-ccv"></div>
     </div>
-
-    <hr class="hr"/>
-
-    <div class="credit-card-information">
-        <p class="credit-card-information-title">您的聯絡資訊</p>
-        <div class="credit-card-information-number">
-            <p >卡片號碼&nbsp;&nbsp;:&nbsp;&nbsp;</p>
-            <div  class="tpfield" id="card-number"></div>
-        </div>
-        <div class="credit-card-information-passtime">
-            <p>過期時間&nbsp;&nbsp;:&nbsp;&nbsp;</p>
-            <div  class="tpfield" id="card-expiration-date"></div>
-        </div>
-        <div class="credit-card-information-password">
-            <p>驗證密碼&nbsp;&nbsp;:&nbsp;&nbsp;</p>
-            <div  class="tpfield" id="card-ccv"></div>
-        </div>
-    </div>
+</div>
 
 
-    <div class="booking-message">
-        <div>
-            <p class="booking-message-font">刪除成功</p>
-            <p class="booking-message-btn">OK</p>
-        </div>
+<div class="booking-message">
+    <div>
+        <p class="booking-message-font">刪除成功</p>
+        <p class="booking-message-btn">OK</p>
     </div>
+</div>
 
-    <hr class="hr"/>
-    <div class="price-and-btn">
-        <div>
-            <p class="total-price"></p>
-            <p class="payment-btn">確認訂購並付款</p>
-        </div>
+<hr class="hr"/>
+<div class="price-and-btn">
+    <div>
+        <p class="total-price"></p>
+        <p class="payment-btn">確認訂購並付款</p>
     </div>
+</div>
 
-    <img class="empty-shoppingcart" src="../static/images/shoppingcart_empty.png"/>
-    <div class="bottom">
-        <p>COPYRIGHT © 2021 台北一日遊</p>
-    </div>
-    <script type="module" src="../static/scripts/loginSignup.js"></script>
-    <script type="module" src="../static/scripts/booking.js"></script>
-    <script src="https://js.tappaysdk.com/tpdirect/v5.1.0"></script>
-    
-</body>
-</html>
+<img class="empty-shoppingcart" src="../static/images/shoppingcart_empty.png"/>
+{% endblock %}
+
+{% block script %}
+<script type="module" src="../static/scripts/loginSignup.js"></script>
+<script type="module" src="../static/scripts/booking.js"></script>
+<script src="https://js.tappaysdk.com/tpdirect/v5.1.0"></script>
+{% endblock %}

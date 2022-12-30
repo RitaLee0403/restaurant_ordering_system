@@ -108,19 +108,60 @@ class Booking:
         cursor.close()
         cnx.close()
         return record
-        
     
-    # def get_order_number(userId):
-    #     cnx = pool.get_connection()
-    #     cursor = cnx.cursor() 
-    #     execute = 'SELECT id from `order_product` where userId = %s'
-    #     values = ([f'{userId}'])
-    #     cursor.execute(execute,values)
-        
-    #     record = cursor.fetchall()
-    #     cursor.close()
-    #     cnx.close()
-    #     return record
+    def get_order_data(self, userId):
+        cnx = pool.get_connection()
+        cursor = cnx.cursor()
+        execute = "SELECT `id`,\
+                        `attractionId`,\
+                        `time`,\
+                        `date`,\
+                        `name`,\
+                        `email`,\
+                        `phone`,\
+                        `price` \
+                        WHERE `userId` = %s"
+        values = ([f"{userId}"]) 
+        cursor.execute(execute, values)
+        record = cursor.fetchall()
+        cursor.close()
+        cnx.close()
+        return record
+    
+
+    def upload_headshot(self, userId, headshot):
+        cnx = pool.get_connection()
+        cursor = cnx.cursor()
+        execute = 'INSERT INTO `user_headshot`(`userId`, `headshot`) VALUES(%s, %s)'
+        # a = self.convertToBinary(headshot)
+        values = (userId, headshot)
+        print(headshot)
+        cursor.execute(execute,values)
+        cnx.commit()
+        cursor.close()
+        cnx.close()
+    
+    def get_headshot(self, userId):
+        cnx = pool.get_connection()
+        cursor = cnx.cursor()
+        execute = 'SELECT `headshot` from `user_headshot` WHERE `userId` = %s'
+        values = ([f"{userId}"]) 
+        cursor.execute(execute,values)
+        record = cursor.fetchall()[0][0]
+        test = self.convertBinaryToFile(record,"static/images/headshot.png")
+        cursor.close()
+        cnx.close()
+        return test
+    
+    def convertToBinary(self,filename):
+        with open(filename, 'rb') as file:
+            binarydata = file.read()
+        return binarydata
+    
+    def convertBinaryToFile(self,binarydata,filename):
+        with open(filename,'wb') as file:
+            print("type",type(binarydata))
+            file.write(binarydata)
         
         
         

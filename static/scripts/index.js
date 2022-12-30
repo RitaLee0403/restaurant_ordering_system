@@ -12,6 +12,7 @@ let clickEvent = false;
 let prevSearch = "";
 let url = "/api/categories";
 
+document.title = "台北一日遊";
 window.onload = function(){
     getHomePage();
 }

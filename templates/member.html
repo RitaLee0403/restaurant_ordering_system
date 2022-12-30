@@ -1,0 +1,65 @@
+{% extends "navbar.html" %}
+
+{% block style %}
+<link rel="stylesheet" href="../static/styles/navbar_and_footer.css" />
+<link rel="stylesheet" href="../static/styles/login_signup.css" />
+<link rel="stylesheet" href="../static/styles/member_page.css" />
+{% endblock %}
+
+{% block main %}
+<div class="profile">
+    <p class='title'>個人檔案</p>
+    <img  class="paper-clip" src = "/static/images/thumbtack.png"/>
+    <div class= "content">
+        <div class="left-profile">
+            <img class="headshot"  />
+            <div >
+                <p class="headshot-title">大頭貼</p>
+                <img class="pen-btn" src = "/static/images/pen.png"/>
+            </div>
+            <form method="POST" action = "/upload_img" enctype="multipart/form-data">
+                <input  type="file"  class="img-file" accept=".png" name="photo" >
+                <input type="submit" value="上傳照片" class="upload-pc-btn" />
+                <p class="cancel-img-btn">取消修改</p>  
+            </form> 
+        </div>
+
+        <div class="right-profile">
+            <div class='id-content'>
+                id &nbsp;&nbsp;:&nbsp;&nbsp;
+                <p class="id-name">{{id}}</p>
+            </div>
+            <div class='name-content'>
+                姓名 &nbsp;&nbsp;:&nbsp;&nbsp;
+                <p class="username">{{name}}</p>
+                <input class="name-input" type="text"/>
+                <img  class="change-name-btn" src = "/static/images/pen.png"/>
+                <img  class="ok-name-btn" src = "/static/images/ok.png"/>
+            </div>
+            <div class='email-content'>
+                <p class="email-font">Email &nbsp;&nbsp;:&nbsp;&nbsp;</p>
+                <p class="user-email">{{email}}</p>
+                <input class="email-input" type="text"/>
+                <img  class="change-email-btn" src = "/static/images/pen.png"/>
+                <img  class="ok-email-btn" src = "/static/images/ok.png"/>
+            </div>
+            <p class="update-error-msg">adfasdfasd</p>
+            <p class="cancel-btn">取消修改</p>        
+        </div>
+        
+    </div>
+    
+</div>
+<div class="message">
+    <div>
+        <p class="message-font">新增成功</p>
+    </div>
+</div>
+{% endblock %}
+
+
+
+{% block script %}
+<script type="module" src="../static/scripts/loginSignup.js"></script>
+<script type="module" src="../static/scripts/member_page.js"></script>
+{% endblock %}
