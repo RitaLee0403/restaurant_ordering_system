@@ -5,10 +5,10 @@ class Order:
     def get_history_order(self, userId):
         cnx = pool.get_connection()
         cursor = cnx.cursor()
-        execute = 'select MAX(payment.id),MAX(time),MAX(date),MAX(payment.name),MAX(email),MAX(phone),MAX(price),MAX(data.name),MAX(data.address),MIN(picture.pc) from payment\
-                join data on payment.attractionId = data.id\
-                join picture on data.idName = picture.id\
-                where payment.userId = %s GROUP BY data.idName order by `payment`.`id`;'
+        execute = 'SELECT payment.id, time, date, payment.name, email, phone, price, data.name as attraction_name, data.address as address, MIN(picture.pc) as picture FROM payment \
+                JOIN data ON payment.attractionId = data.id JOIN picture ON data.idName = picture.id WHERE payment.userId = %s\
+                GROUP BY payment.id, time, date, payment.name, email, phone, price, data.name, data.address\
+                ORDER BY payment.id;'
         values = ([f"{userId}"])
         cursor.execute(execute,values)
         record = cursor.fetchall()
