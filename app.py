@@ -13,8 +13,6 @@ jwt_key = os.getenv("jwt_key")
 
 
 
-
-
 @app.route("/")
 def index():	
 	return render_template("index.html")

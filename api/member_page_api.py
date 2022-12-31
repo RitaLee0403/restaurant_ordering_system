@@ -67,7 +67,7 @@ def upload_img():
 	image = image.stream.read()
 	if(len(image) == 0):
 		return redirect("/member_page")
-	write_file(image,f"static/images/{getId}.png") #儲存到static/images
+	write_file(image,f"./static/images/{getId}.png") #儲存到static/images
 	return redirect("/member_page")
 	
 
