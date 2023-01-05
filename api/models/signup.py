@@ -1,7 +1,7 @@
 from mysql_connect import pool
 
 class Signup:
-    def is_signup_success(self,email):
+    def is_email_registered(self,email):
         cnx = pool.get_connection()
         cursor = cnx.cursor()
         execute = 'SELECT `email` from `account` WHERE `email` = %s'
@@ -11,10 +11,10 @@ class Signup:
         if(len(record) == 0):
             cursor.close()
             cnx.close()
-            return True
+            return False
         cursor.close()
         cnx.close()
-        return False
+        return True
     
     def signup(self,name, email, password):
         cnx = pool.get_connection()

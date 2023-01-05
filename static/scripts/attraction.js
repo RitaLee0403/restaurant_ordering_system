@@ -3,7 +3,7 @@ const arrowRight = document.querySelector(".arrow-right");
 const contentLeft = document.querySelector(".content-left");
 const pictureDot = document.querySelector(".dot-btn");
 const datetimeInput = document.querySelectorAll(".datetime-input");
-
+const productCount = document.querySelector(".product-count");
 
 let costNum = document.querySelector(".cost-number");
 let selectMorning = document.querySelector(".select-time-morning");
@@ -25,6 +25,8 @@ let bookingMessageClose = document.querySelector(".booking-message-btn");
 let bookingMessageFont = document.querySelector(".booking-message-font");
 let title = document.querySelector(".title");
 let category = document.querySelector(".category");
+let  pcBackground = document.querySelector(".pc-background");
+let preloadingPc = document.querySelector(".lds-dual-ring");
 
 
 
@@ -105,18 +107,21 @@ fetch(url)
         newDot.className = "dot";
         pictureDot.appendChild(newDot);
         let newImg = document.createElement("img");
+        newImg.onload = ()=>{
+            contentLeft.insertBefore(newImg,arrowLeft);
+        }
+        pcBackground.style.display = "none";
         newImg.src = data["images"][i];
+        arrowLeft.style.display = "block";
+        arrowRight.style.display = "block";
         newImg.className = "content-pc";
         
         
         if(i > 0){
             newImg.style.display="none";
         }
-        contentLeft.insertBefore(newImg,arrowLeft);
-        
+    
     }
-    
-    
     
     year = datetime.getFullYear();
     month = datetime.getMonth() + 1;
@@ -138,6 +143,8 @@ fetch(url)
     transport.innerHTML = data["transport"];
     clickDotToChangePc();
 })
+
+
 
 
 //點擊預定行程
@@ -168,6 +175,14 @@ orderBtn.addEventListener("click",()=>{
         if("ok" in data){
             bookingMessage.style.display = "block";
             darker.style.display = "block";
+            fetch("/api/booking") //取得購物車訂單數量
+            .then((response)=>{
+                return response.json()
+            })
+            .then((data)=>{
+                productCount.innerHTML = data.data.length;
+            })
+            
         }
         if("error" in data && data.message === "日期輸入錯誤"){
             bookingMessage.style.display = "block";

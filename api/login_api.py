@@ -1,5 +1,7 @@
 from flask import Blueprint, request, make_response
 from api.models.login import Login
+from api.models.updatee_profile import UpdateProfile
+from api.models.signup import Signup
 import jwt
 import datetime
 from dotenv import load_dotenv
@@ -10,6 +12,38 @@ jwtKey = os.getenv("jwt_key")
 login_api = Blueprint("login_api", __name__)
 login = Login()
 jwt_key = jwtKey
+UpdateProfile = UpdateProfile()
+Signup = Signup()
+
+
+@login_api.route("/update_token", methods = ["POST"])
+def update_token():
+	ok = {
+		"ok" : True
+	}
+	getId = request.cookies.get("token")
+	getId = jwt.decode(getId, jwt_key, algorithms="HS256")
+	getId = getId["data"]["id"]	
+	response = make_response(ok)
+	response.delete_cookie("token")
+	name = UpdateProfile.get_user_data(getId)[0][0]
+	email = UpdateProfile.get_user_data(getId)[0][1]
+	payload_data = {
+		"data":{
+			"id" : getId,
+			"name" : name,
+			"email" : email
+		}
+	}
+	token = jwt.encode(payload_data, jwt_key, algorithm="HS256")
+	expire_date = datetime.datetime.now()
+	expire_date = expire_date + datetime.timedelta(days=7)
+	response.set_cookie("token", token,expires= expire_date)
+	global initCookie
+	initCookie = token
+	return response, 200
+	
+	
 
 
 @login_api.route("/api/user/auth" , methods = ["GET", "PUT", "DELETE"])
@@ -23,7 +57,6 @@ def userAuth():
 				if(login.login(data["email"], data["password"])):
 					userData = login.get_user_data(data["email"])
 					response = make_response(ok)
-					global payload_data
 					payload_data = {
 						"data" : {
 						"id" : userData[0][0],
