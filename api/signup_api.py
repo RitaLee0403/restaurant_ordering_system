@@ -1,5 +1,5 @@
 from flask import Blueprint ,  request
-from api.models.signup import Signup
+from models.signup import Signup
 import re
 
 signup_api = Blueprint("signup_api", __name__)

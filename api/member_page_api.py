@@ -2,9 +2,9 @@ from flask import Blueprint ,  request, render_template, redirect
 import jwt
 import os
 from dotenv import load_dotenv
-from api.models.booking import Booking
-from api.models.updatee_profile import UpdateProfile
-from api.models.signup import Signup
+from models.booking import Booking
+from models.updatee_profile import UpdateProfile
+from models.signup import Signup
 load_dotenv()
 
 member_page_api = Blueprint("member_page_api", __name__)

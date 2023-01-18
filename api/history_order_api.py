@@ -2,7 +2,7 @@ from flask import Blueprint ,  request, render_template, redirect
 import jwt
 import os
 from dotenv import load_dotenv
-from api.models.orders import Order
+from models.orders import Order
 load_dotenv()
 
 history_order_api = Blueprint("history_order_api", __name__)

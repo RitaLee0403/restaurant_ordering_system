@@ -1,5 +1,5 @@
 from flask import Blueprint ,  request
-from api.models.categories import Categories
+from models.categories import Categories
 categories_api = Blueprint("categories_api", __name__)
 categories = Categories()
 

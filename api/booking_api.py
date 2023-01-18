@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 import jwt
-from api.models.booking import Booking
+from models.booking import Booking
 import time
 from dotenv import load_dotenv
 import os
