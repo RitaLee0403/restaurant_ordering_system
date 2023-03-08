@@ -1,7 +1,7 @@
 from flask import Blueprint, request, make_response
-from api.models.login import Login
-from api.models.updatee_profile import UpdateProfile
-from api.models.signup import Signup
+from models.login import Login
+from models.updatee_profile import UpdateProfile
+from models.signup import Signup
 import jwt
 import datetime
 from dotenv import load_dotenv

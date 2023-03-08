@@ -1,5 +1,5 @@
 from flask import Blueprint ,  request
-from api.models.attraction import Attraction
+from models.attraction import Attraction
 
 
 attraction_api = Blueprint("attraction_api", __name__)

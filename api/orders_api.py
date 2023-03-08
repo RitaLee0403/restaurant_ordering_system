@@ -1,5 +1,5 @@
 from flask import Blueprint ,  request
-from api.models.booking import Booking
+from models.booking import Booking
 import datetime
 import requests
 import jwt
