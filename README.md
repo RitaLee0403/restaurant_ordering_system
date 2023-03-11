@@ -25,10 +25,14 @@ test account
 
 | Technique 	  | Description                        |
 |---------------|------------------------------------|
-|  MySQL        |Database, connection pool           |
+| Web Framework | Python / Flask                     |
+|  MySQL        | Database, connection pool          |
+|	APIs          | implement RESTful APIs             |
 | Blueprints    | Managing Python files              |
 | AWS           | AWS EC2 for deployment             |
 | JWT           | mechanism for user authentication  |
+| TapPay        | as Third-Party Payment System      |
+| JavaScript    |  infinite scroll, carousel and popup dialog|
 
 <br/>
 
