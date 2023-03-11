@@ -18,21 +18,22 @@ test account
 <br/>
 
 
-<br/>
-
 ## Skills used
 
 
 | Technique 	  | Description                        |
 |---------------|------------------------------------|
 | Web Framework | Python / Flask                     |
-|  MySQL        | Database, connection pool          |
+|  MySQL        | Databases of Normalization and using connection pool|
 |	APIs          | implement RESTful APIs             |
+| MVC           | Using MVC architecture             |
 | Blueprints    | Managing Python files              |
 | AWS           | AWS EC2 for deployment             |
 | JWT           | mechanism for user authentication  |
 | TapPay        | as Third-Party Payment System      |
 | JavaScript    |  infinite scroll, carousel and popup dialog|
+
+
 
 <br/>
 
