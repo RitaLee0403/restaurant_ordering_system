@@ -4,13 +4,23 @@ const contentLeft = document.querySelector(".content-left");
 const pictureDot = document.querySelector(".dot-btn");
 const datetimeInput = document.querySelectorAll(".datetime-input");
 const productCount = document.querySelector(".product-count");
+const costNum = document.querySelector(".cost-number");
+const selectMorning = document.querySelector(".select-time-morning");
+const selectAfternoon = document.querySelector(".select-time-afternoon");
+const descriptionFont = document.querySelector(".description-font");
+const address = document.querySelector(".address-name");
+const transport = document.querySelector(".transport");
+const bookingMessage = document.querySelector(".booking-message");
+const darker = document.querySelector(".darker");
+const bookingMessageClose = document.querySelector(".booking-message-btn");
+const bookingMessageFont = document.querySelector(".booking-message-font");
+const title = document.querySelector(".title");
+const category = document.querySelector(".category");
+const pcBackground = document.querySelector(".pc-background");
+const preloadingPc = document.querySelector(".lds-dual-ring");
 
-let costNum = document.querySelector(".cost-number");
-let selectMorning = document.querySelector(".select-time-morning");
-let selectAfternoon = document.querySelector(".select-time-afternoon");
-let descriptionFont = document.querySelector(".description-font");
-let address = document.querySelector(".address-name");
-let transport = document.querySelector(".transport");
+
+
 let url = "/api" + window.location.pathname;
 let allRadio, allPc, radio, pcCount;
 let pcPosition = 0;
@@ -19,15 +29,6 @@ let date = document.querySelector(".date");
 let datetime = new Date();
 let year, month, day, time, orderData, price;
 let id = location.pathname.replace("/attraction/", "");
-let bookingMessage = document.querySelector(".booking-message");
-let darker = document.querySelector(".darker");
-let bookingMessageClose = document.querySelector(".booking-message-btn");
-let bookingMessageFont = document.querySelector(".booking-message-font");
-let title = document.querySelector(".title");
-let category = document.querySelector(".category");
-let pcBackground = document.querySelector(".pc-background");
-let preloadingPc = document.querySelector(".lds-dual-ring");
-
 
 
 
