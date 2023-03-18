@@ -42,8 +42,10 @@ function clickDotToChangePc() {
             allRadio = document.querySelectorAll(".dot");
             allPc = document.querySelectorAll(".content-pc");
             for (let k = 0; k < allRadio.length; k++) {
-                if (allPc[k].style.display === "block") {
-                    allPc[k].style.display = "none";
+                if (allPc[k]) {
+                    if (allPc[k].style.display === "block") {
+                        allPc[k].style.display = "none";
+                    }
                 }
 
                 if (allRadio[k].checked === true) {
@@ -108,6 +110,9 @@ fetch(url)
         descriptionFont.innerHTML = data["description"];
         address.innerHTML = data["address"];
         transport.innerHTML = data["transport"];
+
+    })
+    .then(() => {
         clickDotToChangePc();
     })
     .then(() => {
