@@ -3,7 +3,7 @@ const search = document.querySelector(".icon-search-bg");
 const message = document.querySelector(".message");
 const input = document.getElementById("title-input");
 const categories = document.getElementById("categories");
-const child = document.querySelector(".child");
+let child = document.querySelector(".child");
 const content = document.getElementById("content");
 
 let newP, textNode, dataContent, contentBaby, newChild, username, email, password;
