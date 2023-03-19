@@ -56,7 +56,10 @@ function clickDotToChangePc() {
                 }
 
             }
-            allPc[pcPosition].style.display = "block";
+            if (allPc[pcPosition]) {
+                allPc[pcPosition].style.display = "block";
+            }
+
         })
     }
 }
@@ -74,21 +77,33 @@ fetch(url)
             newDot.type = "radio";
             newDot.name = "control";
             newDot.className = "dot";
+            newDot.style.display = "none";
             pictureDot.appendChild(newDot);
             let newImg = document.createElement("img");
             newImg.onload = () => {
                 contentLeft.insertBefore(newImg, arrowLeft);
+                if (i === data["images"].length - 1) {
+                    console.log("ok")
+                    document.querySelector(".content-pc").style.display = "block";
+                    pcBackground.style.display = "none";
+                    arrowLeft.style.display = "block";
+                    arrowRight.style.display = "block";
+                    document.querySelectorAll(".dot").forEach(element => {
+                        element.style.display = "block";
+                    })
+                }
+
+
+
             }
-            pcBackground.style.display = "none";
+
             newImg.src = data["images"][i];
-            arrowLeft.style.display = "block";
-            arrowRight.style.display = "block";
             newImg.className = "content-pc";
 
 
-            if (i > 0) {
-                newImg.style.display = "none";
-            }
+
+            newImg.style.display = "none";
+
 
         }
 
@@ -110,6 +125,7 @@ fetch(url)
         descriptionFont.innerHTML = data["description"];
         address.innerHTML = data["address"];
         transport.innerHTML = data["transport"];
+
 
     })
     .then(() => {
