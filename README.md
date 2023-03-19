@@ -13,7 +13,7 @@ test account
 
 | Account  	| demo@demo.com |
 |-----------|---------------|
-|  Password |testtest      |
+|  Password |demodemo   |
 
 <br/>
 
