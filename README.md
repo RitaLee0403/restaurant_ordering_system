@@ -15,7 +15,17 @@ test account
 |-----------|---------------|
 |  Password |demodemo   |
 
+
 <br/>
+<br/>
+Test payment infornation:
+<br/>
+<br/>
+
+|Card number 	| 424242424242|
+|-----------|---------------|
+| Expiration date |12/34  |
+|CCV        | 123| 
 
 
 ## Skills used
