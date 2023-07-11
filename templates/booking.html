@@ -1,0 +1,73 @@
+{% extends "navbar.html" %}
+
+{% block style %}
+<link rel="stylesheet" href="../static/styles/navbar_and_footer.css" />
+<link rel="stylesheet" href="../static/styles/login_signup.css" />
+<link rel="stylesheet" href="../static/styles/booking.css" />
+{% endblock %}
+
+{% block main %}
+<div class="booking-content">
+    <p class="booking-title"></p>
+    <p class="booking-empty">目前沒有任何待預定的行程</p>
+</div>
+<hr class="hr"/>
+<div class="contact-information">
+    <p class="contact-information-title">您的聯絡資訊</p>
+    <div class="contact-information-name">
+        <p>聯絡姓名&nbsp;&nbsp;:&nbsp;&nbsp;</p>
+        <input class="contact-name" type="text"/>
+    </div>
+    <div class="contact-information-email">
+        <p>聯絡信箱&nbsp;&nbsp;:&nbsp;&nbsp;</p>
+        <input class="contact-email" type="text"/>
+    </div>
+    <div class="contact-information-email">
+        <p>手機號碼&nbsp;&nbsp;:&nbsp;&nbsp;</p>
+        <input class= "contact-phone-number" type="text"/>
+    </div>
+    <p style="margin-bottom:30px;">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</p>
+</div>
+
+<hr class="hr"/>
+
+<div class="credit-card-information">
+    <p class="credit-card-information-title">您的聯絡資訊</p>
+    <div class="credit-card-information-number">
+        <p >卡片號碼&nbsp;&nbsp;:&nbsp;&nbsp;</p>
+        <div  class="tpfield" id="card-number"></div>
+    </div>
+    <div class="credit-card-information-passtime">
+        <p>過期時間&nbsp;&nbsp;:&nbsp;&nbsp;</p>
+        <div  class="tpfield" id="card-expiration-date"></div>
+    </div>
+    <div class="credit-card-information-password">
+        <p>驗證密碼&nbsp;&nbsp;:&nbsp;&nbsp;</p>
+        <div  class="tpfield" id="card-ccv"></div>
+    </div>
+</div>
+
+
+<div class="booking-message">
+    <div>
+        <p class="booking-message-font">刪除成功</p>
+        <p class="booking-message-btn">OK</p>
+    </div>
+</div>
+
+<hr class="hr"/>
+<div class="price-and-btn">
+    <div>
+        <p class="total-price"></p>
+        <p class="payment-btn">確認訂購並付款</p>
+    </div>
+</div>
+
+<img class="empty-shoppingcart" src="../static/images/shoppingcart_empty.png"/>
+{% endblock %}
+
+{% block script %}
+<script type="module" src="../static/scripts/loginSignup.js"></script>
+<script type="module" src="../static/scripts/booking.js"></script>
+<script src="https://js.tappaysdk.com/tpdirect/v5.1.0"></script>
+{% endblock %}

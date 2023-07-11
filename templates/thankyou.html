@@ -1,0 +1,20 @@
+{% extends "navbar.html" %}
+
+{% block title %}感謝購買{% endblock %}
+    
+{% block style %}
+<link rel="stylesheet" href="../static/styles/login_signup.css" />
+<link rel="stylesheet" href="../static/styles/navbar_and_footer.css" />
+<link rel="stylesheet" href="../static/styles/thankyou.css" />
+{% endblock %}
+
+{% block main %}
+<p class="order-info">訂購成功~</p>
+<p class="order-number">您的訂單編號是:{{num}}</p>
+<img class="thankyou-img" src="../static/images/thankyou.png"/>
+{% endblock %}
+
+{% block script %}
+<script type="module" src="../static/scripts/loginSignup.js"></script>
+{% endblock %}
+    

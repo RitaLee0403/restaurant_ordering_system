@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    {% block style %}
+
+    {% endblock %}
+</head>
+<body>
+    <div class="navbar-father">
+        <div class="navbar">
+            <div class="title-left">
+                <p id="titleLeftFont">台北一日遊</p>
+            </div>
+            
+            <div class="title-right">
+                <img class="hamburger"  src="../static/images/hamburger.png" />
+                <p class="member-page">個人資料</p>
+                <div class="member-headshot-container">
+                    <img class="member-headshot"/>
+                </div>
+                <div class="shopping-cart-container">
+                    <img class="shopping-cart-image" src="../static/images/shopping-cart.png">
+                    <p class="product-count"></p>
+                </div>
+                <p class="history-order">購物紀錄</p>
+             
+                <p class="login-btn">登錄/註冊</p>  
+                
+            </div>          
+        </div> 
+    </div>
+
+    <div class="darker">
+    </div>
+    <div class="login">
+        <div class="login-inner">
+            <div class="login-content">
+                <div class="login-title">
+                    <p>登入會員帳號</p>
+                    <img class="login-close" src="../static/images/icon_close.png"/>
+                </div>
+                <div class="login-input">
+                    <input type="text" id="loginEmail" placeholder="輸入電子信箱" value="demo@demo.com"/>
+                    <input type="password" id = "loginPassword" placeholder="輸入密碼" value="demodemo"/>
+                    <input id = "clickToLogin" type="submit" name="submit" value="登入帳號">
+                    <p class="login-error-msg"></p>
+                    <a class="signup-btn">還沒有帳戶?點此註冊</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="signup">
+        <div class="signup-inner">
+            <div class="signup-content">
+                <div class="signup-title">
+                    <p>註冊會員帳號</p>
+                    <img class="signup-close" src="../static/images/icon_close.png"/>
+                </div>
+                <div class="signup-input" >
+                    <input type="text" id="name" placeholder="輸入姓名" />
+                    <input type="text" id = "email" placeholder="輸入電子郵件" />
+                    <input type="password" id = "password" placeholder="輸入密碼" />
+                    <input id ="clickToSignup" type="submit" name="SB" value="註冊新帳戶">
+                
+                    <p class="error-msg"></p>
+                
+                    <a class="had-login-btn">已經有帳戶了?點此登入</a>
+                </div >
+            </div>
+        </div>
+
+    </div>
+    {% block main %}
+    {% endblock %}
+
+    <div class="bottom">
+        <p>COPYRIGHT © 2021 台北一日遊</p>
+    </div>
+    {% block script %}
+    {% endblock %}
+</body>
+</html>

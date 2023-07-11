@@ -1,0 +1,287 @@
+*{
+    margin:0px;
+    padding:0px;
+}
+body{
+    font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
+}
+p{
+    font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
+}
+.booking-content{
+    padding-top: 100px;
+    width:1200px;
+    margin:auto;
+}
+.booking-title{ 
+    font-size:19px;
+    font-weight:bolder;
+    padding-bottom:40px;
+}
+
+.booking-product{
+    display:flex;
+    margin-bottom:30px;
+    position:relative;
+}
+
+.booking-empty{
+    display:none;
+    font-size:16px;
+    padding-bottom:40px;
+    font-weight:bolder;
+}
+
+.product-image{
+    width:266px;
+    height:200px;
+}
+.right-product{
+    padding-left:22px;
+    margin-bottom:30px;
+    width:100%;
+    position: relative;
+}
+.right-product-title{
+    color: #448899;
+    font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
+    font-style: normal;
+    font-weight:700;
+    margin-bottom:20px;
+    
+}
+.right-product-img-title{
+    display:flex;
+    justify-content: space-between;
+}
+.product-date{
+    margin-bottom:15px;
+    color: #666666;
+    font-weight: 700;
+}
+.product-time{
+    margin-bottom:15px;
+    color: #666666;
+    font-weight: 700;
+}
+.product-price{
+    margin-bottom:15px;
+    color: #666666;
+    font-weight: 700;
+}
+.product-address{
+    color: #666666;
+    font-weight: 700;
+}
+hr{
+    width:1200px;
+    
+    margin:auto;
+}
+.contact-information{
+    width:1200px;
+    margin:auto;
+    color: #666666;
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 19px;
+}
+.contact-information-title{
+    margin-top:44px;
+    color: #666666;
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom:30px;
+}
+.trashcan{
+    height:30px;
+    width:30px;
+    cursor: pointer;
+  
+  
+}
+.contact-information-name{
+    display:flex;
+    margin-bottom:30px;
+}
+.contact-information-email{
+    display:flex;
+    margin-bottom:30px;
+}
+.credit-card-information{
+    width:1200px;
+    margin:auto;
+    color: #666666;
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 19px;
+}
+.credit-card-information-title{
+    margin-top:44px;
+    color: #666666;
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom:30px;
+}
+.credit-card-information-number{
+    display:flex;
+    margin-bottom:30px;
+}
+.credit-card-information-number p{
+    display:flex;
+    align-items: center;
+}
+.credit-card-information-passtime{
+    display:flex;
+    margin-bottom:30px;
+}
+.credit-card-information-passtime p{
+    display:flex;
+    align-items: center;
+}
+.credit-card-information-password{
+    display:flex;
+    margin-bottom:30px;
+}
+.credit-card-information-password p{
+    display:flex;
+    align-items: center;
+}
+
+input{
+    width:200px;
+    height:30px;
+    font-size:20px;
+    padding-left:10px;
+}
+.price-and-btn{
+    width:1200px;
+    margin:auto;
+    display:flex;
+    justify-content: right;
+}
+.price-and-btn div{
+    width:300px;
+}
+.total-price{
+    text-align: center;
+    margin:auto;
+    font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    color: #666666;
+    margin-top:40px;
+    margin-bottom:20px;
+}
+.payment-btn{
+    margin:auto;
+    background-color: #448899;
+    color:white;
+    font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    padding:10px;
+    width:173px;
+    text-align: center;
+    border-radius: 6px;
+    margin-bottom:20px;
+    cursor: pointer;
+}
+
+.booking-message{
+    z-index: 1100;
+    display:none;
+    position: fixed;
+    width:100%;
+    text-align: center;
+    height:300px;
+    top:200px;
+}
+.booking-message div{
+    background-color: white;
+    width:300px;
+    margin:auto;
+    height:150px;
+    border-radius: 6px;
+    
+}
+.booking-message-font{
+    font-weight:900;
+    color:rgb(0, 0, 0);
+    padding-top:40px;
+}
+.booking-message-btn{
+    cursor:pointer;
+    color:white;
+    padding:10px;
+    width:30%;
+    margin:auto;
+    border-radius: 6px;
+    margin-top:30px;
+    background-color: #448899;
+
+}
+
+.empty-shoppingcart{
+    display:none;
+    margin:auto;
+    margin-top:90px;
+}
+
+
+.tpfield {
+    font-size:20px;
+    height: 30px;
+    width: 200px;
+    border: 1px solid gray;
+    margin: 5px 0;
+    padding-left: 10px;
+}
+@media(max-width:1200px){
+    .booking-product{
+        flex-wrap:wrap;  
+    }
+    .booking-content{
+        width:90%;
+    }
+    .left-product{
+        width:100%;
+    }
+    .product-image{
+        width:100%;
+        object-fit: cover;
+        height:256px;
+    }
+    .right-product{
+        padding-left:0px;
+    }
+    .right-product-title{
+        margin-top:30px;
+    }
+    .trashcan{
+        position: absolute;
+        bottom:0px;
+        right:0px;
+    }
+    .contact-information{
+        width:90%;
+    }
+    .credit-card-information{
+        width:90%;
+    }
+    hr{
+        width:90%;
+    }
+ 
+    .price-and-btn{
+        width:90%;
+        justify-content: center;
+    }
+    
+   
+    
+}

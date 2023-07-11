@@ -1,0 +1,45 @@
+{% extends "navbar.html" %}
+
+{% block style %}
+<link rel="stylesheet" href="../static/styles/navbar_and_footer.css" />
+<link rel="stylesheet" href="../static/styles/login_signup.css" />
+<link rel="stylesheet" href="../static/styles/index.css" />
+{% endblock %}
+
+{% block main %}
+<div class="title-pc">
+    <img src="../static/images/welcome.png"/> 
+</div>
+
+
+
+<div class="pc-101">
+    <div class="pc-101-inner">
+        <p style="font-size:28px;">輕鬆享受台北一日悠閒</p>
+        <p style="font-size:16px;">探索每個角落，體驗城市的深度旅遊行程</p>
+        
+        <div class="search-pc">
+            <input id="title-input" class="title-input"  type="text" placeholder="輸入景點名稱查詢"/>
+            <div class="icon-search-bg" id="icon-search-bg">
+                <img class="icon-search" src="../static/images/icon_search.png"  />
+            </div>
+        
+            <div class="categories" id ="categories" >
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content" id="content"> 
+</div>
+<p class="message">無此資料</p>
+
+{% endblock %}
+
+{% block script %}
+<script type="module" src="../static/scripts/loginSignup.js"></script>
+<script type="module" src="../static/scripts/index.js"></script>
+{% endblock %}
+
+
+

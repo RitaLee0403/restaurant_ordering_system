@@ -1,0 +1,80 @@
+{% extends "navbar.html" %}
+
+{% block style %}
+<link rel="stylesheet" href="../static/styles/navbar_and_footer.css" />
+<link rel="stylesheet" href="../static/styles/login_signup.css" />
+<link rel="stylesheet" href="../static/styles/attraction.css" />
+{% endblock %}
+
+    
+{% block main %}
+<div class="content">
+    <div class="content-left">
+        <div class="lds-dual-ring"></div>
+        <div class="pc-background"></div>
+        <img src = "../static/images/btn_leftArrow.png" class="arrow-left" />
+        <img src = "../static/images/btn_rightArrow.png" class="arrow-right" />
+        <div class="dot-btn">
+        </div>
+    </div>
+
+    <div class="content-right">
+        <p class="title"></p>
+        <p class="category"></p>
+        <div class="reserve">
+            <p style="padding-bottom:15px;">訂購預覽行程</p>
+            <p>以此景點為中心的一日行程，帶您探索城市角落故事</p>
+            <div class="datetime">
+                <p>選擇日期 :&nbsp;&nbsp;</p>
+                <input class="date" type="date" /> 
+            </div> 
+            <div class="time-order">
+                
+                <input class="datetime-input" type="radio" id="datetime-1" name = "datetime" checked/>
+                <input class="datetime-input" type="radio" id="datetime-2" name = "datetime"/>
+                
+                <div class="datetime-visible">
+                    <p >選擇時間 :&nbsp;&nbsp;</p>
+                    <label class="select-time-morning" for="datetime-1"></label>
+                    <p>上半天</p>
+                    <label class="select-time-afternoon" for="datetime-2"></label>
+                    <p>下半天</p>
+                </div>
+            </div>  
+            <div class="cost">
+                <p >導覽費用 :&nbsp;&nbsp;</p>
+                <p class="cost-number">2000元</p>
+            </div>
+            <div class="reserve-btn">
+                <p class="order-btn">開始預約行程</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<div class="booking-message">
+    <div>
+        <p class="booking-message-font">新增成功</p>
+        <p class="booking-message-btn">OK</p>
+    </div>
+</div>
+
+<hr />
+<div class="description">
+    <p class="description-font"></p>
+    <div class="address">景點地址:</div>
+    <p class="address-name"></p>
+    <div class="address">交通方式:</div>
+    <p class="transport"></p>
+</div>    
+{% endblock %}
+
+{% block script %}
+<script type="module" src="../static/scripts/loginSignup.js"></script>
+<script type="module" src="../static/scripts/attraction.js"></script>
+{% endblock %}
+
+
