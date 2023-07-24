@@ -108,7 +108,7 @@ fetch(url)
         }
 
         year = datetime.getFullYear();
-        month = datetime.getMonth() + 1;
+        month = datetime.getMonth();
         day = datetime.getDate();
         if (datetime.getDate() < 10) {
             day = `0${day}`;

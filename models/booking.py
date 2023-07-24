@@ -2,6 +2,8 @@ from mysql_connect import pool
 
 
 class Booking:    
+
+
     def add_data_to_booking(self, id, data):
         cnx = pool.get_connection()
         cursor = cnx.cursor()
@@ -16,6 +18,42 @@ class Booking:
         cursor.close()
         cnx.close()
         
+    def get_linepay_booking_data(self, id):
+        cnx = pool.get_connection()
+        cursor = cnx.cursor()
+        execute = 'SELECT attractionId, MAX(userId), MAX(date), MAX(time), MAX(price), MAX(name), MAX(email)\
+                    FROM booking\
+                    INNER JOIN account ON booking.userId = account.id AND userId = %s\
+                    GROUP BY attractionId;'
+        values = ([f"{id}"])
+        cursor.execute(execute,values)
+        record = cursor.fetchall()
+        cursor.close()
+        cnx.close()
+        return record
+    
+    def get_pdf_data(self, paymentId):
+        cnx = pool.get_connection()
+        cursor = cnx.cursor()
+        execute = 'select payment.id,\
+                     payment.userId,\
+                     data.name,\
+                     payment.date,\
+                     payment.time,\
+                     account.name,\
+                     account.email\
+                     from payment\
+                    inner join data on \
+                    payment.attractionId = data.id &&\
+                    payment.id = %s inner join account on payment.userId = account.id;'
+        values = ([f"{paymentId}"])
+        cursor.execute(execute,values)
+        record = cursor.fetchall()
+        cursor.close()
+        cnx.close()
+        return record
+        
+
     def get_booking_data(self, id):
         cnx = pool.get_connection()
         cursor = cnx.cursor()
@@ -152,6 +190,19 @@ class Booking:
         cursor.close()
         cnx.close()
         return test
+    
+    def get_order_info(self, userId):
+        cnx = pool.get_connection()
+        cursor = cnx.cursor()
+        execute = 'SELECT SUM(DISTINCT price) AS total_price\
+                    FROM booking where userId = %s\
+                    GROUP BY userId, attractionId;'
+        values = ([f"{userId}"]) 
+        cursor.execute(execute,values)
+        record = cursor.fetchall()
+        cursor.close()
+        cnx.close()
+        return record
     
     def convertToBinary(self,filename):
         with open(filename, 'rb') as file:

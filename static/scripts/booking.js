@@ -12,6 +12,10 @@ const bookingContent = document.querySelector(".booking-content");
 const totalCost = document.querySelector(".total-price");
 const hr = document.querySelectorAll(".hr");
 const bookingMessageFont = document.querySelector(".booking-message-font");
+const linepayBtn = document.querySelector(".linepay-button");
+const linepayContainer = document.querySelector(".linepay-container");
+const jkoPay = document.querySelector(".jkopay-button");
+
 
 let userName, data, time, productImage, productTitle, productDate, productTime, productPrice, productAddress, trashcan;
 let newDiv, newImg, newP, attractionId, productName;
@@ -22,6 +26,23 @@ let orderDataTrip = [];
 let ordereDateTripObj = {};
 
 document.title = "購物車";
+
+linepayBtn.addEventListener("click", ()=>{
+    fetch("api/linepay", {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    })
+    .then((response)=>{
+        return response.json();
+    })
+    .then((data)=>{
+        window.location = data.data;
+    })
+})
+
+
 fetch("/api/user/auth")
     .then((response) => {
         return response.json()
@@ -49,6 +70,7 @@ fetch("/api/booking")
                 creditCardInformation.style.display = "none";
                 priceAndBtn.style.display = "none";
                 emptyShoppingcart.style.display = "block";
+                linepayContainer.style.display = "none";
             } else {
                 data = data.data;
                 for (let i = 0; i < data.length; i++) {
@@ -134,11 +156,166 @@ bookingMessageClose.addEventListener("click", () => {
 
 })
 
+
+
+
+//tappay
 TPDirect.setupSDK(
     126855,
     "app_dpKeO3WPG3kSEwvU64ADMVj0w5qIe682MtWRl5FkQRq7IKNXff5iNeTWF5Zi",
     "sandbox"
 );
+
+var googlePaySetting = {
+
+    // Optional in sandbox, Required in production
+    googleMerchantId: "",
+
+    allowedCardAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
+    merchantName: "TapPay Test!",
+    emailRequired: true, // optional
+    shippingAddressRequired: false, // optional,
+    billingAddressRequired: false, // optional
+    billingAddressFormat: "MIN", // FULL, MIN
+
+    allowPrepaidCards: true,
+    allowedCountryCodes: ['TW'],
+
+    phoneNumberRequired: true // optional
+}
+TPDirect.googlePay.setupGooglePay(googlePaySetting)
+
+var paymentRequest = {
+    allowedNetworks: ["AMEX", "JCB", "MASTERCARD", "VISA"],
+    price: "2000", // optional
+    currency: "TWD", // optional
+}
+
+
+TPDirect.googlePay.setupPaymentRequest(paymentRequest, function(err, result){
+    if (result.canUseGooglePay) {
+        canUseGooglePay = true
+    }
+})
+
+
+TPDirect.googlePay.setupGooglePayButton({
+    el: "#container",
+    color: "black",
+    type: "long",
+    getPrimeCallback: function(err, prime){
+        if (err) {
+            return
+        }
+        orderData = {
+            prime: prime,
+            order: {
+                price: totalPrice,
+                trip: orderDataTrip
+            }
+        }
+        fetch("/api/google/pay", {
+            method: 'POST',
+            body: JSON.stringify(orderData),
+            headers: {
+                'Content-type': 'application/json',
+            },
+        })
+        .then(response =>{
+            return response.json()
+        })
+        .then((result) =>{
+            console.log(result)
+            window.location = result.payment_url;
+        })
+        // Send prime to your server, call pay by prime API.
+
+
+    }
+})
+
+
+jkoPay.addEventListener("click", ()=>{
+    
+    TPDirect.jkoPay.getPrime(function(result){
+        console.log("result : " , result)
+        orderData = {
+            prime: result.prime,
+            order: {
+                price: totalPrice,
+                trip: orderDataTrip
+            }
+        }
+        fetch("/api/jkopay", {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify(orderData)
+        })
+        .then((response) => {
+            return response.json();
+        })
+        .then((result) => {
+            TPDirect.redirect(result.payment_url)
+            console.log(result)
+        })
+    })
+})
+
+function getPrime() {
+    // Get Prime
+    TPDirect.jkoPay.getPrime(function(result){
+        console.log("result : " , result)
+        orderData = {
+            prime: result.prime,
+            order: {
+                price: totalPrice,
+                trip: orderDataTrip,
+                contact: {
+                    name: inputName,
+                    email: inputEmail,
+                    phone: inputTelephone
+                }
+            }
+        }
+        fetch("/api/jkopay", {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify(orderData)
+        })
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            console.log(data);
+        })
+        // Post Prime To Your Server
+
+
+        // $.ajax({
+        //     url: '/create_order',
+        //     data: {
+        //         "prime" : result.prime
+        //     },
+        //     type: "POST",
+        //     dateType: "json",
+        //     success: function(result) {
+        //         $('#sendButton').click(function() {
+        //             // Go to JKOPAY Page.
+        //             TPDirect.redirect(result.payment_url)
+        //         })
+        //     },
+        //     error: function (xhr, ajaxOptions, thrownError) {
+        //         alert(xhr.status);
+        //         alert(thrownError);
+        //     }
+        // })
+    })
+}
+
 
 
 
@@ -249,7 +426,7 @@ paymentBtn.addEventListener("click", () => {
 
                 if ("data" in data) {
                     if (data.data.payment.message === "Success") {
-                        window.location = `/thankyou?number=${data.data.number}`;
+                        window.location = `/thankyou?number=${data.data.number}&pay=credit_card`;
                     } else {
                         bookingErrorMsg("購買失敗");
                     }

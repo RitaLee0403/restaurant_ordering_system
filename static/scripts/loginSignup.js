@@ -80,7 +80,10 @@ fetch("/api/booking")
         return response.json()
     })
     .then((data) => {
+    
         productCount.innerHTML = data.data.length;
+        
+        
     })
 
 

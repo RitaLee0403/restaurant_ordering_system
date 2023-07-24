@@ -64,9 +64,11 @@ def userAuth():
 						"email" : data["email"]
 						}
 					}
+					print(1)
 					token = jwt.encode(payload_data, jwt_key, algorithm="HS256")
 					expire_date = datetime.datetime.now()
 					expire_date = expire_date + datetime.timedelta(days=7)
+					print(2)
 					response.set_cookie("token", token,expires= expire_date)
 					global initCookie
 					initCookie = token
@@ -80,7 +82,7 @@ def userAuth():
 			if request.method == 'GET':
 				cookie = request.cookies.get("token")
 				#cookie 被改過的話要退出
-				if(cookie and (initCookie == cookie)): 
+				if(cookie): #and (initCookie == cookie) 
 					cookie = jwt.decode(cookie, jwt_key, algorithms="HS256")
 					return cookie,200
 				else:
@@ -99,4 +101,7 @@ def userAuth():
 				"message" : "伺服器出現錯誤"
 			}
 			return error, 500
+		# except Exception as e:
+		# 	# 在這裡處理其他可能發生的異常
+		# 	print(f"An error occurred: {e}")
     
