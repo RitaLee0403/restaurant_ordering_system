@@ -59,7 +59,7 @@ def thankyou():
 			Booking().order(num, getId, i[0], i[3], i[2], i[5], i[6], "無", price)
 		# for i in order_data:
 		# 	Booking().order()
-		
+	print(getId)
 	Booking().delete_all(getId)
 	headers = {
 		'content-type': 'application/json'

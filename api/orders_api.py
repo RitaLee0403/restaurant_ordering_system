@@ -5,6 +5,7 @@ import requests
 import jwt
 from dotenv import load_dotenv
 import os
+
 from reportlab.lib import colors
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
@@ -18,6 +19,7 @@ from email.mime.multipart import MIMEMultipart
 import smtplib
 from email.mime.application import MIMEApplication
 from email.mime.text import MIMEText
+from os.path import basename
 load_dotenv()
 
 orders_api = Blueprint("orders_api", __name__)
@@ -30,7 +32,7 @@ jkopay_merchant_id = os.getenv("jkopay_merchant_id")
 channel_id = os.getenv("channel_id")
 channel_secret = os.getenv("channel_secret")
 pwd = os.getenv("stmp_pwd")
-
+website_url = os.getenv("website_url")
 
 
 @orders_api.route("/api/user_orders/<userId>", methods = ["GET"])
@@ -108,38 +110,32 @@ def api_send_email():
 		story.append(table)
 		pdfTemplate.build(story)
 		msg = MIMEMultipart()
+		msg["Subject"]="台北一日遊訂單確認通知"
+		msg["From"]="台北一日遊客服中心"
+		msg["To"]=data[0][5]
+		msg.attach(MIMEText("親愛的用戶您好，檔案附件為本次所消費的訂單明細，感謝您的購買，謝謝。"))
 		with open(fileName, "rb") as file:
 			filecontent=file.read()
-		mime=MIMEApplication(filecontent)
-		mime["Content-Type"]="application/pdf"  
-		mime["Content-Disposition"]='attachment; fileName="' + emailFileName + '"'  
-		mime["Subject"]="台北一日遊訂單確認通知"
-		mime["From"]="台北一日遊客服中心"
-		mime["To"]=data[0][5]
+			mime=MIMEApplication(filecontent, Name = basename(fileName))
+			mime["Content-Type"]="application/pdf"
+			mime['Content-Disposition'] = 'attachment; filename="%s"' % basename(fileName)
+			msg.attach(mime)
 		# 副本收件者
 		# email_body = "親愛的顧客您好，以下是您的消費明細資料。"
 		# msg.attach(MIMEText(email_body, "plain"))
-		mime["Cc"]="rita09436@gmail.com" 
-		msg=mime.as_string() #將msg轉成str
+		# msg["Cc"]="rita09436@gmail.com" 
 		smtp=smtplib.SMTP("smtp.gmail.com", 587)  
 		smtp.ehlo()
 		smtp.starttls()
 		smtp.login("rita09436@gmail.com", pwd) 
 		from_addr="rita09436@gmail.com"
 		to_addr=[data[0][6]]
-		status=smtp.sendmail(from_addr, to_addr, msg)
-		if status=={}:
-			print("Email sent successfully!")
-			smtp.quit()
-			return {
-				"status": "success"
-			}
-		
-		print("Mail delivery failed!")
+		smtp.sendmail(from_addr, to_addr, msg.as_string())
 		smtp.quit()
 		return {
-			"status": "error"
+			"status": "success"
 		}
+		
 	except ZeroDivisionError as e:
     # 在這裡處理 ZeroDivisionError，並獲取錯誤代碼
 		error_code = e.args[0]
@@ -150,7 +146,6 @@ def api_send_email():
 
 @orders_api.route("/api/linepay", methods = ["POST"])
 def api_linepay():
-	website_url = request.host_url
 	product_number = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
 	getId = request.cookies.get("token")
 	getId = jwt.decode(getId, jwt_key, algorithms="HS256")
@@ -184,7 +179,6 @@ def api_linepay():
 
 @orders_api.route("/api/google/pay", methods = ["POST"])
 def api_google_pay():
-	website_url = request.host_url
 	getId = request.cookies.get("token")
 	getId = jwt.decode(getId, jwt_key, algorithms="HS256")
 	userId = getId["data"]["id"]	
@@ -238,7 +232,7 @@ def api_google_pay():
 
 @orders_api.route("/api/jkopay", methods = ["POST"])
 def api_jkopay():
-	website_url = request.host_url
+	print(website_url)
 	getId = request.cookies.get("token")
 	getId = jwt.decode(getId, jwt_key, algorithms="HS256")
 	userId = getId["data"]["id"]	
